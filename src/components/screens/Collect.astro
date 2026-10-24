@@ -1,0 +1,20 @@
+---
+import QrGlyph from '../ui/QrGlyph.astro';
+import Stamps from '../ui/Stamps.astro';
+---
+<div class="ui-app ui-app--camera">
+  <div class="ui-cam">
+    <p class="ui-cam__hint">מכוונים את המצלמה לקוד שבקופה</p>
+    <div class="ui-cam__frame">
+      <span class="ui-cam__corner"></span><span class="ui-cam__corner"></span><span class="ui-cam__corner"></span><span class="ui-cam__corner"></span>
+      <QrGlyph class="ui-cam__qr" />
+    </div>
+  </div>
+  <div class="ui-sheet">
+    <span class="ui-sheet__grab"></span>
+    <p class="ui-sheet__title">נוספה חותמת</p>
+    <p class="ui-sheet__sub">קפה פינה · כרטיס קפה</p>
+    <Stamps type="stamps" total={10} current={8} class="ui-stamps--sheet" />
+    <p class="ui-sheet__foot"><b>8 מתוך 10.</b> עוד 2 ביקורים לקפה הפוך עלינו.</p>
+  </div>
+</div>

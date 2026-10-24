@@ -1,0 +1,21 @@
+---
+// The Perko wordmark. Its "o" is a collected stamp: a solid cobalt disc.
+interface Props { class?: string; tone?: 'ink' | 'white'; label?: boolean }
+const { class: cls = '', tone = 'ink', label = true } = Astro.props;
+---
+<span class:list={['wordmark', `wordmark--${tone}`, cls]} dir="ltr" role={label ? 'img' : undefined} aria-label={label ? 'Perko' : undefined} aria-hidden={label ? undefined : 'true'}>
+  <span class="wordmark__letters" aria-hidden="true">perk</span><span class="wordmark__o" aria-hidden="true"></span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex; align-items: baseline; gap: 0.035em;
+    font-weight: 800; letter-spacing: -0.055em; line-height: 1; font-size: 30px;
+    color: var(--ink); white-space: nowrap; unicode-bidi: isolate;
+  }
+  .wordmark--white { color: var(--white); }
+  .wordmark__o {
+    display: inline-block; width: 0.5em; height: 0.5em; border-radius: 50%;
+    background: var(--cobalt); transform: translateY(0.015em);
+  }
+</style>

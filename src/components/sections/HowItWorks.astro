@@ -1,0 +1,111 @@
+---
+import Phone from '../Phone.astro';
+import Discover from '../screens/Discover.astro';
+import Collect from '../screens/Collect.astro';
+import Redeem from '../screens/Redeem.astro';
+const steps = [
+  {
+    id: 'discover',
+    runIn: 'קודם מגלים.',
+    text: 'פותחים את Perko ורואים אילו עסקים בסביבה משתתפים בה, ומה התוכנית של כל אחד: כמה חותמות או נקודות צריך, ומה ההטבה בסוף. כרטיס חדש נוסף לארנק בלחיצה.',
+    label: 'מסך גילוי: רשימת עסקים משתתפים בסביבה, עם המרחק והתוכנית של כל עסק',
+  },
+  {
+    id: 'collect',
+    runIn: 'אחר כך צוברים.',
+    text: 'אחרי רכישה מזכה סורקים את קוד ה-QR שבקופה, והחותמת או הנקודות נכנסות לכרטיס של אותו עסק. כך אנחנו מתכננים את תהליך הצבירה, והוא יתגבש יחד עם העסקים שישתתפו בפיילוט.',
+    label: 'מסך סריקה: המצלמה מכוונת לקוד בקופה, ומתחתיה אישור שנוספה חותמת, 8 מתוך 10',
+  },
+  {
+    id: 'redeem',
+    runIn: 'ובסוף מממשים.',
+    text: 'רואים בכל רגע כמה חסר עד ההטבה. כשעומדים בתנאים שהעסק קבע, ההטבה מופיעה כמוכנה, מציגים אותה לצוות בקופה, וכרטיס חדש מתחיל מההתחלה.',
+    label: 'מסך הטבה: 10 מתוך 10 חותמות, קפה הפוך מוכן למימוש מול הצוות',
+  },
+];
+---
+<section class="how section-gap" id="how" aria-labelledby="how-title" data-steps>
+  <div class="how__grid">
+    <div class="how__stage" aria-hidden="true">
+      <div class="how__panel">
+        <div class="how__phones">
+          <Phone class="how__phone is-active" data-screen="discover"><Discover /></Phone>
+          <Phone class="how__phone" data-screen="collect"><Collect /></Phone>
+          <Phone class="how__phone" data-screen="redeem"><Redeem /></Phone>
+        </div>
+        <p class="how__count small"><span data-step-count>שלב 1 מתוך 3</span><span>המחשה של המסכים המתוכננים</span></p>
+      </div>
+    </div>
+
+    <div class="how__column">
+      <h2 id="how-title" class="head how__title" data-reveal>
+        <span class="line">לגלות. לצבור.</span>
+        <span class="line">לממש.</span>
+      </h2>
+      <ol class="how__steps">
+        {steps.map((s, i) => (
+          <li class="how__step" data-step={s.id} data-reveal>
+            <p><b>{s.runIn}</b> {s.text}</p>
+            <div class="how__inline">
+              <Phone class="how__mini" label={s.label}>
+                {i === 0 && <Discover />}
+                {i === 1 && <Collect />}
+                {i === 2 && <Redeem />}
+              </Phone>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .how__grid {
+    width: min(100% - 2 * var(--m), var(--max)); margin-inline: auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 112px);
+  }
+  .how__column { order: -1; padding-top: 8vh; }
+  
+  .how__steps { margin-top: 56px; }
+  .how__step { min-height: 62svh; display: flex; flex-direction: column; justify-content: center; max-width: 34em; }
+  .how__step:last-child { min-height: 48svh; justify-content: flex-start; padding-top: 6svh; }
+  .how__step p { font-size: var(--t-lead); line-height: 1.5; color: var(--slate); }
+  .how__step b { color: var(--ink); font-weight: 800; }
+  .how__step.is-current b { color: var(--cobalt-strong); }
+  .how__inline { display: none; }
+
+  .how__stage { position: relative; }
+  .how__panel {
+    position: sticky; top: 80px; height: calc(100svh - 92px); min-height: 600px;
+    background: var(--pale); border-radius: var(--radius);
+    display: flex; flex-direction: column;
+  }
+  .how__phones { flex: 1; position: relative; display: grid; place-items: center; }
+  .how__phone {
+    grid-area: 1 / 1; width: clamp(240px, min(22vw, calc((100svh - 220px) * 0.46)), 330px);
+    opacity: 0; transform: translateY(16px) scale(0.985);
+    transition: opacity 900ms ease, transform 1100ms var(--ease-expo);
+  }
+  .how__phone.is-active { opacity: 1; transform: none; }
+  .how__count { display: flex; justify-content: space-between; padding: 18px 24px; color: var(--slate); }
+  .how__count span:first-child { color: var(--ink); font-weight: 700; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .how__phone { transition: opacity 300ms ease; transform: none; }
+  }
+
+  @media (max-width: 900px) {
+    .how__grid { grid-template-columns: 1fr; }
+    .how__stage { display: none; }
+    .how__column { padding-top: 0; }
+    .how__steps { margin-top: 40px; display: grid; gap: 56px; }
+    .how__step, .how__step:last-child { min-height: 0; padding-top: 0; }
+    .how__step p { font-size: 18px; color: var(--ink); }
+    .how__inline {
+      display: block; margin-top: 24px; background: var(--pale); border-radius: var(--radius);
+      height: 360px; overflow: hidden; padding: 28px 0 0; display: flex; justify-content: center;
+    }
+    .how__mini { width: 260px; }
+  }
+</style>

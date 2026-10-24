@@ -1,0 +1,19 @@
+---
+// Stamp grid for stamp programs, progress bar for points programs.
+interface Props { type: 'stamps' | 'points'; total: number; current: number; columns?: number; class?: string }
+const { type, total, current, columns = 5, class: cls = '' } = Astro.props;
+const pct = Math.min(100, Math.round((current / total) * 100));
+---
+{type === 'stamps' ? (
+  <ol class:list={['ui-stamps', cls]} style={`--cols:${columns}`} aria-label={`${current} מתוך ${total} חותמות`}>
+    {Array.from({ length: total }, (_, i) => (
+      <li class:list={['ui-stamp', { 'is-on': i < current, 'is-reward': i === total - 1 }]} aria-hidden="true">
+        {i === total - 1 && <svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>}
+      </li>
+    ))}
+  </ol>
+) : (
+  <div class:list={['ui-meter', cls]} role="meter" aria-valuemin="0" aria-valuemax={total} aria-valuenow={current} aria-label={`${current} מתוך ${total} נקודות`}>
+    <span class="ui-meter__fill" style={`transform: scaleX(${pct / 100})`}></span>
+  </div>
+)}

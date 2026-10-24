@@ -1,0 +1,21 @@
+---
+// A drawn QR-like glyph for illustrations. It is not a readable code.
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+const inFinder = (x: number, y: number) => (x < 7 && y < 7) || (x > 7 && y < 7) || (x < 7 && y > 7);
+const cells: number[][] = [];
+for (let y = 0; y < 15; y++) for (let x = 0; x < 15; x++) {
+  if (inFinder(x, y)) continue;
+  if (((x * 7 + y * 13 + x * y * 3) % 5) < 2) cells.push([x, y]);
+}
+---
+<svg class={cls} viewBox="0 0 15 15" aria-hidden="true" focusable="false" shape-rendering="crispEdges">
+  {[[0,0],[9,0],[0,9]].map(([x, y]) => (
+    <g>
+      <rect x={x} y={y} width="6" height="6" rx="1.2" fill="currentColor"/>
+      <rect x={x + 1} y={y + 1} width="4" height="4" rx="0.7" fill="var(--qr-bg, #fff)"/>
+      <rect x={x + 2} y={y + 2} width="2" height="2" rx="0.4" fill="currentColor"/>
+    </g>
+  ))}
+  {cells.map(([x, y]) => <rect x={x} y={y} width="1" height="1" rx="0.2" fill="currentColor"/>)}
+</svg>

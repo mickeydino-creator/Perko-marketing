@@ -1,0 +1,149 @@
+---
+import { businesses } from '../../data/businesses';
+const first = businesses[0];
+---
+<section class="demo" id="demo" aria-labelledby="demo-title" data-demo>
+  <script type="application/json" data-demo-data set:html={JSON.stringify(businesses)} />
+  <div class="demo__input on-ink">
+    <div class="demo__input-inner">
+      <h2 id="demo-title" class="head demo__title">
+        <span class="line">בחרו עסק.</span>
+        <span class="visually-hidden">ראו איך נראה הכרטיס שלו.</span>
+      </h2>
+      <p class="demo__intro">הדמיה קטנה של Perko. בחרו אחד משלושת העסקים, והוסיפו ביקורים כדי לראות איך הכרטיס מתמלא. העסקים והשמות כאן לדוגמה בלבד.</p>
+      <fieldset class="demo__choices">
+        <legend class="visually-hidden">עסק לדוגמה</legend>
+        {businesses.map((b, i) => (
+          <label class="choice">
+            <input type="radio" name="demo-business" value={b.id} checked={i === 0} />
+            <span class="choice__body">
+              <span class:list={['choice__mark', `choice__mark--${b.tone}`]} aria-hidden="true">{b.initial}</span>
+              <span class="choice__text"><b>{b.name}</b><span>{b.kind}</span></span>
+              <span class="choice__type">{b.type === 'stamps' ? `${b.total} חותמות` : `${b.total} נקודות`}</span>
+            </span>
+          </label>
+        ))}
+      </fieldset>
+      <div class="demo__actions">
+        <button class="btn btn--white" type="button" data-demo-add>
+          <span data-demo-add-label>הוספת ביקור לדוגמה</span>
+        </button>
+        <button class="demo__reset" type="button" data-demo-reset>איפוס</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo__output">
+    <p class="head demo__title demo__title--out" aria-hidden="true">ראו את הכרטיס.</p>
+    <div class="demo-card" data-ui data-demo-card data-tone={first.tone}>
+      <div class="demo-card__top">
+        <span class="demo-card__avatar" data-demo-initial>{first.initial}</span>
+        <span class="demo-card__names">
+          <b data-demo-name>{first.name}</b>
+          <span data-demo-program>{first.program} · {first.kind}</span>
+        </span>
+      </div>
+      <p class="demo-card__count"><b data-demo-current>{first.current}</b> <span data-demo-of>מתוך {first.total} חותמות</span></p>
+      <div class="demo-card__progress" data-demo-progress>
+        <ol class="demo-stamps" data-demo-stamps aria-hidden="true">
+          {Array.from({ length: first.total }, (_, i) => <li class:list={{ 'is-on': i < first.current }}></li>)}
+        </ol>
+        <div class="demo-meter" hidden data-demo-meter aria-hidden="true"><span></span></div>
+      </div>
+      <p class="demo-card__next" data-demo-next>עוד 3 ביקורים: {first.reward}</p>
+      <dl class="demo-card__rules">
+        <div><dt>צבירה</dt><dd data-demo-rule>{first.rule}</dd></div>
+        <div><dt>הטבה</dt><dd data-demo-reward>{first.reward}</dd></div>
+      </dl>
+      <p class="demo-card__state" data-demo-state hidden>ההטבה מוכנה. בעסק אמיתי מציגים אותה לצוות בקופה.</p>
+    </div>
+    <p class="demo__live visually-hidden" aria-live="polite" data-demo-live></p>
+    <p class="demo__note small">הדמיה בלבד. שום דבר כאן לא נשמר ולא נשלח.</p>
+  </div>
+</section>
+
+<style>
+  .demo { display: grid; grid-template-columns: 1fr 1fr; min-height: 92svh; }
+  .demo__input { background: var(--ink); color: var(--white); display: flex; align-items: center; }
+  .demo__input-inner { width: 100%; max-width: 620px; margin-inline-start: auto; margin-inline-end: auto; padding: 120px clamp(24px, 5vw, 80px); }
+
+  .demo__intro { margin-top: 24px; color: var(--slate-on-ink); max-width: 42ch; }
+  .demo__choices { border: 0; padding: 0; margin: 40px 0 0; display: grid; gap: 10px; }
+  .choice { display: block; cursor: pointer; }
+  .choice input { position: absolute; opacity: 0; pointer-events: none; }
+  .choice__body {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center;
+    padding: 16px 18px; border-radius: 20px; background: var(--ink-raised);
+    transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out);
+  }
+  .choice__text { display: grid; line-height: 1.3; }
+  .choice__text b { font-size: 22px; }
+  .choice__text span { color: var(--slate-on-ink); font-size: 15px; }
+  .choice__type { font-size: 15px; color: var(--slate-on-ink); }
+  .choice__mark { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-weight: 800; font-size: 18px; }
+  .choice__mark--cobalt { background: var(--cobalt); color: var(--white); }
+  .choice__mark--ink { background: var(--paper); color: var(--ink); }
+  .choice__mark--pale { background: var(--pale-strong); color: var(--cobalt-strong); }
+  .choice input:checked + .choice__body { background: var(--white); color: var(--ink); }
+  .choice input:checked + .choice__body .choice__text span,
+  .choice input:checked + .choice__body .choice__type { color: var(--slate); }
+  .choice input:checked + .choice__body .choice__mark--ink { background: var(--ink); color: var(--white); }
+  .choice input:focus-visible + .choice__body { outline: 3px solid var(--cobalt); outline-offset: 3px; }
+  .choice:active .choice__body { transform: scale(0.985); }
+  @media (hover: hover) and (pointer: fine) {
+    .choice:hover input:not(:checked) + .choice__body { background: #252C42; }
+  }
+  .demo__actions { margin-top: 28px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+  .demo__reset {
+    background: none; border: 0; color: var(--white); font-weight: 700; cursor: pointer; padding: 10px 4px;
+    text-decoration: underline; text-underline-offset: 0.28em; text-decoration-thickness: 2px; text-decoration-color: rgba(255,255,255,0.35);
+  }
+  @media (hover: hover) and (pointer: fine) { .demo__reset:hover { text-decoration-color: currentColor; } }
+
+  .demo__output { background: var(--pale); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 28px; padding: 120px clamp(24px, 5vw, 80px); }
+  .demo__title--out { align-self: stretch; max-width: 520px; margin-inline: auto; width: 100%; }
+
+  .demo-card {
+    width: min(100%, 520px); background: var(--white); border-radius: var(--radius); padding: 32px;
+    --tone: var(--cobalt);
+  }
+  .demo-card[data-tone='ink'] { --tone: var(--ink); }
+  .demo-card[data-tone='pale'] { --tone: var(--cobalt-strong); }
+  .demo-card__top { display: flex; gap: 14px; align-items: center; }
+  .demo-card__avatar { width: 54px; height: 54px; border-radius: 16px; background: var(--tone); color: var(--white); display: grid; place-items: center; font-weight: 800; font-size: 22px; transition: background-color 400ms ease; }
+  .demo-card__names { display: grid; line-height: 1.3; }
+  .demo-card__names b { font-size: 22px; }
+  .demo-card__names span { color: var(--slate); font-size: 15px; }
+  .demo-card__count { margin-top: 28px; font-size: 18px; color: var(--slate); }
+  .demo-card__count b { font-size: 72px; line-height: 1; font-weight: 800; letter-spacing: -0.04em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .demo-card__progress { margin-top: 20px; }
+  .demo-stamps { max-width: 400px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .demo-stamps li { aspect-ratio: 1; border-radius: 50%; background: var(--pale); transition: background-color 300ms ease, transform 500ms var(--ease-out); }
+  .demo-stamps li.is-on { background: var(--tone); }
+  .demo-stamps li.is-new { animation: stamp 520ms var(--ease-out); }
+  .demo-meter { height: 18px; border-radius: 999px; background: var(--pale); overflow: hidden; }
+  .demo-meter span { display: block; height: 100%; border-radius: inherit; background: var(--tone); transform-origin: right; transform: scaleX(var(--fill, 0)); transition: transform 700ms var(--ease-out); }
+  .demo-card__next { margin-top: 20px; font-weight: 700; font-size: 18px; }
+  .demo-card__rules { margin-top: 20px; background: var(--paper); border-radius: 18px; padding: 14px 18px; display: grid; gap: 6px; }
+  .demo-card__rules div { display: flex; justify-content: space-between; gap: 16px; font-size: 15px; }
+  .demo-card__rules dt { color: var(--slate); }
+  .demo-card__rules dd { margin: 0; font-weight: 600; text-align: left; }
+  .demo-card__state { margin-top: 16px; background: var(--tone); color: var(--white); border-radius: 16px; padding: 14px 18px; font-weight: 700; }
+  .demo__note { color: var(--slate); width: min(100%, 520px); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes stamp { from { transform: scale(0.55); opacity: 0.4; } }
+    .demo-card.is-switching { animation: swap 420ms var(--ease-out); }
+    @keyframes swap { from { opacity: 0.4; transform: translateY(8px); } }
+  }
+
+  @media (max-width: 900px) {
+    .demo { grid-template-columns: 1fr; min-height: 0; }
+    .demo__input-inner { padding: 80px 20px 56px; }
+
+    .demo__output { padding: 56px 16px 80px; align-items: stretch; }
+    .demo-card { padding: 24px 20px; width: 100%; }
+    .demo-card__count b { font-size: 60px; }
+    .choice__type { display: none; }
+  }
+</style>

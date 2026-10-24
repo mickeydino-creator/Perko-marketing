@@ -1,0 +1,15 @@
+---
+// A phone body for the illustrative app screens. Everything inside scales with the phone's width.
+interface Props { class?: string; label?: string; [key: string]: unknown }
+const { class: cls = '', label, ...rest } = Astro.props;
+---
+<div class:list={['phone', cls]} data-ui role={label ? 'img' : undefined} aria-label={label} {...rest}>
+  <div class="phone__screen" aria-hidden={label ? 'true' : undefined}>
+    <div class="phone__status" aria-hidden="true">
+      <span>9:41</span>
+      <span class="phone__island"></span>
+      <span class="phone__icons"><i></i><i></i><i></i></span>
+    </div>
+    <slot />
+  </div>
+</div>

@@ -1,0 +1,107 @@
+---
+import Wordmark from './Wordmark.astro';
+const links = [
+  { href: '#how', label: 'איך זה עובד' },
+  { href: '#business', label: 'לעסקים' },
+  { href: '#faq', label: 'שאלות נפוצות' },
+];
+---
+<header class="site-header" data-header>
+  <div class="site-header__bar">
+    <a class="site-header__brand" href="#top" aria-label="Perko, לראש העמוד">
+      <Wordmark label={false} />
+    </a>
+    <nav class="site-header__nav" aria-label="ניווט ראשי">
+      <ul>
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="site-header__actions">
+      <a class="btn btn--small" href="#join">הצטרפו בחינם</a>
+      <button class="site-header__toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+        <span class="visually-hidden" data-menu-label>פתיחת תפריט</span>
+        <span class="burger" aria-hidden="true"><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobile-menu" data-menu hidden>
+    <nav aria-label="ניווט במובייל">
+      <ul>
+        {links.map((l) => <li><a href={l.href} data-menu-link>{l.label}</a></li>)}
+        <li><a href="#demo" data-menu-link>נסו את ההדמיה</a></li>
+      </ul>
+    </nav>
+    <a class="btn mobile-menu__cta" href="#join" data-menu-link>הצטרפו בחינם</a>
+    <p class="small mobile-menu__note">גישה מוקדמת לעסקים. ההצטרפות בשלב הזה חינם ובלי התחייבות לתשלום.</p>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--paper);
+    transition: background-color var(--t-ui) ease;
+  }
+  .site-header__bar {
+    width: min(100% - 2 * var(--m), var(--max)); margin-inline: auto;
+    height: 68px; display: flex; align-items: center; gap: 40px;
+  }
+  .site-header__brand { text-decoration: none; display: inline-flex; padding: 6px 0; border-radius: 8px; }
+  .site-header__nav ul { display: flex; gap: 32px; }
+  .site-header__nav a {
+    text-decoration: none; font-size: 15px; font-weight: 500; color: var(--ink);
+    padding: 6px 0; position: relative;
+  }
+  .site-header__nav a::after {
+    content: ''; position: absolute; inset-inline: 0; bottom: 0; height: 2px; border-radius: 2px;
+    background: currentColor; transform: scaleX(0); transform-origin: right;
+    transition: transform 300ms var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .site-header__nav a:hover::after { transform: scaleX(1); }
+  }
+  .site-header__actions { margin-inline-start: auto; display: flex; align-items: center; gap: 8px; }
+  .site-header__toggle {
+    display: none; width: 46px; height: 46px; border-radius: 999px; border: 0; cursor: pointer;
+    background: var(--pale); align-items: center; justify-content: center;
+    transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease;
+  }
+  .site-header__toggle:active { transform: scale(0.95); }
+  .burger { position: relative; width: 18px; height: 12px; display: block; }
+  .burger span {
+    position: absolute; inset-inline: 0; height: 2.5px; border-radius: 2px; background: var(--ink);
+    transition: transform var(--t-ui) var(--ease-out), top var(--t-ui) var(--ease-out);
+  }
+  .burger span:first-child { top: 0; }
+  .burger span:last-child { top: 9.5px; }
+  [aria-expanded='true'] .burger span:first-child { top: 5px; transform: rotate(45deg); }
+  [aria-expanded='true'] .burger span:last-child { top: 5px; transform: rotate(-45deg); }
+
+  .mobile-menu {
+    position: absolute; inset-inline: 0; top: 68px;
+    background: var(--paper); padding: 12px var(--m) 28px;
+    height: calc(100svh - 68px); overflow-y: auto;
+    display: flex; flex-direction: column;
+  }
+  .mobile-menu[hidden] { display: none; }
+  .mobile-menu ul { display: grid; gap: 4px; }
+  .mobile-menu a[data-menu-link]:not(.btn) {
+    display: block; padding: 14px 0; font-size: 34px; font-weight: 800; letter-spacing: -0.03em;
+    text-decoration: none; line-height: 1.1;
+  }
+  .mobile-menu__cta { margin-top: 28px; width: 100%; min-height: 58px; font-size: 18px; }
+  .mobile-menu__note { margin-top: 14px; color: var(--slate); }
+  @media (prefers-reduced-motion: no-preference) {
+    .mobile-menu.is-open { animation: menu-in 260ms var(--ease-out); }
+    @keyframes menu-in { from { opacity: 0; transform: translateY(-8px); } }
+  }
+
+  @media (max-width: 860px) {
+    .site-header__nav { display: none; }
+    .site-header__toggle { display: inline-flex; }
+    .site-header__bar { height: 68px; }
+  }
+  @media (max-width: 420px) {
+    .site-header__actions .btn { padding: 0 14px; font-size: 15px; }
+  }
+</style>

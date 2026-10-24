@@ -1,0 +1,146 @@
+---
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+const facts = [
+  { t: 'ההצטרפות חינם', d: 'בשלב הגישה המוקדמת עסקים מצטרפים בלי עלות.' },
+  { t: 'אין התחייבות לתשלום', d: 'משאירים פרטים ומביעים עניין. שום דבר לא מחייב אתכם.' },
+  { t: 'יש לכם מה להגיד?', d: 'נשמח לשמוע איך עובד היום מועדון הלקוחות שלכם ומה הייתם רוצים שיהיה אחרת.' },
+  { t: 'עוזרים לבנות את המוצר', d: 'ההשתתפות של העסקים הראשונים עוזרת לנו לבדוק את Perko ולשפר אותה לפני שהיא נפתחת לכולם.' },
+];
+---
+<section class="join" id="join" aria-labelledby="join-title">
+  <div class="wrap join__grid">
+    <div class="join__copy">
+      <h2 id="join-title" class="head join__title" data-reveal>
+        <span class="line">בואו לבנות איתנו דרך</span>
+        <span class="line">חדשה לצבור הטבות.</span>
+      </h2>
+      <p class="lead join__lead" data-reveal style="--i:1">אנחנו בשלבים הראשונים של Perko ומחפשים עסקים שרוצים לקחת חלק בבניית חוויית נאמנות פשוטה ונוחה יותר.</p>
+      <dl class="join__facts">
+        {facts.map((f, i) => (
+          <div data-reveal style={`--i:${i}`}>
+            <dt>{f.t}</dt>
+            <dd>{f.d}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="join__fine small">ההצטרפות חינם בשלב הגישה המוקדמת. איננו מתחייבים שהשירות יישאר חינמי לתמיד, ואם תנאי השימוש ישתנו, תשמעו על כך מאיתנו מראש.</p>
+    </div>
+
+    <div class="join__form-wrap" data-reveal style="--i:1">
+      <form class="form" novalidate data-join-form data-endpoint={endpoint}>
+        <div class="form__intro">
+          <h3 class="form__title">הבעת עניין להצטרפות</h3>
+          <p class="small">חמישה שדות, פחות מדקה. אנחנו חוזרים לכל עסק שפונה.</p>
+        </div>
+
+        <div class="field">
+          <label for="f-business">שם העסק</label>
+          <input id="f-business" name="business" type="text" autocomplete="organization" required maxlength="80" aria-describedby="e-business" />
+          <p class="field__error" id="e-business" data-error-for="business"></p>
+        </div>
+
+        <div class="field">
+          <label for="f-type">סוג העסק</label>
+          <div class="select">
+            <select id="f-type" name="type" required aria-describedby="e-type">
+              <option value="">בחרו מהרשימה</option>
+              <option>בית קפה</option>
+              <option>מסעדה</option>
+              <option>מאפייה או קונדיטוריה</option>
+              <option>חנות מקומית</option>
+              <option>שירותים (מספרה, כושר, קוסמטיקה)</option>
+              <option>אחר</option>
+            </select>
+          </div>
+          <p class="field__error" id="e-type" data-error-for="type"></p>
+        </div>
+
+        <div class="field">
+          <label for="f-name">שם איש הקשר</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="60" aria-describedby="e-name" />
+          <p class="field__error" id="e-name" data-error-for="name"></p>
+        </div>
+
+        <div class="field">
+          <label for="f-contact">אימייל או טלפון</label>
+          <input id="f-contact" name="contact" type="text" inputmode="email" autocomplete="email" required maxlength="80" dir="ltr" placeholder="name@business.co.il" aria-describedby="h-contact e-contact" />
+          <p class="field__hint small" id="h-contact">איך הכי נוח שנחזור אליכם</p>
+          <p class="field__error" id="e-contact" data-error-for="contact"></p>
+        </div>
+
+        <div class="field">
+          <label for="f-message">הודעה <span class="field__opt">(לא חובה)</span></label>
+          <textarea id="f-message" name="message" rows="3" maxlength="600"></textarea>
+        </div>
+
+        <button class="btn form__submit" type="submit" data-submit>
+          <span class="form__label">אני רוצה להצטרף בחינם</span>
+          <span class="form__spinner" aria-hidden="true"></span>
+        </button>
+        <p class="form__privacy small">נשתמש בפרטים רק כדי לחזור אליכם בנוגע להצטרפות ל-Perko.</p>
+
+        <div class="form__status" role="status" aria-live="polite" tabindex="-1" data-form-status></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .join { background: var(--pale); padding-block: var(--gap-section); margin-top: var(--gap-section); }
+  .join__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 112px); align-items: start; }
+
+  .join__lead { margin-top: 28px; max-width: 38ch; }
+  .join__facts { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px 40px; }
+  .join__facts dt { font-size: 22px; font-weight: 800; display: flex; gap: 10px; align-items: center; }
+  .join__facts dt::before { content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--cobalt); flex: none; }
+  .join__facts dd { margin: 6px 0 0; color: var(--slate); padding-inline-start: 22px; }
+  .join__fine { margin-top: 40px; color: var(--slate); max-width: 52ch; }
+
+  .join__form-wrap { position: sticky; top: 92px; }
+  .form { background: var(--white); border-radius: var(--radius); padding: clamp(24px, 3.2vw, 44px); display: grid; gap: 20px; }
+  .form__title { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+  .form__intro p { color: var(--slate); margin-top: 4px; }
+  .field { display: grid; gap: 8px; }
+  .field label { font-weight: 700; font-size: 15px; }
+  .field__opt { font-weight: 400; color: var(--slate); }
+  .field input, .field select, .field textarea {
+    width: 100%; min-height: 54px; padding: 12px 16px; border-radius: 14px; border: 2px solid transparent;
+    background: var(--paper); font-size: 18px; transition: border-color var(--t-hover) ease, background-color var(--t-hover) ease;
+  }
+  .field textarea { resize: vertical; min-height: 96px; }
+  .field input[dir='ltr'] { text-align: right; }
+  .field input[dir='ltr']:not(:placeholder-shown) { text-align: left; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--cobalt); background: var(--white); }
+  .field [aria-invalid='true'] { border-color: #C4321F; background: #FFF6F4; }
+  .select { position: relative; }
+  .select select { appearance: none; padding-inline-start: 16px; padding-inline-end: 44px; cursor: pointer; }
+  .select::after {
+    content: ''; position: absolute; left: 18px; top: 50%; width: 9px; height: 9px; pointer-events: none;
+    border: solid var(--ink); border-width: 0 2.5px 2.5px 0; transform: translateY(-70%) rotate(45deg);
+  }
+  .field__hint { color: var(--slate); }
+  .field__error { color: #B42B18; font-size: 15px; font-weight: 600; }
+  .field__error:empty { display: none; }
+  .form__submit { width: 100%; min-height: 60px; font-size: 18px; margin-top: 4px; position: relative; }
+  .form__spinner { display: none; width: 20px; height: 20px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.35); border-top-color: var(--white); }
+  .form.is-loading .form__spinner { display: block; animation: spin 800ms linear infinite; }
+  .form.is-loading .form__submit { pointer-events: none; opacity: 0.9; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .form__privacy { color: var(--slate); }
+  .form__status:empty { display: none; }
+  .form__status { border-radius: 18px; padding: 20px; outline: none; }
+  .form__status.is-success { background: var(--cobalt); color: var(--white); }
+  .form__status.is-info { background: var(--pale); color: var(--ink); }
+  .form__status.is-error { background: #FFF1EE; color: #8A2414; }
+  .form__status b { display: block; font-size: 18px; margin-bottom: 4px; }
+
+  @media (max-width: 960px) {
+    .join__grid { grid-template-columns: 1fr; }
+    .join__lead, .join__title { max-width: none; }
+    .join__form-wrap { position: static; }
+  }
+  @media (max-width: 560px) {
+    .join__facts { grid-template-columns: 1fr; gap: 22px; }
+    .form { padding: 24px 18px; margin-inline: -4px; }
+  }
+</style>

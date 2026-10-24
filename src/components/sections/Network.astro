@@ -1,0 +1,145 @@
+---
+// The long-term vision: a shared network of neighbourhood businesses, drawn as a street map.
+const blocks: [number, number, number, number][] = [];
+const cols = [0, 150, 300, 470, 620];
+const rows = [0, 130, 270, 400, 540];
+const widths = [126, 126, 146, 126, 160];
+const heights = [106, 116, 106, 116, 140];
+cols.forEach((x, ci) => rows.forEach((y, ri) => {
+  if (ci === 2 && ri === 2) return; // the square
+  blocks.push([x + 12, y + 12, widths[ci], heights[ri]]);
+}));
+const others = [[90, 250], [372, 120], [560, 470], [700, 220], [220, 520], [470, 640], [60, 640], [740, 600]];
+const steps = [
+  { title: 'בוקר בבית הקפה הקבוע', note: 'החותמת השביעית נכנסת לכרטיס.' },
+  { title: 'מגלים מאפייה ברחוב הסמוך', note: 'Perko מראה עסק משתתף שלא הכרתם.' },
+  { title: 'צוברים בשניהם, באותו ארנק', note: 'שני כרטיסים, אפליקציה אחת.' },
+];
+---
+<section class="network" id="network" aria-labelledby="network-title" data-network data-step="1">
+  <div class="network__stage">
+    <div class="network__text">
+      <h2 id="network-title" class="head network__title">
+        <span class="line">עסק אחד מוביל</span>
+        <span class="line">לעסק הבא.</span>
+      </h2>
+      <p class="network__lead">Perko לא נועדה להיות עוד כלי שהופך כרטיס ניקוב אחד לדיגיטלי. החזון הוא רשת שכונתית: עסקים מקומיים שמשתתפים בחוויה משותפת אחת, ולקוחות שמגלים דרכה מקומות חדשים.</p>
+      <ol class="network__index">
+        {steps.map((s, i) => (
+          <li data-index={i + 1}>
+            <span class="network__dot" aria-hidden="true"></span>
+            <span><b>{s.title}</b><span>{s.note}</span></span>
+          </li>
+        ))}
+      </ol>
+      <p class="network__honest small">זה החזון, לא המצב היום. הערך של הרשת תלוי בעסקים שיצטרפו אליה, ואנחנו בונים אותה עסק אחרי עסק. הרשת שימושית יותר ככל שיותר עסקים משתתפים בה.</p>
+    </div>
+
+    <figure class="network__map">
+      <div class="map" data-ui role="img" aria-label="המחשה של מפת שכונה: מסלול מבית קפה משתתף אל מאפייה משתתפת ברחוב הסמוך, ושני הכרטיסים באותו ארנק">
+        <div class="map__canvas">
+        <svg viewBox="0 0 800 700" aria-hidden="true">
+          <rect width="800" height="700" fill="#DCE2FF" />
+          {blocks.map(([x, y, w, h]) => <rect x={x} y={y} width={w} height={h} rx="14" fill="#F8F9FC" />)}
+          <rect x="312" y="282" width="146" height="106" rx="14" fill="#C9D3FF" />
+          <path d="M-20 470 L820 300" stroke="#F8F9FC" stroke-width="30" />
+          <path d="M-20 470 L820 300" stroke="#DCE2FF" stroke-width="18" />
+          {others.map(([x, y]) => <circle cx={x} cy={y} r="9" fill="#F8F9FC" stroke="#111522" stroke-opacity="0.35" stroke-width="3" />)}
+          <path class="map__route map__route--a" d="M120 600 L120 400 L280 400 L280 255" fill="none" stroke="#435BFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pathLength="1" />
+          <path class="map__route map__route--b" d="M280 255 L440 255 L440 128 L585 128" fill="none" stroke="#435BFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pathLength="1" />
+          <circle cx="120" cy="600" r="11" fill="#111522" />
+          <g class="map__pin map__pin--a"><circle cx="280" cy="255" r="22" fill="#435BFF" /><circle cx="280" cy="255" r="8" fill="#FFFFFF" /></g>
+          <g class="map__pin map__pin--b"><circle cx="585" cy="128" r="22" fill="#435BFF" /><circle cx="585" cy="128" r="8" fill="#FFFFFF" /></g>
+        </svg>
+        <span class="map__label map__label--home">מתחילים כאן</span>
+        <span class="map__label map__label--a"><b>קפה פינה</b>7 מתוך 10</span>
+        <span class="map__label map__label--b"><b>מאפיית הגפן</b>עסק משתתף · 350 מ׳</span>
+        </div>
+        <div class="map__wallet">
+          <p>הארנק שלי</p>
+          <div><span class="map__w-dot"></span><b>קפה פינה</b><span>7/10</span></div>
+          <div><span class="map__w-dot"></span><b>מאפיית הגפן</b><span>1/8</span></div>
+        </div>
+      </div>
+      <figcaption class="small">מפה להמחשה. השמות והמקומות לדוגמה. הנקודות האפורות הן עסקים שעוד לא משתתפים.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .network { height: 300svh; margin-top: var(--gap-section); }
+  .network__stage {
+    position: sticky; top: 68px; height: calc(100svh - 68px); min-height: 640px;
+    display: grid; grid-template-columns: 38fr 62fr; gap: clamp(32px, 4vw, 72px); align-items: stretch;
+    padding-inline-start: max(var(--m), calc((100% - var(--max)) / 2));
+    padding-block: 12px;
+  }
+  .network__text { display: flex; flex-direction: column; padding-block: 3vh 2vh; }
+
+  .network__lead { margin-top: 20px; max-width: 42ch; }
+  .network__index { margin-top: auto; padding-top: 28px; display: grid; gap: 6px; }
+  .network__index li { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; padding: 10px 0; color: var(--slate); transition: color 300ms ease; }
+  .network__index li > span:last-child { display: grid; line-height: 1.35; }
+  .network__index b { font-size: 22px; font-weight: 700; transition: color 300ms ease; }
+  .network__index span span { font-size: 15px; }
+  .network__dot { width: 14px; height: 14px; border-radius: 50%; margin-top: 7px; background: var(--pale-strong); transition: background-color 300ms ease, transform 400ms var(--ease-out); }
+  [data-step='1'] [data-index='1'], [data-step='2'] [data-index='2'], [data-step='3'] [data-index='3'] { color: var(--ink); }
+  [data-step='1'] [data-index='1'] .network__dot, [data-step='2'] [data-index='2'] .network__dot, [data-step='3'] [data-index='3'] .network__dot { background: var(--cobalt); transform: scale(1.25); }
+  .network__honest { margin-top: 20px; color: var(--slate); max-width: 48ch; }
+
+  .network__map { display: grid; grid-template-rows: 1fr auto; gap: 10px; min-height: 0; }
+  .network__map figcaption { color: var(--slate); padding-inline: 4px; }
+  .map { position: relative; border-radius: var(--radius) 0 0 var(--radius); overflow: hidden; min-height: 0; background: #DCE2FF; }
+  .map { container-type: size; }
+  .map__canvas { position: absolute; left: 50%; top: 50%; width: max(100cqw, calc(100cqh * 800 / 700)); aspect-ratio: 800 / 700; transform: translate(-50%, -50%); }
+  .map svg { width: 100%; height: 100%; }
+  .map__route { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1200ms var(--ease-in-out); }
+  [data-step='1'] .map__route--a, [data-step='2'] .map__route--a, [data-step='3'] .map__route--a { stroke-dashoffset: 0; }
+  [data-step='2'] .map__route--b, [data-step='3'] .map__route--b { stroke-dashoffset: 0; }
+  .map__pin { transform-box: fill-box; transform-origin: center; transition: transform 500ms var(--ease-out), opacity 400ms ease; }
+  .map__pin--b { opacity: 0; transform: scale(0.6); }
+  [data-step='2'] .map__pin--b, [data-step='3'] .map__pin--b { opacity: 1; transform: none; }
+
+  .map__label {
+    position: absolute; background: var(--white); border-radius: 14px; padding: 8px 12px; font-size: 15px; line-height: 1.3;
+    display: grid; transition: opacity 400ms ease, transform 500ms var(--ease-out); white-space: nowrap;
+  }
+  .map__label b { font-size: 15px; }
+  .map__label--home { left: 17.5%; top: 85.7%; transform: translate(0, -50%); background: var(--ink); color: var(--white); font-weight: 600; }
+  .map__label--a { left: 38.6%; top: 36.4%; transform: translateY(-50%); }
+  .map__label--b { left: 76.6%; top: 18.3%; transform: translate(0, -50%); opacity: 0; }
+  [data-step='2'] .map__label--b, [data-step='3'] .map__label--b { opacity: 1; }
+  .map__wallet {
+    position: absolute; right: 6%; bottom: 7%; width: min(300px, 46%); background: var(--white); border-radius: 22px; padding: 16px 18px;
+    display: grid; gap: 8px; font-size: 15px; box-shadow: 0 24px 48px -24px rgba(9, 14, 50, 0.4); /* taste-skill-ignore: floating app overlay */
+    opacity: 0; transform: translateY(16px); transition: opacity 500ms ease, transform 700ms var(--ease-out);
+  }
+  .map__wallet p { color: var(--slate); font-size: 15px; }
+  .map__wallet div { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; background: var(--paper); border-radius: 12px; padding: 10px 12px; }
+  .map__wallet div span:last-child { color: var(--slate); font-variant-numeric: tabular-nums; }
+  .map__w-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--cobalt); }
+  [data-step='3'] .map__wallet { opacity: 1; transform: none; }
+
+  :global(html:not(.js)) .network { height: auto; }
+  :global(html:not(.js)) .network__stage { position: static; height: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    .network { height: auto; }
+    .network__stage { position: static; height: auto; }
+    .map__route, .map__pin, .map__label, .map__wallet { transition: none; }
+  }
+
+  @media (max-width: 960px) {
+    .network { height: auto; }
+    .network__stage { position: static; height: auto; min-height: 0; grid-template-columns: 1fr; padding-inline: var(--m); gap: 32px; }
+    .network__index { margin-top: 0; }
+    .network__index li { color: var(--ink); }
+    .network__index .network__dot { background: var(--cobalt); }
+    .map { aspect-ratio: 4 / 4.4; border-radius: var(--radius); }
+    .map__label { font-size: 15px; padding: 6px 9px; }
+    .map__label b { font-size: 15px; }
+    .map__label--b { left: auto; right: 2%; top: 8%; transform: none; opacity: 1; }
+    .map__pin--b { opacity: 1; transform: none; }
+    .map__route--b { stroke-dashoffset: 0; }
+    .map__wallet { opacity: 1; transform: none; width: 62%; right: 4%; bottom: 4%; padding: 12px; font-size: 15px; }
+  }
+</style>

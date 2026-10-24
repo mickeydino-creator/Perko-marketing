@@ -1,0 +1,145 @@
+---
+const benefits = [
+  { t: 'חוויית נאמנות דיגיטלית ופשוטה', d: 'הלקוחות לא צריכים לשמור כרטיס נייר או להוריד אפליקציה רק בשביל העסק שלכם.' },
+  { t: 'הטבה שמתאימה לעסק', d: 'אתם מחליטים מה הלקוח מקבל ומתי: קפה אחרי עשרה ביקורים, קינוח, הנחה או כל דבר אחר שהמוצר יתמוך בו.' },
+  { t: 'לקוחות שרואים כמה חסר', d: 'כשההתקדמות גלויה בכל רגע, יש עוד סיבה לחזור ולהשלים את הכרטיס.' },
+  { t: 'פחות כרטיסי נייר', d: 'בלי הדפסות, בלי ניקובים שנשכחו ובלי לקוחות שמגיעים בלי הכרטיס.' },
+  { t: 'חשיפה ברשת של עסקים משתתפים', d: 'לקוחות של עסקים אחרים בשכונה יכולים לגלות אתכם דרך Perko, ככל שהרשת תגדל.' },
+  { t: 'השפעה על המוצר מההתחלה', d: 'עסקים שמצטרפים עכשיו עוזרים לנו להחליט מה בונים ואיך זה עובד בקופה.' },
+];
+const photos = [
+  { src: '/img/carmel-market-2019-07.webp', w: 1400, h: 1121, alt: 'דוכני פירות וירקות בשוק הכרמל בתל אביב', cap: 'שוק הכרמל, תל אביב' },
+  { src: '/img/cafe-in-tel-aviv-panoramio.webp', w: 1200, h: 900, alt: 'בית קפה עם שמשיות ירוקות ואופניים על המדרכה בתל אביב', cap: 'בית קפה ברחוב, תל אביב' },
+  { src: '/img/mahane-yehuda-market-5101386538.webp', w: 1400, h: 1046, alt: 'דוכן זיתים ומעדנים בשוק מחנה יהודה בירושלים', cap: 'שוק מחנה יהודה, ירושלים' },
+  { src: '/img/dizengoff-st-cafe-tel-aviv-panoramio.webp', w: 1200, h: 797, alt: 'צנצנות ריבה על שולחן בכניסה לבית קפה ברחוב דיזנגוף', cap: 'רחוב דיזנגוף, תל אביב' },
+];
+---
+<section class="business" id="business" aria-labelledby="business-title">
+  <div class="business__panel on-cobalt">
+    <div class="business__head">
+      <h2 id="business-title" class="head business__title" data-reveal>
+        <span class="line">הלקוחות חוזרים.</span>
+        <span class="line">העסק נשאר בתודעה.</span>
+      </h2>
+      <p class="lead business__lead" data-reveal style="--i:1">תוכנית נאמנות טובה נותנת ללקוחות סיבה לחזור. Perko נועדה להפוך אותה לפשוטה יותר, גם לכם וגם להם. אלה התועלות שאנחנו בונים לקראתן. הן אפשריות, לא מובטחות, וכל עסק יגלה מה עובד אצלו.</p>
+    </div>
+
+    <div class="business__body">
+      <ul class="business__list">
+        {benefits.map((b, i) => (
+          <li data-reveal style={`--i:${i % 2}`}>
+            <h3>{b.t}</h3>
+            <p>{b.d}</p>
+          </li>
+        ))}
+      </ul>
+
+      <figure class="setup" data-reveal style="--i:2">
+        <div class="setup__card" data-ui role="img" aria-label="קונספט של מסך הגדרת תוכנית נאמנות לעסק: שם התוכנית, סוג הצבירה, מספר החותמות וההטבה">
+          <div class="setup__top">
+            <b>הגדרת התוכנית</b>
+            <span class="setup__tag">קונספט, בפיתוח</span>
+          </div>
+          <div class="setup__field"><span>שם התוכנית</span><b>כרטיס קפה</b></div>
+          <div class="setup__field">
+            <span>סוג הצבירה</span>
+            <span class="setup__seg"><b class="is-on">חותמות</b><b>נקודות</b></span>
+          </div>
+          <div class="setup__field"><span>חותמות עד להטבה</span><b class="setup__stepper"><i>-</i>10<i>+</i></b></div>
+          <div class="setup__field"><span>ההטבה</span><b>קפה הפוך עלינו</b></div>
+          <div class="setup__preview">
+            <span>כך הלקוחות יראו את זה</span>
+            <span class="setup__dots">{Array.from({ length: 10 }, (_, i) => <i class:list={{ on: i < 3 }}></i>)}</span>
+          </div>
+        </div>
+        <figcaption class="small">כך אנחנו מדמיינים את הגדרת התוכנית. כלי הניהול לעסקים עדיין בפיתוח, ואת הפרטים נבנה יחד עם העסקים הראשונים.</figcaption>
+      </figure>
+    </div>
+
+    <div class="business__cta">
+      <a class="btn btn--white" href="#join">
+        הצטרפו כעסק, בחינם
+        <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <p class="small">בלי התחייבות לתשלום. משאירים פרטים ואנחנו חוזרים אליכם.</p>
+    </div>
+  </div>
+
+  <div class="business__photos">
+    <p class="business__photos-line">בית הקפה בפינה, הדוכן בשוק, המעדנייה הקבועה. בשביל עסקים כאלה אנחנו בונים את Perko.</p>
+    <div class="business__strip">
+      {photos.map((p, i) => (
+        <figure class="photo" data-reveal style={`--i:${i}`}>
+          <div class="photo__frame"><img src={p.src} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" /></div>
+          <figcaption class="small">{p.cap}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .business { margin-top: var(--gap-section); }
+  .business__panel {
+    margin-inline: 12px; border-radius: var(--radius); background: var(--cobalt); color: var(--white);
+    padding: clamp(56px, 8vw, 128px) max(calc((100% - var(--max)) / 2), clamp(24px, 4.5vw, 72px));
+  }
+  .business__head { display: grid; grid-template-columns: 7fr 5fr; gap: 48px; align-items: end; }
+
+  .business__lead { color: var(--slate-on-cobalt); max-width: 40ch; }
+  .business__body { margin-top: 88px; display: grid; grid-template-columns: 7fr 5fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .business__list { display: grid; grid-template-columns: 1fr 1fr; gap: 44px 48px; }
+  .business__list h3 { font-size: 22px; font-weight: 800; line-height: 1.25; letter-spacing: -0.01em; }
+  .business__list p { margin-top: 8px; color: var(--slate-on-cobalt); }
+
+  .setup { display: grid; gap: 16px; }
+  .setup__card { background: var(--white); color: var(--ink); border-radius: 24px; padding: 24px; font-size: 15px; display: grid; gap: 8px; }
+  .setup__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .setup__top b { font-size: 22px; }
+  .setup__tag { background: var(--pale); color: var(--cobalt-strong); font-weight: 700; font-size: 15px; padding: 4px 12px; border-radius: 999px; }
+  .setup__field { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--paper); border-radius: 14px; padding: 12px 16px; }
+  .setup__field > span:first-child { color: var(--slate); }
+  .setup__seg { display: flex; background: var(--white); border-radius: 999px; padding: 3px; }
+  .setup__seg b { padding: 4px 14px; border-radius: 999px; font-weight: 600; }
+  .setup__seg b.is-on { background: var(--ink); color: var(--white); }
+  .setup__stepper { display: flex; align-items: center; gap: 14px; font-variant-numeric: tabular-nums; }
+  .setup__stepper i { font-style: normal; width: 28px; height: 28px; border-radius: 50%; background: var(--white); display: grid; place-items: center; }
+  .setup__preview { margin-top: 6px; display: grid; gap: 10px; padding: 14px 16px; border-radius: 14px; background: var(--pale); }
+  .setup__preview > span:first-child { font-size: 15px; color: var(--slate); }
+  .setup__dots { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; }
+  .setup__dots i { aspect-ratio: 1; border-radius: 50%; background: var(--white); }
+  .setup__dots i.on { background: var(--cobalt); }
+  .setup figcaption { color: var(--slate-on-cobalt); max-width: 44ch; }
+
+  .business__cta { margin-top: 80px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .business__cta .btn { min-height: 60px; padding: 0 30px; font-size: 18px; }
+  .business__cta p { color: var(--slate-on-cobalt); }
+
+  .business__photos { width: min(100% - 2 * var(--m), var(--max)); margin: 72px auto 0; }
+  .business__photos-line { font-size: var(--t-lead); line-height: 1.4; max-width: 40ch; font-weight: 500; }
+  .business__strip { margin-top: 32px; display: grid; grid-template-columns: 1.35fr 1fr 1.1fr 0.85fr; gap: 12px; align-items: start; }
+  .photo__frame { overflow: hidden; border-radius: var(--radius-sm); background: var(--pale); }
+  .photo img { width: 100%; height: 340px; object-fit: cover; transition: transform 900ms var(--ease-soft); }
+  .photo:nth-child(2) img { height: 420px; }
+  .photo:nth-child(4) img { height: 380px; }
+  .photo figcaption { margin-top: 10px; color: var(--slate); }
+  @media (hover: hover) and (pointer: fine) { .photo:hover img { transform: scale(1.03); } }
+
+  @media (max-width: 1000px) {
+    .business__head, .business__body { grid-template-columns: 1fr; }
+    .business__strip { grid-template-columns: 1fr 1fr; }
+    .photo img, .photo:nth-child(n) img { height: 300px; }
+    .business__body { margin-top: 56px; }
+  }
+  @media (max-width: 640px) {
+    .business__panel { margin-inline: 8px; padding: 56px 20px; }
+    .business__list { grid-template-columns: 1fr; gap: 28px; }
+    .business__list h3 { font-size: 22px; }
+    .business__cta { margin-top: 48px; }
+    .business__cta .btn { width: 100%; }
+    .business__strip { grid-template-columns: 1fr 1fr; }
+    .photo img, .photo:nth-child(n) img { height: 200px; }
+    .photo:nth-child(1) { grid-column: 1 / -1; }
+    .photo:nth-child(1) img { height: 240px; }
+  }
+</style>

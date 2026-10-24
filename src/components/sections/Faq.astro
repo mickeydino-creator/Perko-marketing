@@ -1,0 +1,71 @@
+---
+const items = [
+  { q: 'האם ההצטרפות בחינם?', a: 'כן. בשלב הגישה המוקדמת עסקים מצטרפים ל-Perko בחינם. איננו מתחייבים שזה יישאר כך לתמיד, ואם התנאים ישתנו, נעדכן מראש את העסקים המשתתפים.' },
+  { q: 'האם יש התחייבות לתשלום?', a: 'לא. השארת פרטים בטופס היא הבעת עניין בלבד, ואין בה שום התחייבות כספית.' },
+  { q: 'איך העסק יכול להצטרף?', a: 'ממלאים את טופס הבעת העניין בעמוד הזה. נחזור אליכם כדי להכיר את העסק, להבין איך עובד היום מועדון הלקוחות שלכם ולספר מה אפשר לעשות בשלב הנוכחי.' },
+  { q: 'איך לקוחות צוברים חותמות או נקודות?', a: 'התהליך המתוכנן: אחרי רכישה מזכה, הלקוח סורק קוד QR בקופה, והחותמת או הנקודות נוספות לכרטיס של אותו עסק באפליקציה. את פרטי התהליך אנחנו מגבשים יחד עם העסקים הראשונים.' },
+  { q: 'האם כל עסק יכול להגדיר הטבה משלו?', a: 'זה הרעיון. כל עסק קובע את כללי הצבירה ואת ההטבה שלו, למשל קפה חינם אחרי עשרה ביקורים, בהתאם לאפשרויות שהמוצר יתמוך בהן.' },
+  { q: 'האם צריך אפליקציה נפרדת לכל עסק?', a: 'לא. זו בדיוק הנקודה: כרטיסים של כל העסקים המשתתפים נמצאים באותה אפליקציה, אחד ליד השני.' },
+  { q: 'האם הפלטפורמה כבר פעילה?', a: 'עדיין לא לציבור הרחב. Perko נמצאת בשלב אימות והשקה מוקדמת, ואנחנו עובדים עם עסקים שמביעים עניין כדי לבדוק ולשפר את המוצר. המסכים באתר הם המחשה של המוצר המתוכנן.' },
+  { q: 'איך אפשר להשתתף בתהליך הפיתוח?', a: 'השאירו פרטים בטופס וכתבו בהודעה שתרצו לשתף משוב. נשמח לשוחח, להראות לכם את מה שבנינו ולשמוע מה חשוב לעסק שלכם.' },
+];
+---
+<section class="faq section-gap" id="faq" aria-labelledby="faq-title">
+  <div class="wrap faq__grid">
+    <div class="faq__head">
+      <h2 id="faq-title" class="head" data-reveal>שאלות נפוצות</h2>
+      <p class="faq__aside" data-reveal style="--i:1">לא מצאתם תשובה? כתבו לנו בהודעה <a class="text-link" href="#join">בטופס ההצטרפות</a>, ונחזור אליכם.</p>
+    </div>
+    <div class="acc" data-accordion>
+      {items.map((it, i) => (
+        <div class="acc__item">
+          <h3 class="acc__h">
+            <button class="acc__btn" type="button" id={`faq-q-${i}`} aria-expanded="false" aria-controls={`faq-a-${i}`}>
+              <span>{it.q}</span>
+              <span class="acc__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="acc__panel" id={`faq-a-${i}`} role="region" aria-labelledby={`faq-q-${i}`}>
+            <div><p>{it.a}</p></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__grid { display: grid; grid-template-columns: 4fr 8fr; gap: clamp(40px, 6vw, 112px); align-items: start; }
+  .faq__head { position: sticky; top: 100px; }
+  .faq__aside { margin-top: 20px; color: var(--slate); max-width: 30ch; }
+  .acc { display: grid; gap: 8px; }
+  .acc__item { background: var(--white); border-radius: 20px; transition: background-color var(--t-hover) ease; }
+  .acc__h { font-size: inherit; }
+  .acc__btn {
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; text-align: right;
+    background: none; border: 0; cursor: pointer; padding: 24px 28px; font-size: 22px; font-weight: 700; line-height: 1.35; border-radius: 20px;
+  }
+  .acc__icon { position: relative; width: 36px; height: 36px; border-radius: 50%; background: var(--pale); flex: none; transition: background-color var(--t-hover) ease, transform 320ms var(--ease-out); }
+  .acc__icon::before, .acc__icon::after { content: ''; position: absolute; left: 50%; top: 50%; width: 14px; height: 2.5px; border-radius: 2px; background: var(--ink); transform: translate(-50%, -50%); transition: transform 320ms var(--ease-out), background-color var(--t-hover) ease; }
+  .acc__icon::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .acc__btn[aria-expanded='true'] .acc__icon { background: var(--cobalt); }
+  .acc__btn[aria-expanded='true'] .acc__icon::before, .acc__btn[aria-expanded='true'] .acc__icon::after { background: var(--white); }
+  .acc__btn[aria-expanded='true'] .acc__icon::after { transform: translate(-50%, -50%) rotate(0deg); }
+  @media (hover: hover) and (pointer: fine) {
+    .acc__btn:hover .acc__icon { background: var(--pale-strong); }
+    .acc__btn[aria-expanded='true']:hover .acc__icon { background: var(--cobalt-strong); }
+  }
+  .acc__panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 320ms var(--ease-out); }
+  .acc__panel > div { overflow: hidden; }
+  .acc__panel p { padding: 0 28px 26px; max-width: 62ch; color: var(--slate); font-size: 18px; }
+  .acc__item.is-open .acc__panel { grid-template-rows: 1fr; }
+  :global(html:not(.js)) .acc__panel { grid-template-rows: 1fr; }
+  @media (prefers-reduced-motion: reduce) { .acc__panel { transition: none; } }
+
+  @media (max-width: 860px) {
+    .faq__grid { grid-template-columns: 1fr; }
+    .faq__head { position: static; }
+    .acc__btn { padding: 20px 18px; font-size: 18px; gap: 16px; }
+    .acc__panel p { padding: 0 18px 22px; font-size: 18px; }
+  }
+</style>
