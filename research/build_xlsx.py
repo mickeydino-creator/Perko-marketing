@@ -5,10 +5,9 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.formatting.rule import CellIsRule, FormulaRule
 from openpyxl.utils import get_column_letter
-from openpyxl.worksheet.table import Table, TableStyleInfo
 
 LIME, INK, PAPER, LIME2, MUTED = 'D7FF35', '11130F', 'F8F8F4', 'BCE82D', '303626'
-OUT = 'Perko_Local_Business_Prospects_Jerusalem.xlsx'
+OUT = 'research/Perko_Local_Business_Prospects_Jerusalem.xlsx'
 
 COLS = [
     ('name_he', 'Business Name (Hebrew)', 22),
@@ -181,8 +180,10 @@ for lv in ('High', 'Medium', 'Low'):
 row += 1
 
 band('Contact-information completeness')
-for key, label in (('phone', 'Verified public phone'), ('email', 'Verified public email'), ('website', 'Official website'), ('instagram', 'Instagram profile'), ('other_social', 'Other social profile'), ('contact_person', 'Named contact person')):
+for key, label in (('phone', 'Public phone listed (official site, directory or press)'), ('email', 'Public email published by the business'), ('website', 'Official website'), ('instagram', 'Instagram profile'), ('other_social', 'Other social profile'), ('contact_person', 'Named contact person')):
     line(label, f'=COUNTA({rng(key)})', f'=B{row}/{total}')
+official = sum(1 for r in rows if r.get('phone_on_official_site'))
+line('Phone confirmed on the business\'s own site', official, official / total)
 row += 1
 
 band('Independence status')
