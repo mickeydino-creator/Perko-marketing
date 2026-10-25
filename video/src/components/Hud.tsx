@@ -5,9 +5,14 @@ import { mono } from '../fonts';
 
 // Mirrored HUD for RTL (STYLE_GUIDE §4.6): label top-right, counter top-left, tag bottom-right, timecode bottom-left.
 const scenes = [
-  { ...S.collect, n: 1, tag: 'PRODUCT / COLLECT', tone: 'light' },
-  { ...S.redeem, n: 2, tag: 'PRODUCT / REDEEM', tone: 'dark' },
-  { ...S.network, n: 3, tag: 'VISION / NETWORK', tone: 'light' },
+  { ...S.title, n: 1, tag: 'IDENTITY / TYPE', tone: 'dark' },
+  { ...S.wallet, n: 2, tag: 'PRODUCT / WALLET', tone: 'dark' },
+  { ...S.scan, n: 3, tag: 'PRODUCT / SCAN', tone: 'light' },
+  { ...S.stamp, n: 4, tag: 'DATA / STAMPS', tone: 'light' },
+  { ...S.progress, n: 5, tag: 'UI / PROGRESS', tone: 'dark' },
+  { ...S.back, n: 6, tag: 'KINETIC TYPOGRAPHY', tone: 'light' },
+  { ...S.map, n: 7, tag: 'VISION / MAP', tone: 'light' },
+  { ...S.orbit, n: 8, tag: 'VISION / NETWORK', tone: 'dark' },
 ] as const;
 
 const tc = (f: number) => {
@@ -34,8 +39,8 @@ export const Hud: React.FC = () => {
   if (!sc) return null;
   const color = sc.tone === 'dark' ? 'rgba(255,255,255,0.78)' : 'rgba(17,21,34,0.66)';
   const dot = sc.tone === 'dark' ? C.white : C.cobalt;
-  const m = 80;
-  const text: React.CSSProperties = { fontFamily: mono, fontSize: 17, letterSpacing: '0.18em', color, position: 'absolute', whiteSpace: 'nowrap', direction: 'ltr' };
+  const m = 64;
+  const text: React.CSSProperties = { fontFamily: mono, fontSize: 15, letterSpacing: '0.2em', color, position: 'absolute', whiteSpace: 'nowrap', direction: 'ltr' };
   return (
     <AbsoluteFill style={{ pointerEvents: 'none' }}>
       <div style={{ ...text, top: m - 8, right: m, display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -44,7 +49,7 @@ export const Hud: React.FC = () => {
         <Bracket corner="tr" color={color} />
       </div>
       <div style={{ ...text, top: m - 8, left: m }}>
-        SCENE {String(sc.n).padStart(2, '0')} / 03
+        SCENE {String(sc.n).padStart(2, '0')} / 08
         <Bracket corner="tl" color={color} />
       </div>
       <div style={{ ...text, bottom: m - 8, right: m }}>

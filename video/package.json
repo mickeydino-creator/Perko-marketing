@@ -7,8 +7,9 @@
     "render": "remotion render PerkoPromo out/perko-promo.mp4"
   },
   "dependencies": {
-    "@fontsource/frank-ruhl-libre": "^5.3.0",
+    "@fontsource-variable/noto-serif-hebrew": "^5.3.0",
     "@fontsource/heebo": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.3.0",
     "@fontsource/jetbrains-mono": "^5.3.0",
     "@remotion/cli": "^4.0.538",
     "@remotion/fonts": "^4.0.538",

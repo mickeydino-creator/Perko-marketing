@@ -4,7 +4,7 @@ Date researched: 2026-10-24 · Motion DNA version: STYLE_GUIDE §15 (no entries 
 ## 1. Subject and objective
 - Subject: Perko, a shared digital loyalty platform for local businesses in Israel, in early validation / early access.
 - Objective: get business owners (cafés, restaurants, local shops) to register interest and join for free during early access. Runs on the landing page and social.
-- Format: 16:9, 1920×1080, ~15 s, 30 fps, Hebrew (RTL), user-supplied music track (BPM to be measured), Remotion + React.
+- Format: 16:9, 1920×1080, 20.4 s, 30 fps, Hebrew (RTL), original synthesised score at 150 BPM (music/compose.py), Remotion + React.
 
 ## 2. Verified identity
 - Online search found no external Perko identity, site or press (search 2026-10-24: only unrelated products such as Perka, Perkfull, PerQ). The identity of record is the one published in this repository's landing page. [V] `src/` of mickeydino-creator/Perko-marketing
@@ -20,7 +20,7 @@ Date researched: 2026-10-24 · Motion DNA version: STYLE_GUIDE §15 (no entries 
 
 ## 4. Logo, typography, assets
 - Logo: the Perko wordmark, lowercase "perk" in Heebo 800 + a solid cobalt disc as the "o" (the collected stamp). App icon: cobalt rounded square, white "p" whose bowl is a solid disc. [V] `src/components/Wordmark.astro`, `public/favicon.svg`. Rendered from the same component logic, not redrawn.
-- Fonts: impact = Heebo Black/800 [V] (site font) · accent = Frank Ruhl Libre [S] (STYLE_GUIDE §4.6; the site has no serif) · mono = JetBrains Mono for Latin HUD labels [S] · ui = Heebo [V]. All OFL / Google Fonts.
+- Fonts: impact = Heebo Black/800 [V] (site font) · accent = Noto Serif Hebrew, wght 300, wdth 68% [S] (light, condensed, high-contrast, to match the reference accent; replaced Frank Ruhl Libre on 2026-10-25), Latin fallback Instrument Serif Italic [S] · mono = JetBrains Mono for Latin HUD labels [S] · ui = Heebo [V]. All OFL, bundled from @fontsource.
 - Product UI: the illustrative app screens of the site (home with stamp card, discover, QR collect, redeem) [V] `src/components/screens/`, `src/styles/app.css`. Labelled as illustration, as on the site.
 - Brand graphic elements: the filled stamp dot, 5-column stamp grids, rounded cards (28px radius), the neighbourhood street map with cobalt route [V] `Network.astro`.
 
@@ -33,4 +33,4 @@ Bright, editorial, confident. The stamp dot is the whole film's thread: it is th
 - Adaptations: (1) Hebrew has no uppercase → impact uses Heebo Black at large scale. (2) Signal on the cobalt field → white disc instead of cobalt (signal-on-signal forbidden). (3) The site's no-serif / no-mono rules do not apply to this video medium; the accent and mono voices are added here only.
 
 ## 7. Open items
-- Music track and BPM: waiting for the user's file.
+- Music: the supplied stock track was replaced on 2026-10-25 (user feedback) by an original score composed for this edit.

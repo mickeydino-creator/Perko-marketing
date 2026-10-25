@@ -2,21 +2,26 @@
 import { Easing } from 'remotion';
 
 export const FPS = 30;
-export const BPM = 100; // measured from the supplied track (autocorrelation, kicks every 0.6 s)
-export const BEAT = Math.round((60 / BPM) * FPS); // 18 f
-export const BAR = BEAT * 4; // 72 f
+export const BPM = 150; // Motion DNA clock; the score (music/compose.py) is written at this tempo
+export const BEAT = Math.round((60 / BPM) * FPS); // 12 f = 0.4 s
+export const BAR = BEAT * 4; // 48 f = 1.6 s
 export const W = 1920;
 export const H = 1080;
-export const DURATION = 576; // 19.2 s = 8 bars
+export const DURATION = 612; // 20.4 s
 
-// Scene boundaries in frames. Each start is on a beat; VO lines start on these downbeats.
+// One scene = one bar. VO lines start on beats: f48, f108, f192, f288, f384, f491 (see README).
 export const S = {
-  boot: { from: 0, to: 72 }, // VO 1 at 0.6 s
-  title: { from: 72, to: 144 }, // VO 2 at 2.4 s; music drop lands on 144
-  collect: { from: 144, to: 252 }, // VO 3 at 4.8 s
-  redeem: { from: 252, to: 342 }, // VO 4 at 8.4 s
-  network: { from: 342, to: 450 }, // VO 5 at 11.4 s
-  end: { from: 450, to: DURATION }, // VO 6 at 15.0 s ("Perko."), 15.76 s rest of the line
+  boot: { from: 0, to: 48 },
+  problem: { from: 48, to: 96 }, // kinetic type, VO 1
+  title: { from: 96, to: 144 }, // VO 2; the music drop lands on f144
+  wallet: { from: 144, to: 192 },
+  scan: { from: 192, to: 240 }, // VO 3
+  stamp: { from: 240, to: 288 },
+  progress: { from: 288, to: 336 }, // VO 4
+  back: { from: 336, to: 384 }, // kinetic type
+  map: { from: 384, to: 432 }, // VO 5
+  orbit: { from: 432, to: 480 },
+  end: { from: 480, to: DURATION }, // VO 6; the groove stops on f480
 };
 
 export const C = {

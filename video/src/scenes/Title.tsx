@@ -1,79 +1,57 @@
 import React from 'react';
 import { AbsoluteFill, useCurrentFrame } from 'remotion';
-import { C, BEAT } from '../tokens';
-import { accent, impact, mono } from '../fonts';
+import { C } from '../tokens';
+import { impact, mono } from '../fonts';
 import { accel, lin, snap } from '../motion';
 import { Blur } from '../components/Blur';
-import { Letters } from '../components/Letters';
-import { Wordmark } from '../components/Wordmark';
+import { WriteOn, accentStyle } from '../components/Kinetic';
 
-// Bar 2 (72-144, cobalt field). VO 2 at f72: "Perko מכניסה את כולם למקום אחד."
-// Beat 1: the wordmark. Beat 3 (f108): whip to "מקום אחד." whose period is the white signal dot.
-// Exit (punctuation -> mask): the period grows to fill the frame and becomes the paper field on the drop (f144).
+// Bar 3 (f96-144, cobalt). The reference title, rebuilt with Perko's own wordmark:
+// mono overline above-left, the hero "perk" revealed letter by letter, the disc arrives as the period,
+// the accent sits under the hero, right-aligned to it. A 3% push over the bar.
+// Exit (punctuation -> ink mask): the disc grows with a soft edge and covers the frame on the drop (f144).
+const SIZE = 460;
+const LETTERS = ['p', 'e', 'r', 'k'];
+
 export const Title: React.FC = () => {
-  const g = useCurrentFrame(); // local frame, 0 = f72
-  const swap = BEAT * 2; // f108
-
-  // wordmark: snap up from blur, exits with a whip upward at the swap
-  const wmY = (x: number) => (x < swap - 3 ? snap(x, 0, 120, 0, 9) : accel(x, swap - 3, 0, -420, 4));
-  const wmV = Math.abs(wmY(g) - wmY(g - 1));
-
-  // headline whips in from the left (reading start for the next line) with a chromatic split
-  const hX = (x: number) => snap(x, swap, -360, 0, 5);
-  const hV = Math.abs(hX(g) - hX(g - 1));
-  const split = Math.max(0, 1 - (g - swap) / 4) * (g >= swap ? 1 : 0);
-
-  const grow = accel(g, 60, 1, 150, 12);
-  const toPaper = lin(g, 66, 0, 1, 6);
-
-  const headStyle: React.CSSProperties = { fontFamily: impact, fontWeight: 900, fontSize: 230, letterSpacing: '-0.035em', color: C.ink, lineHeight: 1 };
+  const g = useCurrentFrame();
+  const push = 1 + lin(g, 0, 0, 0.03, 48);
+  const disc = snap(g, 9, 0, 1, 6);
+  const mask = accel(g, 34, 0, 1, 14);
+  const r = 0.25 * SIZE + mask * 2600;
 
   return (
-    <AbsoluteFill style={{ background: `radial-gradient(ellipse at 78% 20%, #5A70FF 0%, ${C.cobalt} 45%, #3349F0 100%)` }}>
-      {/* overline */}
-      <div style={{ position: 'absolute', top: 300, right: 330, fontFamily: mono, fontSize: 20, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.8)', direction: 'ltr', display: 'flex', alignItems: 'center', gap: 18, opacity: lin(g, 4, 0, 1, 4) }}>
-        <span>2026</span>
-        <span style={{ width: lin(g, 4, 0, 260, 10), height: 1.5, background: 'rgba(255,255,255,0.6)' }} />
-        <span>PERKO</span>
-      </div>
-
-      {/* beat 1: the wordmark, white with a white disc on the brand field */}
-      {g < swap + 2 && (
-        <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Blur y={wmV}>
-            <div style={{ transform: `translateY(${wmY(g)}px) scale(${1 + g * 0.0012})`, opacity: g < 1 ? 0 : 1 }}>
-              <Wordmark size={300} color={C.white} disc={C.white} />
-            </div>
-          </Blur>
-        </AbsoluteFill>
-      )}
-
-      {/* beat 3: "מקום אחד." */}
-      {g >= swap && (
-        <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ position: 'relative', transform: `translateX(${hX(g)}px) scale(${1 + (g - swap) * 0.0015})` }}>
-            {split > 0 && (
-              <>
-                <div style={{ ...headStyle, position: 'absolute', inset: 0, color: '#FF3B6B', opacity: 0.55, transform: `translateX(${-34 * split}px)`, direction: 'rtl' }}>מקום אחד</div>
-                <div style={{ ...headStyle, position: 'absolute', inset: 0, color: '#3FD2FF', opacity: 0.55, transform: `translateX(${34 * split}px)`, direction: 'rtl' }}>מקום אחד</div>
-              </>
-            )}
-            <Blur x={hV}>
-              <div style={{ display: 'flex', direction: 'rtl', alignItems: 'baseline' }}>
-                <div style={headStyle}>מקום אחד</div>
-                <div style={{ width: 54, height: 54, borderRadius: 99, background: C.white, marginRight: 14, transform: `scale(${grow})`, position: 'relative', zIndex: 5 }} />
-              </div>
-            </Blur>
-            {/* accent, offset to the end side and slightly into the baseline zone */}
-            <div style={{ position: 'absolute', left: 40, top: 238, fontFamily: accent, fontSize: 84, color: C.white, direction: 'rtl', whiteSpace: 'nowrap' }}>
-              <Letters text="את כל הכרטיסים." f={g} at={swap + 6} stagger={1} dur={10} style={{ fontFamily: accent, fontSize: 84, color: C.white }} />
-            </div>
+    <AbsoluteFill style={{ background: `radial-gradient(ellipse at 22% 30%, #6075FF 0%, ${C.cobalt} 42%, #2E45EE 100%)` }}>
+      <AbsoluteFill style={{ transform: `scale(${push})` }}>
+        <div style={{ position: 'absolute', left: 300, top: 300, direction: 'ltr' }}>
+          {/* overline */}
+          <div style={{ fontFamily: mono, fontSize: 19, letterSpacing: '0.22em', color: 'rgba(17,21,34,0.85)', display: 'flex', alignItems: 'center', gap: 14, opacity: lin(g, 2, 0, 1, 3), marginLeft: 18 }}>
+            LOYALTY <span style={{ letterSpacing: '0.1em' }}>------</span> 01
           </div>
-        </AbsoluteFill>
-      )}
-
-      {/* the grown period turns into the paper field */}
-      <AbsoluteFill style={{ background: C.paper, opacity: toPaper }} />
+          {/* hero */}
+          <div style={{ display: 'flex', alignItems: 'baseline', fontFamily: impact, fontWeight: 800, fontSize: SIZE, letterSpacing: '-0.055em', lineHeight: 0.9, color: C.ink, marginTop: -20, position: 'relative', zIndex: 2 }}>
+            {LETTERS.map((ch, i) => {
+              const at = 2 + i * 1.5;
+              const x = (f: number) => snap(f, at, -0.35, 0, 6);
+              const v = Math.abs(x(g) - x(g - 1)) * SIZE;
+              return (
+                <span key={i} style={{ display: 'inline-block', overflow: 'hidden', paddingBottom: '0.08em', marginBottom: '-0.08em' }}>
+                  <Blur x={v}>
+                    <span style={{ display: 'inline-block', transform: `translateX(${x(g) * 100}%)`, opacity: g < at ? 0 : 1 }}>{ch}</span>
+                  </Blur>
+                </span>
+              );
+            })}
+            <span style={{ display: 'inline-block', width: '0.5em', height: '0.5em', marginLeft: '0.035em', transform: `translateY(0.015em) scale(${disc})`, position: 'relative' }}>
+              <span style={{ position: 'absolute', left: '50%', top: '50%', width: r * 2, height: r * 2, marginLeft: -r, marginTop: -r, borderRadius: '50%', background: `radial-gradient(circle, ${C.ink} ${mask > 0 ? 62 : 100}%, rgba(17,21,34,0) 71%)` }} />
+            </span>
+          </div>
+          {/* accent, right-aligned to the hero */}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8, marginRight: -40 }}>
+            <WriteOn g={g} at={9} style={accentStyle(110, C.white)}>כל ההטבות, במקום אחד</WriteOn>
+          </div>
+        </div>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
