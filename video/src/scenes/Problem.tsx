@@ -64,8 +64,8 @@ export const Problem: React.FC = () => {
               ...(k[1] === 'l' ? { left: 0, borderLeftWidth: 3 } : { right: 0, borderRightWidth: 3 }),
             }} />
           ))}
-          <div style={{ position: 'absolute', top: 18, right: 4, fontFamily: mono, fontSize: 16, letterSpacing: '0.2em', color: C.muted, direction: 'ltr' }}>PUNCH CARD · APP · CLUB</div>
-          <div style={{ position: 'absolute', bottom: 18, left: 4, fontFamily: mono, fontSize: 16, letterSpacing: '0.2em', color: C.muted, direction: 'ltr' }}>ONE CARD PER SHOP</div>
+          <div style={{ position: 'absolute', top: 18, right: 4, fontFamily: mono, fontSize: 16, letterSpacing: '0.06em', color: C.muted, direction: 'rtl' }}>כרטיסייה · אפליקציה · מועדון</div>
+          <div style={{ position: 'absolute', bottom: 18, left: 4, fontFamily: mono, fontSize: 16, letterSpacing: '0.06em', color: C.muted, direction: 'rtl' }}>כרטיס נפרד לכל חנות</div>
           <div style={{ position: 'relative' }}>
             {Array.from({ length: slices }, (_, i) => {
               const t = g - BEAT * 2 - i * 0.6;

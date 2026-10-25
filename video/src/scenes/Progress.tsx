@@ -35,7 +35,7 @@ export const Progress: React.FC = () => {
                 <span style={{ width: 70, height: 70, borderRadius: 20, background: C.ink, color: C.lime, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 30 }}>פ</span>
                 <span style={{ display: 'grid' }}>
                   <span style={{ fontSize: 36, fontWeight: 800 }}>קפה פינה</span>
-                  <span style={{ fontFamily: mono, fontSize: 15, letterSpacing: '0.18em', color: C.muted, direction: 'ltr', textAlign: 'right' }}>COFFEE CARD · SAMPLE</span>
+                  <span style={{ fontFamily: mono, fontSize: 15, letterSpacing: '0.06em', color: C.muted, direction: 'rtl', textAlign: 'right' }}>כרטיס קפה · דוגמה</span>
                 </span>
               </div>
               <span style={{ fontSize: 30, fontWeight: 700, color: C.muted, direction: 'ltr' }}>{g >= done ? '10' : '9'}/10</span>

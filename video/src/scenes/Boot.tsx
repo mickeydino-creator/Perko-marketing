@@ -13,8 +13,8 @@ export const Boot: React.FC = () => {
   const y = (x: number) => accel(x, 0, -380, 0, 9);
   const v = Math.abs(y(f) - y(f - 1));
 
-  const first = 'perko // loyalty';
-  const second = 'perko / for business - 2026';
+  const first = 'פרקו // נאמנות';
+  const second = 'פרקו / לעסקים - 2026';
   const text = f < 22 ? first.slice(0, Math.floor(lin(f, 12, 0, first.length, 9))) : second.slice(0, Math.floor(lin(f, 22, 6, second.length, 9)));
 
   const lineW = snap(f, 22, 0, 1, 8);
@@ -50,7 +50,7 @@ export const Boot: React.FC = () => {
       {/* terminal line */}
       {f >= 12 && (
         <div style={{ position: 'absolute', top: 574, left: 0, right: 0, display: 'flex', justifyContent: 'center', opacity: 1 - lin(f, 38, 0, 1, 4) }}>
-          <div style={{ fontFamily: mono, fontSize: 24, color: C.paper, letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: 4, direction: 'ltr' }}>
+          <div style={{ fontFamily: mono, fontSize: 24, color: C.paper, letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: 4, direction: 'rtl' }}>
             {text}
             <span style={{ width: 13, height: 26, background: C.lime }} />
           </div>

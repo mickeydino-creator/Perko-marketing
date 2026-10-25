@@ -25,13 +25,13 @@ export const Stamp: React.FC = () => {
   const roll = g < 10 ? Math.abs(snap(g, 0, 1, 8, 10) - snap(g - 1, 0, 1, 8, 10)) * 10 : 0;
   const burst = accel(g, 38, 0, 1, 10);
   const disc = accel(g, 39, 0, 3600, 9);
-  const label: React.CSSProperties = { fontFamily: mono, fontSize: 17, letterSpacing: '0.2em', color: C.muted, direction: 'ltr' };
+  const label: React.CSSProperties = { fontFamily: mono, fontSize: 17, letterSpacing: '0.06em', color: C.muted, direction: 'rtl' };
 
   return (
     <AbsoluteFill style={{ background: `radial-gradient(ellipse at 70% 40%, #FFFFFB 0%, ${C.paper} 55%, #EFEFE8 100%)` }}>
       {/* reading side: counter */}
       <div style={{ position: 'absolute', right: 180, top: 300, width: 520, direction: 'rtl' }}>
-        <div style={{ ...label, textAlign: 'right' }}>STAMPS · קפה פינה · SAMPLE</div>
+        <div style={{ ...label, textAlign: 'right' }}>חותמות · קפה פינה · דוגמה</div>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: 18, marginTop: 10, direction: 'ltr' }}>
           <span style={{ fontFamily: impact, fontWeight: 900, fontSize: 330, letterSpacing: '-0.05em', lineHeight: 0.9, color: C.ink, fontVariantNumeric: 'tabular-nums', filter: roll ? `blur(${Math.min(roll, 6)}px)` : undefined }}>{count}</span>
           <span style={{ fontFamily: impact, fontWeight: 800, fontSize: 92, color: C.ink, opacity: 0.85 }}>/10</span>
@@ -40,7 +40,7 @@ export const Stamp: React.FC = () => {
       </div>
 
       {/* stamp grid */}
-      <div style={{ position: 'absolute', left: GRID.x, top: GRID.y - 60, ...label }}>CARD · 10 STAMPS = FREE COFFEE</div>
+      <div style={{ position: 'absolute', left: GRID.x, top: GRID.y - 60, ...label }}>כרטיס · 10 חותמות = קפה חינם</div>
       {Array.from({ length: 10 }, (_, i) => {
         const p = pos(i);
         const at = 1 + i * 1.2;
@@ -57,7 +57,7 @@ export const Stamp: React.FC = () => {
       })}
       {/* empty 9th slot before the stamp lands */}
       {g < land && <div style={{ position: 'absolute', left: NEW.x, top: NEW.y, width: GRID.cell, height: GRID.cell, borderRadius: 999, background: C.tint }} />}
-      <div style={{ position: 'absolute', left: GRID.x, top: GRID.y + GRID.cell * 2 + GRID.gap + 34, ...label }}>{g >= land ? '9 / 10 · +1 STAMP' : '8 / 10'}</div>
+      <div style={{ position: 'absolute', left: GRID.x, top: GRID.y + GRID.cell * 2 + GRID.gap + 34, ...label }}>{g >= land ? '9 מתוך 10 · עוד חותמת' : '8 מתוך 10'}</div>
 
       {/* landing ring, then the burst */}
       {g >= land && (

@@ -28,8 +28,8 @@ export const Wallet: React.FC = () => {
     <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 50%, #1E2219 0%, ${C.ink} 62%)` }}>
       <AbsoluteFill style={{ clipPath: `circle(${iris * 1200}px at 50% 50%)` }}>
         <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 50%, #1E2219 0%, ${C.ink} 62%)` }} />
-        <div style={{ position: 'absolute', left: 560, top: 150, width: 800, fontFamily: mono, fontSize: 17, letterSpacing: '0.2em', color: C.onInk, direction: 'ltr', display: 'flex', justifyContent: 'space-between', opacity: lin(g, 4, 0, 1, 4) }}>
-          <span>WALLET · ONE APP</span><span>SAMPLE DATA</span>
+        <div style={{ position: 'absolute', left: 560, top: 150, width: 800, fontFamily: mono, fontSize: 17, letterSpacing: '0.06em', color: C.onInk, direction: 'rtl', display: 'flex', justifyContent: 'space-between', opacity: lin(g, 4, 0, 1, 4) }}>
+          <span>ארנק · אפליקציה אחת</span><span>נתוני דוגמה</span>
         </div>
         <Blur y={v} style={{ position: 'absolute', left: 560, top: 200, width: 800 }}>
           <div style={{ transform: `translateY(${cardY(g)}px) scale(${1 + lin(g, 8, 0, 0.02, 40)})`, background: C.paper, borderRadius: 44, padding: '40px 44px 34px', fontFamily: impact, direction: 'rtl', color: C.ink, boxShadow: '0 30px 70px rgba(0,0,0,0.35)' }}>

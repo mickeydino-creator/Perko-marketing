@@ -22,7 +22,7 @@ Date researched: 2026-10-24 · Motion DNA version: STYLE_GUIDE §15 (no entries 
 
 ## 4. Logo, typography, assets
 - Logo: the Perko wordmark, lowercase "perk" in Heebo 800 + a solid cobalt disc as the "o" (the collected stamp). App icon: cobalt rounded square, white "p" whose bowl is a solid disc. [V] `src/components/Wordmark.astro`, `public/favicon.svg`. Rendered from the same component logic, not redrawn.
-- Fonts: impact = Heebo Black/800 [V] (site font) · accent = Noto Serif Hebrew, wght 300, wdth 68% [S] (light, condensed, high-contrast, to match the reference accent; replaced Frank Ruhl Libre on 2026-10-25), Latin fallback Instrument Serif Italic [S] · mono = JetBrains Mono for Latin HUD labels [S] · ui = Heebo [V]. All OFL, bundled from @fontsource.
+- Fonts: impact = Heebo Black/800 [V] (site font) · accent = Noto Sans Hebrew, wght 700, wdth 84.4 [user choice, 2026-10-25] · mono = JetBrains Mono for digits, Hebrew HUD labels in Heebo 500 [S]. No English text on screen except the logo · ui = Heebo [V]. All OFL, bundled from @fontsource.
 - Product UI: the illustrative app screens of the site (home with stamp card, discover, QR collect, redeem) [V] `src/components/screens/`, `src/styles/app.css`. Labelled as illustration, as on the site.
 - Brand graphic elements: the filled stamp dot, 5-column stamp grids, rounded cards (28px radius), the neighbourhood street map with cobalt route [V] `Network.astro`.
 

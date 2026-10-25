@@ -52,8 +52,8 @@ export const Orbit: React.FC = () => {
           opacity: lin(g, 8 + i, 0, 1, 4) * (1 - lin(g, 30, 0, 1, 4)),
         }}>{b.n}</div>
       ))}
-      <div style={{ position: 'absolute', left: 200, top: 200, fontFamily: mono, fontSize: 17, letterSpacing: '0.2em', color: C.onInk, direction: 'ltr', opacity: lin(g, 6, 0, 1, 4) * (1 - lin(g, 30, 0, 1, 4)) }}>
-        n = 6 · ONE WALLET
+      <div style={{ position: 'absolute', left: 200, top: 200, fontFamily: mono, fontSize: 17, letterSpacing: '0.06em', color: C.onInk, direction: 'rtl', opacity: lin(g, 6, 0, 1, 4) * (1 - lin(g, 30, 0, 1, 4)) }}>
+        6 עסקים · ארנק אחד
       </div>
 
       {g >= 40 && [C.lime2, C.lime, C.lime2, C.lime].map((col, k) => {

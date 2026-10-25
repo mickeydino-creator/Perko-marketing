@@ -25,8 +25,8 @@ export const Title: React.FC = () => {
       <AbsoluteFill style={{ transform: `scale(${push})` }}>
         <div style={{ position: 'absolute', left: 300, top: 300, direction: 'ltr' }}>
           {/* overline */}
-          <div style={{ fontFamily: mono, fontSize: 19, letterSpacing: '0.22em', color: C.ink, display: 'flex', alignItems: 'center', gap: 14, opacity: lin(g, 2, 0, 1, 3), marginLeft: 18 }}>
-            LOYALTY <span style={{ letterSpacing: '0.1em' }}>------</span> 01
+          <div style={{ fontFamily: mono, fontSize: 19, letterSpacing: '0.06em', color: C.ink, display: 'flex', alignItems: 'center', gap: 14, opacity: lin(g, 2, 0, 1, 3), marginLeft: 18 }}>
+            נאמנות <span style={{ letterSpacing: '0.1em' }}>------</span> 01
           </div>
           {/* hero */}
           <div style={{ display: 'flex', alignItems: 'baseline', fontFamily: impact, fontWeight: 800, fontSize: SIZE, letterSpacing: '-0.055em', lineHeight: 0.9, color: C.ink, marginTop: -20, position: 'relative', zIndex: 2 }}>
@@ -48,7 +48,7 @@ export const Title: React.FC = () => {
           </div>
           {/* accent, right-aligned to the hero */}
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8, marginRight: -40 }}>
-            <WriteOn g={g} at={9} style={accentStyle(110, C.ink)}>כל ההטבות, במקום אחד</WriteOn>
+            <WriteOn g={g} at={9} style={accentStyle(94, C.ink)}>כל ההטבות, במקום אחד</WriteOn>
           </div>
         </div>
       </AbsoluteFill>

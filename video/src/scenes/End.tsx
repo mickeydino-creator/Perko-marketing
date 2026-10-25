@@ -11,7 +11,7 @@ import { WriteOn, accentStyle } from '../components/Kinetic';
 // hairline, the mono tagline decoding in the signal colour, and a small credit line. The last second is still.
 const SIZE = 250;
 const LETTERS_W = 445; // "perk" at 250px Heebo 800, -0.055em, measured in Chromium
-const TAG = 'EARLY ACCESS · FREE TO JOIN';
+const TAG = 'גישה מוקדמת · הצטרפות בחינם';
 const GLYPHS = '#%/_-+=*01<>';
 
 export const End: React.FC = () => {
@@ -36,16 +36,16 @@ export const End: React.FC = () => {
           </Blur>
         </div>
         <div style={{ marginTop: 26, height: 92 }}>
-          <WriteOn g={g} at={35} style={accentStyle(84, C.ink)}>הצטרפו בחינם לגישה המוקדמת.</WriteOn>
+          <WriteOn g={g} at={35} style={accentStyle(84, C.ink)}>הצטרפו בחינם לגישה המוקדמת</WriteOn>
         </div>
         <div style={{ marginTop: 30, height: 84, display: 'flex', alignItems: 'center', gap: 14, padding: '0 40px', borderRadius: 999, background: C.ink, color: C.lime, fontFamily: impact, fontWeight: 700, fontSize: 34, direction: 'rtl', opacity: g < 42 ? 0 : 1, transform: `translateY(${snap(g, 42, 40, 0, 8)}px)` }}>
           הצטרפו בחינם
           <svg width="30" height="30" viewBox="0 0 24 24"><path d="M19 12H5m6-6l-6 6 6 6" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </div>
-        <div style={{ marginTop: 26, fontFamily: mono, fontSize: 20, letterSpacing: '0.3em', color: C.ink, direction: 'ltr', height: 30 }}>{tag}</div>
+        <div style={{ marginTop: 26, fontFamily: mono, fontSize: 20, letterSpacing: '0.08em', color: C.ink, direction: 'rtl', height: 30 }}>{tag}</div>
       </div>
-      <div style={{ position: 'absolute', bottom: 70, fontFamily: mono, fontSize: 15, letterSpacing: '0.18em', color: C.muted, direction: 'ltr', opacity: lin(g, 62, 0, 1, 6) }}>
-        PERKO · 2026 · PRODUCT SCREENS ARE ILLUSTRATIVE
+      <div style={{ position: 'absolute', bottom: 70, fontFamily: mono, fontSize: 15, letterSpacing: '0.06em', color: C.muted, direction: 'rtl', opacity: lin(g, 62, 0, 1, 6) }}>
+        פרקו · 2026 · מסכי המוצר להמחשה בלבד
       </div>
     </AbsoluteFill>
   );

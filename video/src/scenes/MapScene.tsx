@@ -28,7 +28,7 @@ export const MapScene: React.FC = () => {
   const zoom = snap(g, 0, 1.08, 1, 9) + lin(g, 9, 0, 0.03, 39);
   const newest = pins.reduce((acc, p, i) => (g >= p.at ? i : acc), -1);
   const grow = accel(g, 40, 0, 1, 8);
-  const label: React.CSSProperties = { position: 'absolute', fontFamily: mono, fontSize: 17, letterSpacing: '0.2em', color: C.muted, direction: 'ltr', padding: '6px 0' };
+  const label: React.CSSProperties = { position: 'absolute', fontFamily: mono, fontSize: 17, letterSpacing: '0.06em', color: C.muted, direction: 'rtl', padding: '6px 0' };
 
   return (
     <AbsoluteFill style={{ background: C.lime }}>
@@ -63,8 +63,8 @@ export const MapScene: React.FC = () => {
           );
         })}
       </AbsoluteFill>
-      <div style={{ ...label, right: 180, top: 180, opacity: 1 - grow }}>VISION · ILLUSTRATIVE MAP</div>
-      <div style={{ ...label, left: 180, bottom: 180, opacity: 1 - grow }}>SAMPLE NAMES</div>
+      <div style={{ ...label, right: 180, top: 180, opacity: 1 - grow }}>חזון · מפה להמחשה</div>
+      <div style={{ ...label, left: 180, bottom: 180, opacity: 1 - grow }}>שמות לדוגמה</div>
     </AbsoluteFill>
   );
 };

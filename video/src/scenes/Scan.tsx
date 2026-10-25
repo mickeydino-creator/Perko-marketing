@@ -21,14 +21,14 @@ export const Scan: React.FC = () => {
   const grow = accel(g, 38, 0, 1, 10);
   const plate = PLATE.s + grow * 2300;
 
-  const label: React.CSSProperties = { position: 'absolute', fontFamily: mono, fontSize: 17, letterSpacing: '0.2em', color: C.muted, direction: 'ltr', whiteSpace: 'nowrap', opacity: lin(g, 6, 0, 1, 4) };
+  const label: React.CSSProperties = { position: 'absolute', fontFamily: mono, fontSize: 17, letterSpacing: '0.06em', color: C.muted, direction: 'rtl', whiteSpace: 'nowrap', opacity: lin(g, 6, 0, 1, 4) };
 
   return (
     <AbsoluteFill style={{ background: `radial-gradient(ellipse at 30% 30%, #E4FF6E 0%, ${C.lime} 48%, #C9F02E 100%)` }}>
-      <div style={{ ...label, right: 200, top: 360 }}>SCAN · QR AT THE COUNTER</div>
+      <div style={{ ...label, right: 200, top: 360 }}>סריקה · קוד בקופה</div>
       <div style={{ ...label, right: 200, top: 394, color: C.ink, fontFamily: impact, letterSpacing: 0, fontSize: 30, fontWeight: 700, direction: 'rtl' }}>סורקים את הקוד בקופה</div>
-      <div style={{ ...label, left: 200, top: 640 }}>ILLUSTRATIVE FLOW</div>
-      <div style={{ ...label, left: 200, top: 674 }}>{g >= 26 ? 'STATUS · OK' : 'STATUS · READING'}</div>
+      <div style={{ ...label, left: 200, top: 640 }}>תהליך להמחשה</div>
+      <div style={{ ...label, left: 200, top: 674 }}>{g >= 26 ? 'סטטוס · אושר' : 'סטטוס · קורא'}</div>
 
       <Blur y={v} style={{ position: 'absolute', inset: 0 }}>
         <div style={{ position: 'absolute', left: PH.x, top: PH.y, width: PH.w, height: PH.h, transform: `translateY(${y(g)}px)` }}>
