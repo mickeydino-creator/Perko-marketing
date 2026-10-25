@@ -1,0 +1,418 @@
+<title>Perko - עסקים לפיילוט</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap">
+<style>
+/* Layout: a lime masthead with the summary, the five strongest prospects as a strip, then a filterable list of business cards. */
+:root {
+  --lime: #D7FF35;
+  --lime-2: #BCE82D;
+  --ink: #11130F;
+  --paper: #F8F8F4;
+  --muted: #303626;
+  --bg: #F8F8F4;
+  --surface: #FFFFFF;
+  --surface-2: #EEEFE7;
+  --fg: #11130F;
+  --fg-soft: #4A5240;
+  --line: #DCDED2;
+  --chip: #E6E8DD;
+  --on-lime: #11130F;
+  --link: #11130F;
+  --warn-bg: #FFF4D6;
+  --warn-fg: #6B4A00;
+  --font: 'Heebo', 'Arial Hebrew', 'Segoe UI', system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11130F; --surface: #1A1D16; --surface-2: #22261D; --fg: #F2F3EC; --fg-soft: #B9BCB0;
+    --line: #2E3327; --chip: #2A2E24; --link: #D7FF35; --warn-bg: #3A3014; --warn-fg: #F3D27A; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11130F; --surface: #1A1D16; --surface-2: #22261D; --fg: #F2F3EC; --fg-soft: #B9BCB0;
+  --line: #2E3327; --chip: #2A2E24; --link: #D7FF35; --warn-bg: #3A3014; --warn-fg: #F3D27A; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16px; line-height: 1.55; direction: rtl; }
+a { color: var(--link); }
+:focus-visible { outline: 3px solid var(--lime-2); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* masthead */
+.mast { background: var(--lime); color: var(--on-lime); }
+.mast .wrap { padding-block: 28px 30px; display: grid; gap: 22px; }
+.mast-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.mark { font-weight: 800; font-size: 26px; letter-spacing: -0.05em; direction: ltr; display: inline-flex; align-items: baseline; gap: 2px; }
+.mark i { display: inline-block; width: 0.5em; height: 0.5em; border-radius: 50%; background: var(--ink); }
+.stamp-date { font-size: 14px; font-weight: 500; }
+h1 { margin: 0; font-size: clamp(34px, 5.4vw, 64px); font-weight: 900; letter-spacing: -0.035em; line-height: 1; text-wrap: balance; }
+.lede { margin: 10px 0 0; font-size: clamp(17px, 1.6vw, 20px); max-width: 62ch; color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+.stat { background: var(--ink); color: var(--paper); border-radius: 18px; padding: 14px 16px; display: grid; gap: 2px; }
+.stat b { direction: ltr; text-align: right; unicode-bidi: isolate; font-size: 30px; font-weight: 800; letter-spacing: -0.03em; color: var(--lime); font-variant-numeric: tabular-nums; line-height: 1.1; }
+.stat span { font-size: 13.5px; color: #C9CCBF; }
+.honest { font-size: 14px; color: var(--muted); max-width: 90ch; margin: 0; }
+
+/* top five */
+.section-h { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.top { padding-block: 30px 6px; display: grid; gap: 14px; }
+.top-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.top-card { background: var(--ink); color: var(--paper); box-shadow: inset 0 0 0 1px var(--line); border-radius: 20px; padding: 16px; display: grid; gap: 8px; align-content: start; text-decoration: none; transition: transform .18s ease; }
+.top-card:hover { transform: translateY(-2px); }
+.top-card .rank { display: flex; justify-content: space-between; align-items: center; }
+.top-card .rank span { font-size: 13px; color: #C9CCBF; }
+.score-pill { direction: ltr; unicode-bidi: isolate; background: var(--lime); color: var(--ink); font-weight: 800; border-radius: 999px; padding: 2px 10px; font-size: 14px; font-variant-numeric: tabular-nums; }
+.top-card h3 { margin: 0; font-size: 19px; line-height: 1.2; }
+.top-card p { margin: 0; font-size: 14px; color: #C9CCBF; line-height: 1.45; }
+
+/* toolbar */
+.toolbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.toolbar .wrap { padding-block: 14px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.search { flex: 1 1 220px; min-width: 0; height: 44px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); padding: 0 18px; font: inherit; }
+.seg { display: inline-flex; background: var(--surface-2); border-radius: 999px; padding: 4px; gap: 2px; }
+.seg button { border: 0; background: transparent; color: var(--fg); font: inherit; font-weight: 600; font-size: 14.5px; padding: 7px 14px; border-radius: 999px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--lime); }
+:root[data-theme="dark"] .seg button[aria-pressed="true"] { background: var(--lime); color: var(--ink); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .seg button[aria-pressed="true"] { background: var(--lime); color: var(--ink); } }
+select { height: 44px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); padding: 0 14px; font: inherit; font-size: 14.5px; }
+.check { display: inline-flex; align-items: center; gap: 6px; font-size: 14.5px; cursor: pointer; }
+.count { font-size: 14px; color: var(--fg-soft); margin-inline-start: auto; }
+
+/* cards */
+.list { padding-block: 22px 40px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 20px; display: grid; gap: 14px; align-content: start; min-width: 0; scroll-margin-top: 90px; }
+.card.is-top { border-color: var(--lime-2); box-shadow: inset 0 0 0 2px var(--lime); }
+.head { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
+.score { width: 60px; height: 60px; border-radius: 18px; background: var(--lime); color: var(--ink); display: grid; place-items: center; text-align: center; line-height: 1; }
+.score b { font-size: 26px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.score small { display: block; font-size: 11px; font-weight: 600; margin-top: 2px; }
+.score.mid { background: var(--surface-2); color: var(--fg); }
+.score.low { background: var(--chip); color: var(--fg-soft); }
+.names h2 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
+.names .en { font-size: 14.5px; color: var(--fg-soft); direction: ltr; text-align: right; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip { font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--chip); color: var(--fg); white-space: nowrap; }
+.chip.lime { background: var(--lime); color: var(--ink); }
+.chip.ink { background: var(--ink); color: var(--lime); }
+.chip.warn { background: var(--warn-bg); color: var(--warn-fg); }
+.why { margin: 0; font-size: 15.5px; }
+.why strong { display: block; font-size: 13px; color: var(--fg-soft); font-weight: 700; margin-bottom: 2px; }
+.contacts { display: grid; gap: 6px; background: var(--surface-2); border-radius: 16px; padding: 12px 14px; }
+.crow { display: grid; grid-template-columns: 84px 1fr auto; gap: 8px; align-items: center; font-size: 14.5px; min-width: 0; }
+.crow > span:first-child { color: var(--fg-soft); font-size: 13px; }
+.crow .val { min-width: 0; overflow-wrap: anywhere; direction: ltr; text-align: right; font-variant-numeric: tabular-nums; }
+.crow .val.he { direction: rtl; }
+.copy { border: 0; background: var(--ink); color: var(--lime); font: inherit; font-size: 12.5px; font-weight: 700; border-radius: 999px; padding: 4px 10px; cursor: pointer; }
+.copy.done { background: var(--lime); color: var(--ink); }
+.links { display: flex; flex-wrap: wrap; gap: 8px; }
+.links a { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-size: 14px; font-weight: 700; padding: 7px 12px; border-radius: 999px; background: var(--ink); color: var(--lime); }
+.links a:hover { background: #262A20; }
+.links a.ghost { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line); }
+.links a svg { width: 14px; height: 14px; }
+details { border-top: 1px solid var(--line); padding-top: 10px; }
+summary { cursor: pointer; font-weight: 700; font-size: 14.5px; }
+details[open] summary { margin-bottom: 8px; }
+.detail { display: grid; gap: 8px; font-size: 14.5px; }
+.detail p { margin: 0; }
+.detail .lbl { font-size: 12.5px; color: var(--fg-soft); font-weight: 700; display: block; }
+.srcs a { display: block; overflow-wrap: anywhere; direction: ltr; text-align: right; font-size: 13.5px; }
+.empty { grid-column: 1 / -1; text-align: center; padding: 40px 0; color: var(--fg-soft); }
+footer { border-top: 1px solid var(--line); }
+footer .wrap { padding-block: 22px 40px; font-size: 13.5px; color: var(--fg-soft); display: grid; gap: 6px; }
+
+@media (max-width: 1000px) {
+  .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .top-row { grid-template-columns: repeat(5, minmax(220px, 1fr)); overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x mandatory; }
+  .top-card { scroll-snap-align: start; }
+  .list { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .crow { grid-template-columns: 70px 1fr auto; }
+  .count { width: 100%; margin: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .top-card { transition: none; } }
+</style>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="mast-top">
+      <span class="mark" aria-label="Perko">perk<i></i></span>
+      <span class="stamp-date">נבדק ב-25 באוקטובר 2026</span>
+    </div>
+    <div>
+      <h1>20 עסקים שכונתיים לפיילוט</h1>
+      <p class="lede">עסקים עצמאיים בעמק רפאים ובדרך בית לחם בירושלים, מדורגים לפי ההתאמה שלהם לכרטיס נאמנות משותף. כל פרט מגיע עם מקור, ופרטי קשר מופיעים רק כשפורסמו על ידי העסק או במדריך מוכר.</p>
+    </div>
+    <div class="stats" id="stats"></div>
+    <p class="honest">אלה מועמדים מהמחקר בלבד: אף עסק עוד לא הסכים להשתתף. לחמישה עסקים לא נמצאה עדות מתוארכת מ-2026 שהם פתוחים, והם מסומנים ״לוודא שפתוח״.</p>
+  </div>
+</header>
+
+<main>
+  <section class="wrap top" aria-labelledby="top-h">
+    <h2 class="section-h" id="top-h">חמשת המועמדים החזקים</h2>
+    <div class="top-row" id="top"></div>
+  </section>
+
+  <div class="toolbar">
+    <div class="wrap">
+      <label class="visually-hidden" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">חיפוש</label>
+      <input class="search" id="q" type="search" placeholder="חיפוש לפי שם, סוג עסק או כתובת">
+      <div class="seg" role="group" aria-label="רחוב" id="street">
+        <button type="button" data-v="" aria-pressed="true">הכל</button>
+        <button type="button" data-v="עמק רפאים" aria-pressed="false">עמק רפאים</button>
+        <button type="button" data-v="דרך בית לחם" aria-pressed="false">דרך בית לחם</button>
+      </div>
+      <select id="cat" aria-label="סוג עסק"><option value="">כל סוגי העסקים</option></select>
+      <select id="sort" aria-label="מיון">
+        <option value="fit">מיון: ציון התאמה</option>
+        <option value="name">מיון: שם</option>
+        <option value="street">מיון: רחוב</option>
+      </select>
+      <label class="check"><input type="checkbox" id="hasEmail"> רק עם מייל</label>
+      <span class="count" id="count" aria-live="polite"></span>
+    </div>
+  </div>
+
+  <section class="wrap list" id="list" aria-label="רשימת העסקים"></section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>מקורות: אתרים רשמיים, rest.co.il, d.co.il, Wolt, ויקיפדיה, ‏The Jerusalem Guide, ‏Times of Israel, ‏The Jerusalem Post, ‏The Jewish Link. מיילים וטלפונים שמסומנים ״מהאתר הרשמי״ נבדקו מחדש ב-25.10.2026.</span>
+    <span>בעמק רפאים נמשכות עבודות הרכבת הקלה, וחלק מהרחוב סגור לתנועה מיוני 2026. כדאי להתקשר לפני ביקור.</span>
+  </div>
+</footer>
+
+<script>
+const D = [
+{he:"טחנת הקפה",en:"The Coffee Mill",cat:"בית קפה וקלייה",street:"עמק רפאים",addr:"עמק רפאים 23, המושבה הגרמנית",phone:"02-566-1665",phoneOfficial:true,email:"coffeemill99@gmail.com",web:"https://www.thecoffeemill.co.il/en",ig:"https://www.instagram.com/thecoffeemillil",fb:"https://www.facebook.com/coffeemill99",other:"",person:"לאה ברסלאו, אבי כץ",role:"הבעלים מאז 2016",fit:9,repeat:"גבוה",indep:"עצמאי, מאומת",best:"מייל או טלפון",
+desc:"בית קפה שכונתי בבעלות משפחתית שקולה קפה בעצמו מאז 1996 ומוכר פולים חד-זניים ותערובות. כשר.",
+why:"שתי סיבות לחזור באותה חנות: הקפה היומי, והשקית של פולי הקפה שקונים שוב כל כמה שבועות. הבעלים מופיעים בשמם באתר, כך שהשיחה הראשונה יכולה להיות ישר עם מי שמחליט.",
+notes:"המייל והטלפון אומתו בדף ״אודות״ הרשמי. מופיע במדריך המושבה הגרמנית של The Jerusalem Guide מיולי 2026. עבודות הרכבת הקלה עלולות להשפיע על התנועה ברחוב.",
+src:["https://www.thecoffeemill.co.il/en/about","https://www.thejerusalemguide.com/areas/german-colony"],check:false},
+{he:"בירמה",en:"Birma Coffee",cat:"בית קפה וקלייה",street:"עמק רפאים",addr:"עמק רפאים 20, המושבה הגרמנית",phone:"02-544-5668",phoneOfficial:true,email:"",web:"https://birmacoffee.com",ig:"https://www.instagram.com/birmacoffee",fb:"https://www.facebook.com/birmacoffee",other:"",person:"מיכאל רונן, דניאל רונן",role:"מייסדים ובעלים (אחים)",fit:9,repeat:"גבוה",indep:"עצמאי, מאומת",best:"טלפון או וואטסאפ",
+desc:"קלייה קטנה לקפה מיוחד ובית קפה עם דלפק, שנפתחו ב-2021, עם ישיבה בחוץ. כשר.",
+why:"דלפק טייק-אוויי עם לקוחות קבועים בדרך לעבודה הוא המקרה הקלאסי לכרטיס חותמות, ומותג צעיר שמנוהל בידי המייסדים צפוי להיפתח לכרטיס דיגיטלי במקום נייר.",
+notes:"הטלפון אומת באתר הרשמי. מספר הבית 20 לקוח מ-rest.co.il, כי האתר הרשמי לא מציין מספר. לא מתפרסם מייל.",
+src:["https://birmacoffee.com","https://www.rest.co.il/rest/80358238/"],check:false},
+{he:"קאלו",en:"Kalo Cafe & Market",cat:"בית קפה ומעדנייה",street:"דרך בית לחם",addr:"דרך בית לחם 31, בקעה",phone:"02-673-6365",phoneOfficial:true,email:"kalocafe@gmail.com",web:"https://www.kalocafe.co.il/",ig:"https://www.instagram.com/kalocafejerusalem",fb:"https://www.facebook.com/kalocafe/",other:"",person:"",role:"",fit:9,repeat:"גבוה",indep:"עצמאי, מאומת",best:"מייל או טלפון",
+desc:"בית קפה שכונתי כשר שפועל ברחוב מאז 1997/98: ארוחות בוקר, כריכים, פסטות וסלטים, וגם מוצרי מעדנייה ומנות מוכנות שנמכרים אונליין.",
+why:"מוסד בבקעה עם קהל מקומי גדול (מעל 800 ביקורות בגוגל לפי Wanderlog) ושני סוגי קנייה: ביקור בבית הקפה וקניות במעדנייה. הוא כבר מוכר אונליין, אז הוא רגיל לכלים דיגיטליים.",
+notes:"המייל והטלפון אומתו בדף יצירת הקשר הרשמי. סניף יחיד. שם הבעלים לא מתפרסם. יש סתירות בשעות הפתיחה בין מדריכים שונים.",
+src:["https://www.kalocafe.co.il/contact-us/","https://he.wikipedia.org/wiki/%D7%93%D7%A8%D7%9A_%D7%91%D7%99%D7%AA_%D7%9C%D7%97%D7%9D"],check:false},
+{he:"המקום של איציק",en:"Itzik's Place",cat:"בית קפה",street:"דרך בית לחם",addr:"דרך בית לחם 33, בקעה",phone:"02-672-0247",phoneOfficial:false,email:"",web:"",ig:"",fb:"",other:"https://wolt.com/he/isr/jerusalem/venue/itziks-place",person:"",role:"",fit:8,repeat:"גבוה",indep:"נראה עצמאי",best:"טלפון או ביקור",
+desc:"בית קפה שכונתי חלבי וכשר (ארוחות בוקר, כריכים, סלטים, פסטה וקינוחים) שצמח מקיוסק מקומי ופועל במתכונתו הנוכחית מאז 2003.",
+why:"בית קפה שהתחיל כקיוסק חי מלקוחות יומיים מהרחובות מסביב, ובלי אתר או אפליקציה משלו כרטיס דיגיטלי מוכן מחליף את הנייר בלי שום הקמה. הוא שתי דלתות מקאלו, מה שהופך את שניהם לגרעין טבעי לפיילוט.",
+notes:"פעיל ב-Wolt (פתוח ב-25.10.2026). ב-Wolt מופיע מספר נוסף: ‎054-522-2843. אין אתר ואין מייל.",
+src:["https://www.rest.co.il/rest/80214546/","https://wolt.com/he/isr/jerusalem/venue/itziks-place"],check:false},
+{he:"ציגה - הגלידה של ציגה",en:"Tziga Ice Cream",cat:"גלידה",street:"דרך בית לחם",addr:"דרך בית לחם 31, בקעה",phone:"02-502-8374",phoneOfficial:true,email:"",web:"https://tziga.co.il/",ig:"",fb:"",other:"https://wolt.com/he/isr/jerusalem/restaurant/tziga-ice-cream",person:"",role:"",fit:8,repeat:"גבוה",indep:"נראה עצמאי",best:"טלפון",
+desc:"גלידריה משפחתית קטנה וכשרה שמכינה ג'לאטו וסורבה בעבודת יד בסגנון איטלקי, עם הרבה טעמים טבעוניים.",
+why:"גלידה היא פינוק שאותן משפחות קונות שוב ושוב, ולכן הטבה כמו ״הכדור השמיני חינם״ קלה להבנה. היא באותו בניין עם קאלו, כך שלקוח יכול לצבור בשתיהן ביציאה אחת.",
+notes:"הטלפון אומת באתר הרשמי. פעיל ב-Wolt. תוצאת חיפוש אחת הזכירה סניפים נוספים, אבל לא האתר הרשמי ולא כתבה במאקו מציינים אותם. ביקוש עונתי, בשיא בקיץ.",
+src:["https://tziga.co.il/","https://wolt.com/he/isr/jerusalem/restaurant/tziga-ice-cream"],check:false},
+{he:"פרחי העמק",en:"Emek Flowers",cat:"חנות פרחים",street:"עמק רפאים",addr:"עמק רפאים 43, המושבה הגרמנית",phone:"052-404-3365",phoneOfficial:true,email:"",web:"https://emekflowers.co.il/",ig:"",fb:"",other:"",person:"",role:"",fit:8,repeat:"גבוה",indep:"נראה עצמאי",best:"טלפון",
+desc:"חנות ובוטיק פרחים במושבה הגרמנית עם זרים ומשלוחים בכל ירושלים.",
+why:"פרחים לשבת ביום שישי הם הרגל שבועי בהרבה בתים, ולכן ״8 זרים והתשיעי במתנה״ מתאים בטבעיות. חנות פרחים היא גם עצירה שנייה טובה ללקוחות של בתי הקפה ברחוב.",
+notes:"הטלפון אומת באתר הרשמי, ובתחתית האתר מופיע 2026 עם שעות פתיחה עדכניות. שם הבעלים לא ידוע.",
+src:["https://emekflowers.co.il/"],check:false},
+{he:"קאסה לביא",en:"Casa Lavi",cat:"בית קפה ומאפייה",street:"דרך בית לחם",addr:"דרך בית לחם 41, בקעה",phone:"058-429-6540",phoneOfficial:false,email:"",web:"https://casalavi.webflow.io/",ig:"https://www.instagram.com/casalavicafe",fb:"",other:"",person:"מיטל ואלפונסו יצחק",role:"מייסדים ובעלים",fit:8,repeat:"גבוה",indep:"עצמאי, מאומת",best:"הודעה באינסטגרם או טלפון",
+desc:"בית קפה לקפה מיוחד מ-2022 שקולה קפה בעצמו ואופה במקום מאפים בריאים בלי סוכר לבן ובלי קמח לבן. ברובו טבעוני, כשר.",
+why:"בית קפה צעיר בניהול הבעלים עם קהל קבוע שמחפש אוכל בריא וחוזר כמה פעמים בשבוע. מותג שמובל בידי המייסדים מתאים לפיילוט מוקדם.",
+notes:"הטלפון לקוח מ-rest.co.il. בגוגל (דרך Wanderlog) מופיע ‎02-631-0295. ביקורות מדצמבר 2025 וינואר 2026. הדומיין casalavicafe.com לא נטען.",
+src:["https://casalavi.webflow.io/","https://www.rest.co.il/rest/80359561/"],check:false},
+{he:"גראנד קפה",en:"Grand Cafe",cat:"בית קפה ומסעדה",street:"דרך בית לחם",addr:"דרך בית לחם 70, בקעה",phone:"02-570-2702",phoneOfficial:true,email:"",web:"https://www.grand-cafe.co.il/",ig:"https://www.instagram.com/grand.cafe_/",fb:"https://www.facebook.com/grandcafe70",other:"",person:"עדי תלמור; שרה תלמור",role:"שותף מייסד; מנהלת בית הקפה",fit:7,repeat:"בינוני",indep:"עצמאי, מאומת",best:"טלפון או וואטסאפ ‎+972-52-667-4624",
+desc:"בית קפה-מסעדה חלבי וכשר בסגנון אירופאי שנפתח ב-2011, ידוע בבראנץ' ובמאפים.",
+why:"מקום בראנץ' פופולרי עם קבועים מהשכונה, שבו הטבה כמו מאפה חינם יכולה להביא את סועדי סוף השבוע גם באמצע השבוע. בגודל שלו הוא יכול להיות שותף עוגן שנותן לרשת אמינות.",
+notes:"הטלפון, הוואטסאפ והאינסטגרם אומתו באתר הרשמי. פעיל ב-Wolt. אין מייל, רק טופס לאירועים.",
+src:["https://jewishlink.news/a-jerusalem-restaurant-to-remember-in-baka-the-grand-cafe/","https://www.grand-cafe.co.il/"],check:false},
+{he:"לה שרולה",en:"Le Charolais",cat:"אטליז ומעדנייה",street:"דרך בית לחם",addr:"דרך בית לחם 84, בקעה",phone:"050-579-1350",phoneOfficial:true,email:"",web:"https://lecharolais.co.il/",ig:"",fb:"https://www.facebook.com/lecharolaisjerusalem/",other:"",person:"",role:"",fit:7,repeat:"גבוה",indep:"נראה עצמאי",best:"טלפון או וואטסאפ",
+desc:"אטליז ומעדנייה בוטיק כשרים. אפשר לבקש שיצלו נתח במקום, ויש גם עוף, מנות מוכנות ומאפים צרפתיים בסופי שבוע.",
+why:"משפחות קונות בשר לשבת כל שבוע, וסלי קנייה גדולים מצדיקים הטבה משמעותית. זה גם סוג עסק שונה מבתי הקפה, שמרחיב את מה שהרשת מציעה.",
+notes:"הטלפון אומת באתר הרשמי. ב-Wolt מופיע ‎02-6444966. לפי כתבה מ-2021 הבעלים הם שלושה מסעדנים ירושלמים: חנות אחת, אבל לא בעלים יחיד.",
+src:["https://lecharolais.co.il/"],check:false},
+{he:"ברזאולה",en:"Bresaola",cat:"מעדנייה ובר טאפאס",street:"דרך בית לחם",addr:"דרך בית לחם 27, בקעה",phone:"02-673-5522",phoneOfficial:false,email:"",web:"",ig:"",fb:"https://www.facebook.com/bresaola.jlm/",other:"https://wolt.com/he/isr/jerusalem/restaurant/bresaola",person:"",role:"",fit:7,repeat:"בינוני",indep:"נראה עצמאי",best:"טלפון",
+desc:"מעדנייה-בר כשרה שמכינה בעבודת יד נקניקים ונקניקיות בסגנון איטלקי, עם טאפאס וכריכים חמים.",
+why:"דלפק נקניקים לקנייה הביתה יחד עם בר לישיבה, כך שמגיעים אליו גם לקניות השבועיות וגם לערבים בחוץ. הדירוג הגבוה מאוד מעיד על קהל נאמן שהטבה יכולה להביא לעוד ביקורים.",
+notes:"פעיל ב-Wolt (דירוג 9.2). דף הפייסבוק מופיע כאתר העסק ב-Wolt. האינסטגרם נמצא רק בתוצאת חיפוש ולכן לא נכלל.",
+src:["https://wolt.com/he/isr/jerusalem/restaurant/bresaola","https://www.d.co.il/80361096/30455/"],check:false},
+{he:"פלורה - חנות פרחים",en:"Flora Flower Shop",cat:"חנות פרחים",street:"דרך בית לחם",addr:"דרך בית לחם 29, בקעה",phone:"073-375-3310",phoneOfficial:true,email:"info@floraflower.co.il",web:"https://www.floraflower.co.il/",ig:"",fb:"",other:"",person:"",role:"",fit:7,repeat:"גבוה",indep:"נראה עצמאי",best:"מייל",
+desc:"חנות פרחים עם זרים, עציצים, סידורים לאירועים ומארזי מתנה, משלוחים בכל ירושלים ואיסוף חינם מהחנות.",
+why:"פרחים לשבת כל שבוע, ועוד שיאים בחגים, מתאימים מאוד לכרטיס חותמות. היא כמה דלתות מקאלו ומציגה, אז לקוחות יכולים לצבור בכמה עצירות באותו סיבוב.",
+notes:"המייל והטלפון אומתו באתר הרשמי, שבו פעילים מבצעי סוכות 2026. במדריכים מופיעים מספרים אחרים, אז כדאי להשתמש במספר מהאתר.",
+src:["https://www.floraflower.co.il/"],check:false},
+{he:"לחם ועוד",en:"Lechem V'od",cat:"מאפייה ובית קפה",street:"עמק רפאים",addr:"עמק רפאים 35, המושבה הגרמנית",phone:"02-624-4255",phoneOfficial:false,email:"",web:"",ig:"",fb:"",other:"",person:"",role:"",fit:7,repeat:"גבוה",indep:"נראה עצמאי",best:"טלפון או ביקור",
+desc:"מאפייה-בית קפה ומעדנייה גורמה כשרה למהדרין: לחמי מחמצת, עוגת גבינה, מקרונים וגבינות מיובאות, עם פטיו בחוץ.",
+why:"לחם יומי ועוגות לשבת הופכים מאפיות לקטגוריה החזקה ביותר של קנייה חוזרת. דלפק המעדנייה מוסיף סלים גדולים שמצדיקים הטבה עשירה יותר.",
+notes:"הציון הורד כי לא אומת שהעסק עדיין פתוח: rest.co.il עודכן בפברואר 2026, אבל לא נמצאה ביקורת מתוארכת מ-2026. חולק את מספר 35 עם פוקצ'ה במושבה.",
+src:["https://www.rest.co.il/rest/80209734/"],check:true},
+{he:"הפרחים של ארז",en:"Erez Flowers",cat:"חנות פרחים",street:"עמק רפאים",addr:"עמק רפאים 26, המושבה הגרמנית",phone:"02-533-6363",phoneOfficial:true,email:"erezprachim@gmail.com",web:"https://erez-flowers.co.il/",ig:"",fb:"",other:"https://wolt.com/en/isr/jerusalem/venue/erezer-emek-refaim",person:"",role:"",fit:7,repeat:"גבוה",indep:"נראה עצמאי",best:"מייל או טלפון",
+desc:"חנות פרחים ומתנות עם סידורים ומשלוח באותו יום בכל ירושלים.",
+why:"גם קוני שישי שנכנסים לחנות וגם לקוחות המשלוחים קונים שוב ושוב. עם מייל מפורסם, הוא מהקלים לפנות אליהם בכתב.",
+notes:"המייל והטלפון אומתו באתר הרשמי. יש שתי חנויות פרחים בעמק רפאים שעשויות להתחרות, אז כדאי לפנות לכל אחת בנפרד.",
+src:["https://erez-flowers.co.il/store/","https://erez-flowers.co.il/"],check:false},
+{he:"קומקום - בית תה",en:"Kumkum Tea House",cat:"בית תה",street:"דרך בית לחם",addr:"דרך בית לחם 23, בקעה",phone:"050-656-3334",phoneOfficial:true,email:"",web:"https://kumkumteahouse.com/",ig:"https://www.instagram.com/kumkum.tea.house",fb:"",other:"",person:"אלישבע לוי",role:"הבעלים",fit:6,repeat:"בינוני",indep:"עצמאי, מאומת",best:"טלפון או וואטסאפ",
+desc:"בית תה כשר בסגנון בריטי עם תה של אחר הצהריים, סקונס ביתיים ותה עלים בגינה, וחנות קטנה לכלי תה ומתנות.",
+why:"מקום בניהול הבעלים עם אופי קהילתי, שבו ההטבה יכולה להיות קנקן תה או סקונס. פינת המכירה של תה עלים מוסיפה קנייה חוזרת, והבעלים הופיעה בכתבה באוגוסט 2026, כך שהיא פעילה וזמינה.",
+notes:"הטלפון והאינסטגרם אומתו באתר הרשמי. תה של אחר הצהריים הוא יותר אירוע מאשר ביקור יומי. ויקיפדיה מציינת בעלים אחרת, והסתמכתי על כתבת Times of Israel מ-2026.",
+src:["https://www.timesofisrael.com/elisheva-levy-jerusalems-fairy-godmother/","https://kumkumteahouse.com/"],check:false},
+{he:"בוכמן'ס דיינר",en:"Buchman's Diner",cat:"מסעדה קז'ואל",street:"עמק רפאים",addr:"עמק רפאים 51, המושבה הגרמנית",phone:"073-730-9889",phoneOfficial:false,email:"",web:"",ig:"",fb:"",other:"https://wolt.com/en/isr/jerusalem/restaurant/buchmans-diner",person:"ליאור סיון, מתן סיון",role:"הבעלים (אחים תאומים)",fit:6,repeat:"בינוני",indep:"נראה עצמאי",best:"טלפון",
+desc:"דיינר אמריקאי חלבי וכשר: המבורגרים, פנקייקים, קלצונה ומילקשייק.",
+why:"משפחות ובני נוער חוזרים לארוחות קלילות, אז ״מילקשייק חינם בביקור השישי״ קל להסביר. הבעלים ידועים בשמם ומפעילים גם שני מקומות פיצה, כך שפיילוט מוצלח יכול להתרחב אצלם.",
+notes:"קבוצה משפחתית מקומית קטנה ולא רשת. הטלפון מכתבת ג'רוזלם פוסט מנובמבר 2024. לא נמצאה עדות מתוארכת מ-2026.",
+src:["https://jpost.com/food-recipes/article-829474"],check:true},
+{he:"פומפידו",en:"Pompidou Bistro & Bar",cat:"ביסטרו ובר",street:"עמק רפאים",addr:"עמק רפאים 27, המושבה הגרמנית",phone:"02-625-1111",phoneOfficial:false,email:"",web:"",ig:"",fb:"",other:"",person:"",role:"",fit:5,repeat:"בינוני",indep:"נראה עצמאי",best:"טלפון",
+desc:"ביסטרו חלבי כשר בהשראה איטלקית ובר קוקטיילים עם מרפסות מעל עמק רפאים.",
+why:"ביקורי ערב ודייטים חוזרים לעיתים רחוקות יותר, אבל רשת משותפת יכולה להביא אליו בערב לקוחות של בתי הקפה, והטבה כמו קינוח חינם יכולה להחזיר סועדים שהפסיקו להגיע.",
+notes:"מופיע במדריך The Jerusalem Guide מיולי 2026. אין אתר רשמי או רשתות חברתיות. הביקורת האחרונה ב-rest.co.il מ-2023.",
+src:["https://www.rest.co.il/rest/80164067/","https://www.thejerusalemguide.com/areas/german-colony"],check:true},
+{he:"רנדבו",en:"Rendez-Vous",cat:"מסעדה קז'ואל",street:"דרך בית לחם",addr:"דרך בית לחם 110",phone:"074-726-8306",phoneOfficial:false,email:"",web:"",ig:"",fb:"",other:"",person:"",role:"",fit:5,repeat:"בינוני",indep:"נראה עצמאי",best:"טלפון",
+desc:"מסעדה כשרה למהדרין עם פיצה, פסטה ומאפים.",
+why:"פיצה ופסטה הן הזמנות משפחתיות חוזרות שמתאימות לכרטיס חותמות פשוט. היא בקצה הדרומי של הרחוב, לכיוון תלפיות, ותרחיב את הרשת מעבר למרכז בקעה.",
+notes:"ב-rest.co.il יש ביקורת (שלילית) מאוגוסט 2025. מספר 074 עשוי להיות מספר ניתוב של המדריך, אז כדאי לוודא במקום את הקו הישיר.",
+src:["https://www.rest.co.il/rest/80195583/"],check:true},
+{he:"פוקצ'ה במושבה",en:"Focaccia Moshava",cat:"מסעדה ומאפייה",street:"עמק רפאים",addr:"עמק רפאים 35, המושבה הגרמנית",phone:"02-538-7182",phoneOfficial:false,email:"",web:"",ig:"",fb:"",other:"",person:"",role:"",fit:5,repeat:"בינוני",indep:"לא ודאי",best:"טלפון",
+desc:"מסעדה איטלקית כשרה שאופה פוקצ'ות בטאבון, עם שוק פוקצ'ות בשישי לפני שבת.",
+why:"שוק הפוקצ'ות של שישי הוא איסוף שבועי קבוע וסיבה מוכנה לתגמל ביקורים חוזרים. הנראות שלו ברחוב גם תעזור לרשת.",
+notes:"הסניף הכשר של פוקצ'ה בר מהמרכז (רחוב רבי עקיבא): מותג מקומי עם שני סניפים, לא עסק עצמאי יחיד. מופיע ב-The Jerusalem Guide מיולי 2026.",
+src:["https://www.itraveljerusalem.com/rst/focaccia-moshava/","https://www.rest.co.il/restaurants/jerusalem/emek-refaim/"],check:false},
+{he:"סתיו תכשיטים",en:"Stav Jewelry",cat:"תכשיטים ומתנות",street:"עמק רפאים",addr:"עמק רפאים 40, המושבה הגרמנית",phone:"02-563-7059",phoneOfficial:true,email:"stavjewelry@gmail.com",web:"http://www.stavjewelry.com/",ig:"https://www.instagram.com/stav.jewelry",fb:"https://www.facebook.com/stavjewelry",other:"",person:"דליה סתיו, אייל סתיו",role:"מייסדים ובעלים",fit:4,repeat:"נמוך",indep:"עצמאי, מאומת",best:"מייל",
+desc:"תכשיטים בעיצוב ובעבודת יד בסדנה של החנות, בזהב, כסף ואבנים, מאז 1996.",
+why:"מעט קניות חוזרות, אבל חנות מתנות ותיקה בניהול הבעלים שתרוויח מהחשיפה ברשת, למשל לקוחות של בתי הקפה שמגלים חנות מתנות שכונתית. ההטבה כאן תהיה מחווה שווה יותר, כמו תיקון או חריטה חינם, ולא חותמות.",
+notes:"המייל והטלפון אומתו באתר הרשמי. מתאים יותר כשותף בשלב מאוחר מאשר כעוגן לפיילוט.",
+src:["http://www.stavjewelry.com/"],check:false},
+{he:"ברברה שו מתנות",en:"Barbara Shaw Gifts",cat:"מתנות ויודאיקה",street:"עמק רפאים",addr:"עמק רפאים 6, המושבה הגרמנית",phone:"02-579-9621",phoneOfficial:true,email:"barbshaw@gmail.com",web:"https://www.barbarashawgifts.com/",ig:"",fb:"",other:"",person:"",role:"",fit:4,repeat:"נמוך",indep:"נראה עצמאי",best:"מייל",
+desc:"מותג מעצבים של מתנות יהודיות וישראליות שמיוצרות בירושלים: ספלים, תיקי בד, סינרים, חולצות, בגדי תינוקות ומוצרים לחגים.",
+why:"קניות מתנות וחגים הן עונתיות, אבל מותג מקומי עם אופי ירוויח מתנועת הרשת. החנות בתחילת עמק רפאים, איפה שאנשים מתחילים ללכת ברחוב.",
+notes:"המייל והטלפון אומתו בדף יצירת הקשר הרשמי. מותג מקומי עם שתי חנויות משלו, לא רשת. לא נמצאה עדות מתוארכת מ-2025-26.",
+src:["https://www.barbarashawgifts.com/contact-us/"],check:true}
+];
+
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const ext = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16L16 8M9 8h7v7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const link = (href, label, ghost) => href ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer"${ghost ? ' class="ghost"' : ''}>${esc(label)} ${ext}</a>` : '';
+const host = (u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return u; } };
+const ranked = [...D].sort((a, b) => b.fit - a.fit || a.en.localeCompare(b.en));
+ranked.forEach((d, i) => { d.rank = i + 1; d.id = 'b' + (i + 1); });
+
+// summary
+const total = D.length;
+const stats = [
+  [total, 'עסקים ברשימה'],
+  [D.filter((d) => d.street === 'עמק רפאים').length + ' / ' + D.filter((d) => d.street === 'דרך בית לחם').length, 'עמק רפאים / דרך בית לחם'],
+  [D.filter((d) => d.fit >= 8).length, 'בהתאמה גבוהה (8 ומעלה)'],
+  [D.filter((d) => d.phoneOfficial).length + ' / ' + total, 'טלפון שאומת באתר רשמי'],
+  [D.filter((d) => d.email).length, 'מיילים שפורסמו בידי העסק'],
+  [D.filter((d) => d.web).length, 'עם אתר רשמי'],
+];
+$('#stats').innerHTML = stats.map(([v, l]) => `<div class="stat"><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
+
+// top five
+$('#top').innerHTML = ranked.slice(0, 5).map((d) => `
+  <a class="top-card" href="#${d.id}">
+    <span class="rank"><span>#${d.rank} · ${esc(d.street)}</span><span class="score-pill">${d.fit}/10</span></span>
+    <h3>${esc(d.he)}</h3>
+    <p>${esc(d.why.split('. ')[0].replace(/\.$/, ''))}.</p>
+  </a>`).join('');
+
+// category filter
+[...new Set(D.map((d) => d.cat))].sort((a, b) => a.localeCompare(b, 'he')).forEach((c) => {
+  const o = document.createElement('option'); o.value = c; o.textContent = c; $('#cat').appendChild(o);
+});
+
+const contactRow = (label, value, opts = {}) => value ? `
+  <div class="crow"><span>${label}</span><span class="val${opts.he ? ' he' : ''}">${esc(value)}${opts.note ? ` <small style="color:var(--fg-soft)">${esc(opts.note)}</small>` : ''}</span>${opts.copy ? `<button class="copy" type="button" data-copy="${esc(opts.copy)}">העתקה</button>` : '<span></span>'}</div>` : '';
+
+const card = (d) => {
+  const scoreCls = d.fit >= 8 ? '' : d.fit >= 6 ? ' mid' : ' low';
+  const links = [link(d.web, 'אתר'), link(d.ig, 'אינסטגרם'), link(d.fb, 'פייסבוק'), link(d.other, d.other.includes('wolt') ? 'Wolt' : 'פרופיל', true)].join('');
+  return `
+  <article class="card${d.rank <= 5 ? ' is-top' : ''}" id="${d.id}">
+    <div class="head">
+      <div class="score${scoreCls}" title="ציון התאמה ל-Perko"><div><b>${d.fit}</b><small>מתוך 10</small></div></div>
+      <div class="names">
+        <h2>${esc(d.he)}</h2>
+        <div class="en">#${d.rank} · ${esc(d.en)}</div>
+        <div class="meta">
+          <span class="chip">${esc(d.cat)}</span>
+          <span class="chip">${esc(d.street)}</span>
+          <span class="chip${d.repeat === 'גבוה' ? ' lime' : ''}">חזרתיות: ${esc(d.repeat)}</span>
+          <span class="chip${d.indep === 'עצמאי, מאומת' ? ' ink' : ''}">${esc(d.indep)}</span>
+          ${d.check ? '<span class="chip warn">לוודא שפתוח</span>' : ''}
+        </div>
+      </div>
+    </div>
+    <p class="why"><strong>למה זה מתאים ל-Perko</strong>${esc(d.why)}</p>
+    <div class="contacts">
+      ${contactRow('כתובת', d.addr, { he: true })}
+      ${contactRow('טלפון', d.phone, { copy: d.phone, note: d.phoneOfficial ? 'מהאתר הרשמי' : 'ממדריך או כתבה' })}
+      ${contactRow('מייל', d.email, { copy: d.email })}
+      ${contactRow('איש קשר', d.person ? d.person + (d.role ? ' · ' + d.role : '') : '', { he: true })}
+      ${contactRow('איך לפנות', d.best, { he: true })}
+    </div>
+    ${links.trim() ? `<div class="links">${links}</div>` : ''}
+    <details>
+      <summary>פרטים, הערות ומקורות</summary>
+      <div class="detail">
+        <p><span class="lbl">על העסק</span>${esc(d.desc)}</p>
+        <p><span class="lbl">הערות</span>${esc(d.notes)}</p>
+        <div class="srcs"><span class="lbl">מקורות</span>${d.src.map((u) => `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(host(u))}${esc(new URL(u).pathname.length > 1 ? decodeURIComponent(new URL(u).pathname).slice(0, 48) : '')}</a>`).join('')}</div>
+        <p><span class="lbl">סטטוס</span>נבדק ב-25.10.2026 · עוד לא נוצר קשר</p>
+      </div>
+    </details>
+  </article>`;
+};
+
+const state = { q: '', street: '', cat: '', sort: 'fit', email: false };
+try { const s = JSON.parse(localStorage.getItem('perko-prospects') || '{}'); Object.assign(state, s); } catch {}
+
+function render() {
+  let rows = ranked.filter((d) => {
+    if (state.street && d.street !== state.street) return false;
+    if (state.cat && d.cat !== state.cat) return false;
+    if (state.email && !d.email) return false;
+    if (state.q) {
+      const hay = [d.he, d.en, d.cat, d.addr, d.street].join(' ').toLowerCase();
+      if (!hay.includes(state.q.toLowerCase())) return false;
+    }
+    return true;
+  });
+  if (state.sort === 'name') rows = [...rows].sort((a, b) => a.he.localeCompare(b.he, 'he'));
+  if (state.sort === 'street') rows = [...rows].sort((a, b) => a.street.localeCompare(b.street, 'he') || b.fit - a.fit);
+  $('#list').innerHTML = rows.length ? rows.map(card).join('') : '<p class="empty">אין עסקים שמתאימים לסינון. נסו לנקות את החיפוש או לבחור ״הכל״.</p>';
+  $('#count').textContent = `מוצגים ${rows.length} מתוך ${total}`;
+  try { localStorage.setItem('perko-prospects', JSON.stringify(state)); } catch {}
+}
+
+$('#q').value = state.q;
+$('#cat').value = state.cat;
+$('#sort').value = state.sort;
+$('#hasEmail').checked = state.email;
+document.querySelectorAll('#street button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === state.street)));
+
+$('#q').addEventListener('input', (e) => { state.q = e.target.value.trim(); render(); });
+$('#cat').addEventListener('change', (e) => { state.cat = e.target.value; render(); });
+$('#sort').addEventListener('change', (e) => { state.sort = e.target.value; render(); });
+$('#hasEmail').addEventListener('change', (e) => { state.email = e.target.checked; render(); });
+$('#street').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  state.street = b.dataset.v;
+  document.querySelectorAll('#street button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  render();
+});
+$('#list').addEventListener('click', (e) => {
+  const b = e.target.closest('.copy'); if (!b) return;
+  const text = b.dataset.copy;
+  const done = () => { b.textContent = 'הועתק'; b.classList.add('done'); setTimeout(() => { b.textContent = 'העתקה'; b.classList.remove('done'); }, 1600); };
+  const fallback = () => { const v = b.previousElementSibling; const r = document.createRange(); r.selectNodeContents(v); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'סומן להעתקה'; };
+  try { navigator.clipboard.writeText(text).then(done, fallback); } catch { fallback(); }
+});
+
+render();
+if (location.hash) { const el = document.getElementById(location.hash.slice(1)); if (el) { el.scrollIntoView(); } }
+</script>
