@@ -1,5 +1,6 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame } from 'remotion';
+import { AbsoluteFill } from 'remotion';
+import { useStoryFrame } from '../time';
 import { C } from '../tokens';
 import { impact, mono } from '../fonts';
 import { accel, lin, snap } from '../motion';
@@ -9,7 +10,7 @@ import { Blur } from '../components/Blur';
 // flown in with blur. It shows what is left; on beat 2 the tenth stamp fills and the reward is ready.
 // Exit (collapse to a glowing shape): the card shrinks into a dark rounded square whose bloom ring opens to paper.
 export const Progress: React.FC = () => {
-  const g = useCurrentFrame();
+  const g = useStoryFrame();
   const fly = (x: number) => snap(x, 0, 700, 0, 7);
   const v = Math.abs(fly(g) - fly(g - 1));
   const done = 12;

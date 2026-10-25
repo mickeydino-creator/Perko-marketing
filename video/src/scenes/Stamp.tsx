@@ -1,5 +1,6 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame } from 'remotion';
+import { AbsoluteFill } from 'remotion';
+import { useStoryFrame } from '../time';
 import { C } from '../tokens';
 import { impact, mono } from '../fonts';
 import { accel, lin, snap } from '../motion';
@@ -19,7 +20,7 @@ const pos = (i: number) => {
 const NEW = pos(8);
 
 export const Stamp: React.FC = () => {
-  const g = useCurrentFrame();
+  const g = useStoryFrame();
   const land = 12;
   const count = g < land ? Math.round(snap(g, 0, 1, 8, 10)) : 9;
   const roll = g < 10 ? Math.abs(snap(g, 0, 1, 8, 10) - snap(g - 1, 0, 1, 8, 10)) * 10 : 0;

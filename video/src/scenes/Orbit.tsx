@@ -1,5 +1,6 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame } from 'remotion';
+import { AbsoluteFill } from 'remotion';
+import { useStoryFrame } from '../time';
 import { C } from '../tokens';
 import { impact, mono } from '../fonts';
 import { accel, lin, snap } from '../motion';
@@ -13,7 +14,7 @@ const CY = 470;
 const names = ['בית קפה', 'מסעדה', 'מאפייה', 'חנות ספרים', 'פרחים', 'מעדנייה'];
 
 export const Orbit: React.FC = () => {
-  const g = useCurrentFrame();
+  const g = useStoryFrame();
   const split = snap(g, 1, 0, 1, 10) * (1 - accel(g, 32, 0, 1, 8));
   const spin = g * 0.022;
   const ring = snap(g, 4, 0, 1, 10);

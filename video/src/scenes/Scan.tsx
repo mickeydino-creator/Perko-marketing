@@ -1,5 +1,6 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame } from 'remotion';
+import { AbsoluteFill } from 'remotion';
+import { useStoryFrame } from '../time';
 import { C } from '../tokens';
 import { impact, mono } from '../fonts';
 import { accel, lin, snap } from '../motion';
@@ -13,7 +14,7 @@ const PH = { x: 960 - 215, y: 84, w: 430, h: 916, bez: 12 };
 const PLATE = { cx: 960, cy: 420, s: 230 };
 
 export const Scan: React.FC = () => {
-  const g = useCurrentFrame();
+  const g = useStoryFrame();
   const y = (x: number) => snap(x, 0, 520, 0, 8);
   const v = Math.abs(y(g) - y(g - 1));
   const scan = lin(g, 9, 0, 1, 16);

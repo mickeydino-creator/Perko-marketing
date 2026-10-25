@@ -1,5 +1,6 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame } from 'remotion';
+import { AbsoluteFill } from 'remotion';
+import { useStoryFrame } from '../time';
 import { C } from '../tokens';
 import { mono } from '../fonts';
 import { accel, lin, snap } from '../motion';
@@ -9,7 +10,7 @@ import { Blur } from '../components/Blur';
 // beside it and is rewritten, a line stretches across the frame, flexes, thickens into a band and blooms into a
 // flash (line -> flash) that cools into the paper field of the next scene.
 export const Boot: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useStoryFrame();
   const y = (x: number) => accel(x, 0, -380, 0, 9);
   const v = Math.abs(y(f) - y(f - 1));
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame } from 'remotion';
+import { AbsoluteFill } from 'remotion';
+import { useStoryFrame } from '../time';
 import { C } from '../tokens';
 import { impact, mono } from '../fonts';
 import { accel, lin, snap } from '../motion';
@@ -14,7 +15,7 @@ const SIZE = 460;
 const LETTERS = ['p', 'e', 'r', 'k'];
 
 export const Title: React.FC = () => {
-  const g = useCurrentFrame();
+  const g = useStoryFrame();
   const push = 1 + lin(g, 0, 0, 0.03, 48);
   const disc = snap(g, 9, 0, 1, 6);
   const mask = accel(g, 34, 0, 1, 14);

@@ -2,12 +2,16 @@
 import { Easing } from 'remotion';
 
 export const FPS = 30;
-export const BPM = 150; // Motion DNA clock; the score (music/compose.py) is written at this tempo
-export const BEAT = Math.round((60 / BPM) * FPS); // 12 f = 0.4 s
-export const BAR = BEAT * 4; // 48 f = 1.6 s
+// Scenes are timed in story frames (12 per beat, 48 per bar). SLOW stretches story time onto real frames,
+// so the whole film plays 1.25x slower: 120 BPM, beat = 0.5 s, bar = 2.0 s. Must match music/*.py.
+export const SLOW = 1.25;
+export const BPM = 150 / SLOW;
+export const BEAT = 12; // story frames (0.5 s)
+export const BAR = BEAT * 4; // story frames (2.0 s)
 export const W = 1920;
 export const H = 1080;
-export const DURATION = 612; // 20.4 s
+export const DURATION = 612; // story frames
+export const REAL_DURATION = DURATION * SLOW; // 765 f = 25.5 s
 
 // One scene = one bar. VO lines start on beats: f48, f108, f192, f288, f384, f491 (see README).
 export const S = {

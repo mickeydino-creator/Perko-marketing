@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, Audio, Sequence, staticFile } from 'remotion';
-import { S } from './tokens';
+import { S, SLOW } from './tokens';
 import './fonts';
 import { Boot } from './scenes/Boot';
 import { Problem } from './scenes/Problem';
@@ -15,7 +15,7 @@ import { Orbit } from './scenes/Orbit';
 import { End } from './scenes/End';
 import { Hud } from './components/Hud';
 
-const seq = (k: keyof typeof S) => ({ from: S[k].from, durationInFrames: S[k].to - S[k].from });
+const seq = (k: keyof typeof S) => ({ from: S[k].from * SLOW, durationInFrames: (S[k].to - S[k].from) * SLOW });
 
 export const PerkoPromo: React.FC = () => (
   <AbsoluteFill style={{ background: '#111522' }}>
@@ -31,9 +31,9 @@ export const PerkoPromo: React.FC = () => (
     <Sequence {...seq('orbit')}><Orbit /></Sequence>
     <Sequence {...seq('end')}><End /></Sequence>
     <Hud />
-    {/* Original score (music/compose.py), 150 BPM, drop on f144, groove stops on f480. Sits under the voice. */}
+    {/* Original score (music/compose.py), 120 BPM, drop at 6.0 s, groove stops at 20.0 s. Sits under the voice. */}
     <Audio src={staticFile('music.wav')} volume={0.3} />
-    {/* Voiceover: six lines placed on beats (README). */}
+    {/* Voiceover: six lines placed on beats (music/retime_vo.py). */}
     <Audio src={staticFile('vo.wav')} volume={1.8} />
   </AbsoluteFill>
 );

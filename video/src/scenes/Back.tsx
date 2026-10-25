@@ -1,5 +1,6 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame } from 'remotion';
+import { AbsoluteFill } from 'remotion';
+import { useStoryFrame } from '../time';
 import { C } from '../tokens';
 import { accel, snap } from '../motion';
 import { Whip, WriteOn, accentStyle, impactStyle } from '../components/Kinetic';
@@ -8,7 +9,7 @@ import { Whip, WriteOn, accentStyle, impactStyle } from '../components/Kinetic';
 // resolution in the accent voice with a drawn underline (the reference's "with you." moment).
 // Exit: diagonal slab wipe into the pale map.
 export const Back: React.FC = () => {
-  const g = useCurrentFrame();
+  const g = useStoryFrame();
   const swap = 16;
   const wipe = accel(g, 40, 0, 1, 9);
   return (

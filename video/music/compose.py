@@ -1,12 +1,12 @@
 """Original score for the Perko promo. Synthesised from scratch with numpy/scipy (no samples, no loops).
 
-150 BPM, 4/4, beat = 0.4 s, bar = 1.6 s (the Motion DNA clock). F major, light and clean.
+120 BPM, 4/4, beat = 0.5 s, bar = 2.0 s (the Motion DNA clock, slowed by SLOW = 1.25). F major, light and clean.
 
   bar 1        intro: soft pad, a bell 'ping' for the falling spark, a filtered swell for the line, a whoosh into the flash
   bars 2-3     light groove: shaker, rim on 2 and 4, plucked chords, soft sub; riser, then a short dip before the drop
-  4.8 s        drop (the title's period becomes the ink mask)
+  6.0 s        drop (the title's period becomes the ink mask)
   bars 4-10    full groove: kick, snap, soft hats, round bass, e-piano stabs, a sparse mallet motif every two bars
-  16.0 s       the groove stops for the end card; a bell for the wordmark, final chord, natural tail
+  20.0 s       the groove stops for the end card; a bell for the wordmark, final chord, natural tail
 
 Run:  python3 music/compose.py  ->  public/music.wav (48 kHz, stereo, 16-bit)
 """
@@ -15,12 +15,13 @@ from scipy.signal import butter, sosfilt, fftconvolve
 import wave
 
 SR = 48000
-BPM = 150
+SLOW = 1.25  # must match SLOW in src/tokens.ts
+BPM = 150 / SLOW
 BEAT = 60 / BPM
 BAR = BEAT * 4
-DUR = 20.4
-DROP = 4.8
-STOP = 16.0
+DUR = 20.4 * SLOW
+DROP = 4.8 * SLOW
+STOP = 16.0 * SLOW
 N = int(DUR * SR)
 rng = np.random.default_rng(7)  # seeded: every render is identical
 
@@ -222,13 +223,13 @@ def bar_t(b):
 
 # ---------- arrangement ----------
 
-# bar 1: intro (0 - 1.6)
-add(pad([53, 60, 64, 67], 1.6, gain=0.8, cutoff=900), 0.0)
-add(bell(84, 0.55, 0.8), 0.25, pan=-0.1)             # the spark lands as a dot
-add(noise_swell(0.6, 400, 3000, 0.5), 0.73)          # the line stretches out
-add(noise_swell(0.28, 1500, 9000, 0.8), 1.32, pan=0.1)  # the band blooms into the flash
+# bar 1: intro
+add(pad([53, 60, 64, 67], BAR, gain=0.8, cutoff=900), 0.0)
+add(bell(84, 0.55, 0.8), 0.25 * SLOW, pan=-0.1)             # the spark lands as a dot
+add(noise_swell(0.6 * SLOW, 400, 3000, 0.5), 0.73 * SLOW)   # the line stretches out
+add(noise_swell(0.28 * SLOW, 1500, 9000, 0.8), 1.32 * SLOW, pan=0.1)  # the band blooms into the flash
 
-# bars 2-3: light groove (1.6 - 4.8), the problem and the title
+# bars 2-3: light groove, the problem and the title
 for b in (1, 2):
     chord, root = CHORDS[b - 1]
     t0 = bar_t(b)
@@ -246,9 +247,9 @@ _t = np.arange(N) / SR
 _dip = np.clip(1 - (_t - (DROP - 0.2)) / 0.06, 0, 1) * (_t < DROP) + (_t >= DROP)
 L *= _dip
 R *= _dip
-add(noise_swell(0.5, 300, 7000, 0.9), DROP - 0.66)   # riser into the drop, ends 160 ms before it
+add(noise_swell(0.5 * SLOW, 300, 7000, 0.9), DROP - 0.66 * SLOW)   # riser into the drop, ends just before the dip
 
-# bars 4-10: the groove (4.8 - 16.0)
+# bars 4-10: the groove (DROP - STOP)
 motif = [(0.0, 72), (0.5, 76), (1.0, 79), (2.5, 77), (3.0, 76)]
 for b in range(3, 10):
     chord, root = CHORDS[(b - 3) % 4]
@@ -286,13 +287,13 @@ for b in range(3, 10):
 # accent on the drop
 add(bell(77, 0.5, 1.0), DROP, pan=0.1)
 
-# end card (16.0 - 20.4): the groove stops; the dot writes the wordmark at 16.4 s
+# end card: the groove stops; the dot writes the wordmark shortly after
 add(kick(0.8), STOP)
-add(pad([53, 57, 60, 64, 67], 3.2, gain=0.8, cutoff=1500), STOP)
-add(epiano([53, 57, 60, 64, 67], 2.6, 0.9), STOP)
+add(pad([53, 57, 60, 64, 67], 3.2 * SLOW, gain=0.8, cutoff=1500), STOP)
+add(epiano([53, 57, 60, 64, 67], 2.6 * SLOW, 0.9), STOP)
 add(bass(41, 0.9, 0.6), STOP)
-add(bell(84, 0.6, 1.8), 16.4, pan=-0.1)
-add(bell(91, 0.3, 1.4), 16.62, pan=0.15)
+add(bell(84, 0.6, 1.8), STOP + 0.4 * SLOW, pan=-0.1)
+add(bell(91, 0.3, 1.4), STOP + 0.62 * SLOW, pan=0.15)
 
 # ---------- master ----------
 mix = np.stack([L, R])

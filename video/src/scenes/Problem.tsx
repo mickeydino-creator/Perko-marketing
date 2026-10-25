@@ -1,5 +1,6 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame } from 'remotion';
+import { AbsoluteFill } from 'remotion';
+import { useStoryFrame } from '../time';
 import { C, BEAT } from '../tokens';
 import { mono } from '../fonts';
 import { accel, lin, snap } from '../motion';
@@ -14,7 +15,7 @@ import { Whip, WriteOn, accentStyle, impactStyle } from '../components/Kinetic';
 //   beat 4  paper  "ועוד אחד." serif accent with a drawn underline
 // Exit: diagonal slab wipe into the cobalt title.
 export const Problem: React.FC = () => {
-  const g = useCurrentFrame();
+  const g = useStoryFrame();
   const b = Math.min(3, Math.floor(g / BEAT));
   const field = [C.lime, C.ink, C.lime, C.paper][b];
   const flash = 1 - lin(g, 0, 0, 1, 8); // the boot flash cools into the paper field

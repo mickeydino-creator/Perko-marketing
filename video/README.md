@@ -1,12 +1,14 @@
 # Perko - business promo video (Motion DNA)
 
-16:9, 1920×1080, 30 fps, 20.4 s. 150 BPM: beat = 12 f (0.4 s), bar = 48 f (1.6 s), one scene per bar.
+16:9, 1920×1080, 30 fps, 25.5 s. 120 BPM: beat = 0.5 s, bar = 2.0 s, one scene per bar. Scenes are written in story
+frames (12 per beat, 48 per bar) and stretched by `SLOW = 1.25` in `src/tokens.ts` (the film was 150 BPM / 20.4 s before).
 Hebrew, RTL. Remotion 4 + React. Palette: acid lime #D7FF35 (dominant), ink #11130F, off-white #F8F8F4, secondary lime #BCE82D, muted #303626 - the same tokens as the website. Brand values, sources and the merge plan are in `PROJECT_BRIEF.md`;
 timings and colours live in `src/tokens.ts`.
 
 ```sh
 npm install
 python3 music/compose.py   # regenerates public/music.wav (needs numpy + scipy)
+python3 music/retime_vo.py # re-places the voiceover lines on the slowed grid -> public/vo.wav
 npm run studio             # preview
 npm run render             # out/perko-promo.mp4
 ```
@@ -19,8 +21,9 @@ npm run render             # out/perko-promo.mp4
   snaps, gentle hats (low-passed, no fizz above ~10 kHz), a round bass, e-piano stabs and a sparse mallet motif.
   The groove stops on f480 (16.0 s) for the end card; a bell marks the wordmark at 16.4 s.
 - **Voiceover:** the supplied ElevenLabs take (`assets/audio/voiceover-source.mp3`), cut at its own pauses and placed
-  so each line starts on a beat: 1.60 s, 3.60 s, 6.40 s, 9.60 s, 12.80 s, 16.37 s (`public/vo.wav`).
-- **Mix:** music 0.30, voice 1.8. Measured on the render: -17.7 LUFS integrated, -3.9 dBFS peak, voice ~7 dB above the bed.
+  so each line starts on a beat: 2.00 s, 4.50 s, 8.00 s, 12.00 s, 16.00 s, 20.46 s (`public/vo.wav`). The voice is not
+  stretched; `music/retime_vo.py` only moves the lines from the 150 BPM placement (`assets/audio/vo-placed-150bpm.wav`).
+- **Mix:** music 0.30, voice 1.8. Measured on the render: -18.5 LUFS integrated, -3.2 dBFS peak, voice ~7 dB above the bed.
 
 ## Beat sheet (one bar each)
 

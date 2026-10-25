@@ -1,5 +1,6 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame } from 'remotion';
+import { AbsoluteFill } from 'remotion';
+import { useStoryFrame } from '../time';
 import { C } from '../tokens';
 import { impact, mono } from '../fonts';
 import { accel, lin, snap } from '../motion';
@@ -18,7 +19,7 @@ const rows = [
 ];
 
 export const Wallet: React.FC = () => {
-  const g = useCurrentFrame();
+  const g = useStoryFrame();
   const iris = accel(g, 0, 0, 1, 1) * snap(g, 0, 0, 1, 8);
   const cardY = (x: number) => snap(x, 1, 120, 0, 8);
   const v = Math.abs(cardY(g) - cardY(g - 1));

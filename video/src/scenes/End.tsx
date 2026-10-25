@@ -1,5 +1,6 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame } from 'remotion';
+import { AbsoluteFill } from 'remotion';
+import { useStoryFrame } from '../time';
 import { C } from '../tokens';
 import { impact, mono } from '../fonts';
 import { lin, snap } from '../motion';
@@ -15,13 +16,13 @@ const TAG = 'גישה מוקדמת · הצטרפות בחינם';
 const GLYPHS = '#%/_-+=*01<>';
 
 export const End: React.FC = () => {
-  const g = useCurrentFrame();
+  const g = useStoryFrame();
   const appear = snap(g, 3, 0, 1, 7);
   const p = (x: number) => snap(x, 11, 0, 1, 13);
   const v = Math.abs(p(g) - p(g - 1)) * LETTERS_W;
   const decodeAt = 50;
   const decoded = Math.floor(lin(g, decodeAt, 0, TAG.length, 20));
-  const tag = g < decodeAt ? '' : Array.from(TAG).map((ch, i) => (i < decoded || ch === ' ' ? ch : i < decoded + 5 ? GLYPHS[(i * 7 + g) % GLYPHS.length] : '')).join('');
+  const tag = g < decodeAt ? '' : Array.from(TAG).map((ch, i) => (i < decoded || ch === ' ' ? ch : i < decoded + 5 ? GLYPHS[(i * 7 + Math.floor(g)) % GLYPHS.length] : '')).join('');
 
   return (
     <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 40%, #E4FF6E 0%, ${C.lime} 55%, #CAF02F 100%)`, alignItems: 'center' }}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, useCurrentFrame } from 'remotion';
-import { C, FPS, S } from '../tokens';
+import { C, FPS, S, SLOW } from '../tokens';
 import { mono } from '../fonts';
 
 // Mirrored HUD for RTL (STYLE_GUIDE §4.6): label top-right, counter top-left, tag bottom-right, timecode bottom-left.
@@ -34,8 +34,9 @@ const Bracket: React.FC<{ corner: 'tl' | 'tr' | 'bl' | 'br'; color: string }> = 
 };
 
 export const Hud: React.FC = () => {
-  const f = useCurrentFrame();
-  const sc = scenes.find((s) => f >= s.from && f < s.to);
+  const f = useCurrentFrame(); // real frames: the timecode and blink run in real time
+  const story = f / SLOW;
+  const sc = scenes.find((s) => story >= s.from && story < s.to);
   if (!sc) return null;
   const color = sc.tone === 'dark' ? 'rgba(248,248,244,0.75)' : 'rgba(17,19,15,0.72)';
   const dot = sc.tone === 'dark' ? C.lime : C.ink;

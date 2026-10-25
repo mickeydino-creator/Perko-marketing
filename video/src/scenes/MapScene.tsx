@@ -1,5 +1,6 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame } from 'remotion';
+import { AbsoluteFill } from 'remotion';
+import { useStoryFrame } from '../time';
 import { C } from '../tokens';
 import { impact, mono } from '../fonts';
 import { accel, lin, snap } from '../motion';
@@ -24,7 +25,7 @@ const pins = [
 const links = [[0, 1], [0, 2], [1, 3], [2, 4], [1, 5], [3, 6], [2, 7], [3, 7], [0, 7]];
 
 export const MapScene: React.FC = () => {
-  const g = useCurrentFrame();
+  const g = useStoryFrame();
   const zoom = snap(g, 0, 1.08, 1, 9) + lin(g, 9, 0, 0.03, 39);
   const newest = pins.reduce((acc, p, i) => (g >= p.at ? i : acc), -1);
   const grow = accel(g, 40, 0, 1, 8);
