@@ -33,6 +33,7 @@ COLS = [
     ('date_verified', 'Date Verified', 12),
     ('outreach', 'Outreach Status', 14),
     ('notes', 'Additional Notes', 44),
+    ('outreach_msg', 'Suggested Outreach Message (Hebrew)', 60),
 ]
 LINK_KEYS = {'website', 'instagram', 'other_social', 'source_details', 'source_contact'}
 
@@ -90,6 +91,8 @@ for ri, r in enumerate(rows, start=HEADER_ROW + 1):
         if key == 'email' and v:
             c.hyperlink = f'mailto:{v}'
             c.font = link_font
+        if key == 'outreach_msg':
+            c.alignment = Alignment(wrap_text=True, vertical='top', horizontal='right', readingOrder=2)
         if key == 'name_he':
             c.alignment = Alignment(wrap_text=True, vertical='top', horizontal='right', readingOrder=2)
     ws.row_dimensions[ri].height = 96
