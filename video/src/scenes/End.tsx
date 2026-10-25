@@ -19,31 +19,32 @@ export const End: React.FC = () => {
   const appear = snap(g, 3, 0, 1, 7);
   const p = (x: number) => snap(x, 11, 0, 1, 13);
   const v = Math.abs(p(g) - p(g - 1)) * LETTERS_W;
-  const decodeAt = 44;
+  const decodeAt = 50;
   const decoded = Math.floor(lin(g, decodeAt, 0, TAG.length, 20));
   const tag = g < decodeAt ? '' : Array.from(TAG).map((ch, i) => (i < decoded || ch === ' ' ? ch : i < decoded + 5 ? GLYPHS[(i * 7 + g) % GLYPHS.length] : '')).join('');
-  const halo = 30 + Math.sin(Math.min(g, 96) / 6) * 6;
 
   return (
-    <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 44%, #1C2440 0%, ${C.ink} 62%)`, alignItems: 'center' }}>
+    <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 40%, #E4FF6E 0%, ${C.lime} 55%, #CAF02F 100%)`, alignItems: 'center' }}>
       <div style={{ position: 'absolute', top: 330, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '0.035em', fontFamily: impact, fontWeight: 800, fontSize: SIZE, letterSpacing: '-0.055em', lineHeight: 1, color: C.white, direction: 'ltr' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '0.035em', fontFamily: impact, fontWeight: 800, fontSize: SIZE, letterSpacing: '-0.055em', lineHeight: 1, color: C.ink, direction: 'ltr' }}>
           <span style={{ clipPath: `inset(-20% ${(1 - p(g)) * 100}% -20% -5%)` }}>perk</span>
           <Blur x={v}>
             <span style={{
-              display: 'inline-block', width: '0.5em', height: '0.5em', borderRadius: '50%', background: C.cobalt,
+              display: 'inline-block', width: '0.5em', height: '0.5em', borderRadius: '50%', background: C.ink,
               transform: `translateX(${-(1 - p(g)) * (LETTERS_W / 2)}px) translateY(0.015em) scale(${appear})`,
-              boxShadow: `0 0 ${halo}px rgba(67,91,255,0.85), 0 0 ${halo * 2.6}px rgba(67,91,255,0.35)`,
             }} />
           </Blur>
         </div>
         <div style={{ marginTop: 26, height: 92 }}>
-          <WriteOn g={g} at={35} style={accentStyle(84, C.white)}>הצטרפו בחינם לגישה המוקדמת.</WriteOn>
+          <WriteOn g={g} at={35} style={accentStyle(84, C.ink)}>הצטרפו בחינם לגישה המוקדמת.</WriteOn>
         </div>
-        <div style={{ marginTop: 26, width: lin(g, 40, 0, 620, 9), height: 1.5, background: 'rgba(255,255,255,0.35)' }} />
-        <div style={{ marginTop: 26, fontFamily: mono, fontSize: 24, letterSpacing: '0.3em', color: '#8FA0FF', direction: 'ltr', height: 30 }}>{tag}</div>
+        <div style={{ marginTop: 30, height: 84, display: 'flex', alignItems: 'center', gap: 14, padding: '0 40px', borderRadius: 999, background: C.ink, color: C.lime, fontFamily: impact, fontWeight: 700, fontSize: 34, direction: 'rtl', opacity: g < 42 ? 0 : 1, transform: `translateY(${snap(g, 42, 40, 0, 8)}px)` }}>
+          הצטרפו בחינם
+          <svg width="30" height="30" viewBox="0 0 24 24"><path d="M19 12H5m6-6l-6 6 6 6" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </div>
+        <div style={{ marginTop: 26, fontFamily: mono, fontSize: 20, letterSpacing: '0.3em', color: C.ink, direction: 'ltr', height: 30 }}>{tag}</div>
       </div>
-      <div style={{ position: 'absolute', bottom: 70, fontFamily: mono, fontSize: 15, letterSpacing: '0.18em', color: C.slateOnInk, direction: 'ltr', opacity: lin(g, 62, 0, 1, 6) }}>
+      <div style={{ position: 'absolute', bottom: 70, fontFamily: mono, fontSize: 15, letterSpacing: '0.18em', color: C.muted, direction: 'ltr', opacity: lin(g, 62, 0, 1, 6) }}>
         PERKO · 2026 · PRODUCT SCREENS ARE ILLUSTRATIVE
       </div>
     </AbsoluteFill>

@@ -21,8 +21,8 @@ export const Whip: React.FC<{ g: number; at: number; style: React.CSSProperties;
     <div style={{ position: 'relative', transform: `translateX(${x(g)}px)` }}>
       {split > 0 && (
         <>
-          <div style={{ ...style, position: 'absolute', inset: 0, color: '#FF3D6E', opacity: 0.6, transform: `translateX(${-40 * split}px)`, mixBlendMode: 'multiply' }}>{children}</div>
-          <div style={{ ...style, position: 'absolute', inset: 0, color: '#2FD0FF', opacity: 0.6, transform: `translateX(${40 * split}px)`, mixBlendMode: 'multiply' }}>{children}</div>
+          <div style={{ ...style, position: 'absolute', inset: 0, color: '#11130F', opacity: 0.22, transform: `translateX(${-40 * split}px)`, mixBlendMode: 'multiply' }}>{children}</div>
+          <div style={{ ...style, position: 'absolute', inset: 0, color: '#11130F', opacity: 0.12, transform: `translateX(${40 * split}px)`, mixBlendMode: 'multiply' }}>{children}</div>
         </>
       )}
       <Blur x={v}><div style={style}>{children}</div></Blur>

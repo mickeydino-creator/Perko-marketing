@@ -12,11 +12,13 @@ Date researched: 2026-10-24 · Motion DNA version: STYLE_GUIDE §15 (no entries 
 - Stage and honesty constraints: early access, free to join now, no payment commitment, no claims of customers, partners, numbers or live features. [V] brief + `Join.astro`, `Faq.astro`
 - Audience: owners of neighbourhood cafés, restaurants, bakeries and shops. [V] brief
 
-## 3. Palette
-- Cobalt `#435BFF` (primary, signal) [V] `src/styles/global.css --cobalt`
-- Ink `#111522`, paper `#F8F9FC`, pale blue `#E9EDFF`, white `#FFFFFF`, slate `#586079` [V] same file
-- Mapping: field.dark = ink #111522 · field.brand = cobalt #435BFF · field.light = paper #F8F9FC · field.cool = pale #E9EDFF · signal = cobalt #435BFF · ink = #111522 · white = #FFFFFF (fields never pure: paper/pale already tinted; white only on elements)
-- Contrast: cobalt on ink 3.9:1, on paper 4.9:1, on pale 4.3:1 (all ≥ 3:1). On the cobalt field the signal object is rendered white [S adaptation, see §6].
+## 3. Palette (brand identity supplied by the user, 2026-10-25; replaces the earlier cobalt palette)
+- Acid lime `#D7FF35` (primary, dominant) · secondary lime `#BCE82D` (small variations only) [V] user brand sheet
+- Ink `#11130F` · warm off-white `#F8F8F4` · muted text `#303626` [V] user brand sheet
+- Derived tints (not new colours) [S]: ink-raised `#1F221B`, tint `#EBECE4`, tint-strong `#D8DACE`, on-ink text `#B9BCB0`.
+- Mapping: field.brand = lime · field.dark = ink · field.light = off-white · field.cool = (not used; lime and ink alternate instead) · signal = lime on ink, ink on lime and off-white · ink = #11130F · white = #F8F8F4
+- Balance target ~60 / 25 / 15 (lime / ink / off-white). Field order: boot ink · problem lime/ink/lime/paper · title lime · wallet ink · scan lime · stamps paper · progress lime · kinetic paper · map lime · orbit ink · end lime (about 57% of the running time on lime fields, plus lime elements inside the ink scenes).
+- Contrast: ink on lime 15.8:1 · lime on ink 15.8:1 · muted on lime 9.5:1. Lime on off-white is ~1.1:1, so lime never carries meaning on off-white; the signal there is ink.
 
 ## 4. Logo, typography, assets
 - Logo: the Perko wordmark, lowercase "perk" in Heebo 800 + a solid cobalt disc as the "o" (the collected stamp). App icon: cobalt rounded square, white "p" whose bowl is a solid disc. [V] `src/components/Wordmark.astro`, `public/favicon.svg`. Rendered from the same component logic, not redrawn.
@@ -25,7 +27,7 @@ Date researched: 2026-10-24 · Motion DNA version: STYLE_GUIDE §15 (no entries 
 - Brand graphic elements: the filled stamp dot, 5-column stamp grids, rounded cards (28px radius), the neighbourhood street map with cobalt route [V] `Network.astro`.
 
 ## 5. Visual direction
-Bright, editorial, confident. The stamp dot is the whole film's thread: it is the spark at the boot, the period of the title, every collected stamp, the pins on the map, and finally the "o" that completes the wordmark. Fields rotate ink → cobalt → paper → pale. Copy stays honest: sample business names, "גישה מוקדמת", "הצטרפות חינם".
+Bright, editorial, confident. The stamp dot is the whole film's thread: it is the spark at the boot, the period of the title, every collected stamp, the pins on the map, and finally the "o" that completes the wordmark. Fields rotate between acid lime, ink and off-white, with lime dominant. Copy stays honest: sample business names, "גישה מוקדמת", "הצטרפות חינם".
 
 ## 6. Merge plan: Motion DNA × identity
 - Kept (CORE): bar-locked scenes, expo snaps with motion blur, contained-shape transitions, mirrored HUD (RTL), three type roles, the dot motif (= Perko's stamp disc), field rotation, single signal.

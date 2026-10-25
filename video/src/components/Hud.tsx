@@ -5,11 +5,11 @@ import { mono } from '../fonts';
 
 // Mirrored HUD for RTL (STYLE_GUIDE §4.6): label top-right, counter top-left, tag bottom-right, timecode bottom-left.
 const scenes = [
-  { ...S.title, n: 1, tag: 'IDENTITY / TYPE', tone: 'dark' },
+  { ...S.title, n: 1, tag: 'IDENTITY / TYPE', tone: 'light' },
   { ...S.wallet, n: 2, tag: 'PRODUCT / WALLET', tone: 'dark' },
   { ...S.scan, n: 3, tag: 'PRODUCT / SCAN', tone: 'light' },
   { ...S.stamp, n: 4, tag: 'DATA / STAMPS', tone: 'light' },
-  { ...S.progress, n: 5, tag: 'UI / PROGRESS', tone: 'dark' },
+  { ...S.progress, n: 5, tag: 'UI / PROGRESS', tone: 'light' },
   { ...S.back, n: 6, tag: 'KINETIC TYPOGRAPHY', tone: 'light' },
   { ...S.map, n: 7, tag: 'VISION / MAP', tone: 'light' },
   { ...S.orbit, n: 8, tag: 'VISION / NETWORK', tone: 'dark' },
@@ -37,8 +37,8 @@ export const Hud: React.FC = () => {
   const f = useCurrentFrame();
   const sc = scenes.find((s) => f >= s.from && f < s.to);
   if (!sc) return null;
-  const color = sc.tone === 'dark' ? 'rgba(255,255,255,0.78)' : 'rgba(17,21,34,0.66)';
-  const dot = sc.tone === 'dark' ? C.white : C.cobalt;
+  const color = sc.tone === 'dark' ? 'rgba(248,248,244,0.75)' : 'rgba(17,19,15,0.72)';
+  const dot = sc.tone === 'dark' ? C.lime : C.ink;
   const m = 64;
   const text: React.CSSProperties = { fontFamily: mono, fontSize: 15, letterSpacing: '0.2em', color, position: 'absolute', whiteSpace: 'nowrap', direction: 'ltr' };
   return (

@@ -25,19 +25,16 @@ export const S = {
 };
 
 export const C = {
-  ink: '#111522', // [V] src/styles/global.css --ink  -> field.dark
-  cobalt: '#435BFF', // [V] --cobalt -> field.brand + signal
-  cobaltStrong: '#2B44F2', // [V] --cobalt-strong
-  paper: '#F8F9FC', // [V] --paper -> field.light
-  pale: '#E9EDFF', // [V] --pale -> field.cool
-  paleStrong: '#D9E0FF', // [V] --pale-strong
-  white: '#FFFFFF', // [V] --white (elements only, never a field)
-  slate: '#586079', // [V] --slate
-  slateOnInk: '#AEB5CB', // [V] --slate-on-ink
-  inkRaised: '#1C2234', // [V] --ink-raised
-  cream: '#FFF8EC', // [S] paper punch card, from Problem.astro
-  coral: '#E2553D', // [S] app tile in Problem.astro
-  green: '#2F8F5B', // [S] paper slip ticks in Problem.astro
+  lime: '#D7FF35', // [V] Perko brand: primary, dominant field (field.brand)
+  lime2: '#BCE82D', // [V] secondary lime: small variations only
+  ink: '#11130F', // [V] near black: type, shapes (field.dark)
+  paper: '#F8F8F4', // [V] warm off-white (field.light)
+  muted: '#303626', // [V] muted text on lime / off-white
+  // derived tints of the palette (not new colours)
+  inkRaised: '#1F221B', // ink + 4% paper
+  tint: '#EBECE4', // ink 6% on paper
+  tintStrong: '#D8DACE', // ink 13% on paper
+  onInk: '#B9BCB0', // paper 70% on ink
 };
 
 export const EASE = {

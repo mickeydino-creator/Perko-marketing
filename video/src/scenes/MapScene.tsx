@@ -28,18 +28,18 @@ export const MapScene: React.FC = () => {
   const zoom = snap(g, 0, 1.08, 1, 9) + lin(g, 9, 0, 0.03, 39);
   const newest = pins.reduce((acc, p, i) => (g >= p.at ? i : acc), -1);
   const grow = accel(g, 40, 0, 1, 8);
-  const label: React.CSSProperties = { position: 'absolute', fontFamily: mono, fontSize: 17, letterSpacing: '0.2em', color: C.slate, direction: 'ltr', background: C.pale, padding: '6px 10px', borderRadius: 6 };
+  const label: React.CSSProperties = { position: 'absolute', fontFamily: mono, fontSize: 17, letterSpacing: '0.2em', color: C.muted, direction: 'ltr', padding: '6px 0' };
 
   return (
-    <AbsoluteFill style={{ background: C.paleStrong }}>
+    <AbsoluteFill style={{ background: C.lime }}>
       <AbsoluteFill style={{ transform: `scale(${zoom})`, transformOrigin: '960px 540px' }}>
         <svg width="1920" height="1080" style={{ position: 'absolute' }}>
-          {blocks.map(([x, y, w, h], i) => <rect key={i} x={x} y={y} width={w} height={h} rx={22} fill={C.paper} />)}
-          <path d="M-40 760 L1960 420" stroke={C.paper} strokeWidth={40} />
+          {blocks.map(([x, y, w, h], i) => <rect key={i} x={x} y={y} width={w} height={h} rx={22} fill="rgba(17,19,15,0.07)" />)}
+          <path d="M-40 760 L1960 420" stroke={C.lime} strokeWidth={40} />
           {links.map(([a, b], i) => {
             const A = pins[a]; const B = pins[b];
             const p = lin(g, Math.max(A.at, B.at) - 2, 0, 1, 7);
-            return <line key={i} x1={A.x} y1={A.y} x2={A.x + (B.x - A.x) * p} y2={A.y + (B.y - A.y) * p} stroke={i === 0 ? C.cobalt : C.ink} strokeOpacity={i === 0 ? 1 : 0.3} strokeWidth={i === 0 ? 9 : 4} strokeLinecap="round" />;
+            return <line key={i} x1={A.x} y1={A.y} x2={A.x + (B.x - A.x) * p} y2={A.y + (B.y - A.y) * p} stroke={C.ink} strokeOpacity={i === 0 ? 1 : 0.35} strokeWidth={i === 0 ? 9 : 4} strokeLinecap="round" />;
           })}
         </svg>
         {pins.map((p, i) => {
@@ -50,12 +50,12 @@ export const MapScene: React.FC = () => {
           const size = 56 + (isLast ? grow * 2600 : 0);
           return (
             <React.Fragment key={i}>
-              <div style={{ position: 'absolute', left: p.x - size / 2, top: p.y - size / 2, width: size, height: size, borderRadius: 9999, background: isNew ? C.cobalt : C.ink, transform: `scale(${s})`, display: 'grid', placeItems: 'center' }}>
-                <div style={{ width: 18, height: 18, borderRadius: 99, background: C.white, opacity: 1 - grow * 4 }} />
+              <div style={{ position: 'absolute', left: p.x - size / 2, top: p.y - size / 2, width: size, height: size, borderRadius: 9999, background: isNew ? C.ink : C.paper, transform: `scale(${s})`, display: 'grid', placeItems: 'center' }}>
+                <div style={{ width: 18, height: 18, borderRadius: 99, background: isNew ? C.lime : C.ink, opacity: 1 - grow * 4 }} />
               </div>
-              {isNew && <div style={{ position: 'absolute', left: p.x - 28, top: p.y - 28, width: 56, height: 56, borderRadius: 99, border: `4px solid ${C.cobalt}`, transform: `scale(${1 + lin(g, p.at, 0, 1.3, 12)})`, opacity: (1 - lin(g, p.at, 0, 1, 12)) * (1 - grow) }} />}
+              {isNew && <div style={{ position: 'absolute', left: p.x - 28, top: p.y - 28, width: 56, height: 56, borderRadius: 99, border: `4px solid ${C.ink}`, transform: `scale(${1 + lin(g, p.at, 0, 1.3, 12)})`, opacity: (1 - lin(g, p.at, 0, 1, 12)) * (1 - grow) }} />}
               {p.label && (
-                <div style={{ position: 'absolute', left: p.x + 40, top: p.y - 26, background: C.white, borderRadius: 16, padding: '8px 18px', fontFamily: impact, fontSize: 26, fontWeight: 700, color: C.ink, whiteSpace: 'nowrap', direction: 'rtl', opacity: snap(g, p.at + 2, 0, 1, 6) * (1 - grow), transform: `translateX(${snap(g, p.at + 2, 18, 0, 8)}px)` }}>
+                <div style={{ position: 'absolute', left: p.x + 40, top: p.y - 26, background: C.ink, borderRadius: 999, padding: '8px 20px', fontFamily: impact, fontSize: 26, fontWeight: 700, color: C.lime, whiteSpace: 'nowrap', direction: 'rtl', opacity: snap(g, p.at + 2, 0, 1, 6) * (1 - grow), transform: `translateX(${snap(g, p.at + 2, 18, 0, 8)}px)` }}>
                   {p.label}
                 </div>
               )}

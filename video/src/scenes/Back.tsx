@@ -12,18 +12,18 @@ export const Back: React.FC = () => {
   const swap = 16;
   const wipe = accel(g, 40, 0, 1, 9);
   return (
-    <AbsoluteFill style={{ background: `radial-gradient(ellipse at 60% 40%, #FFFFFF 0%, ${C.paper} 60%)`, alignItems: 'center', justifyContent: 'center' }}>
+    <AbsoluteFill style={{ background: `radial-gradient(ellipse at 60% 40%, #FFFFFB 0%, ${C.paper} 60%)`, alignItems: 'center', justifyContent: 'center' }}>
       {g < swap ? (
         <Whip g={g} at={0} style={impactStyle(330, C.ink)}>חוזרים.</Whip>
       ) : (
         <div style={{ position: 'relative' }}>
           <WriteOn g={g} at={swap} style={accentStyle(250, C.ink)}>ומממשים.</WriteOn>
           <svg width="900" height="70" viewBox="0 0 900 70" style={{ position: 'absolute', right: -40, bottom: -44 }}>
-            <path d="M880 34 C 650 56, 380 20, 20 42" fill="none" stroke={C.cobalt} strokeWidth="8" strokeLinecap="round" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - snap(g, swap + 5, 0, 1, 8)} />
+            <path d="M880 34 C 650 56, 380 20, 20 42" fill="none" stroke={C.ink} strokeWidth="8" strokeLinecap="round" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - snap(g, swap + 5, 0, 1, 8)} />
           </svg>
         </div>
       )}
-      {g >= 40 && [C.cobalt, C.white, C.pale].map((col, i) => {
+      {g >= 40 && [C.ink, C.paper, C.lime].map((col, i) => {
         const p = Math.max(0, wipe * 1.3 - i * 0.15);
         return <div key={i} style={{ position: 'absolute', top: -300, left: 2300 - p * 3600, width: 4200, height: 1700, background: col, transform: 'skewX(-20deg)' }} />;
       })}

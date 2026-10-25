@@ -1,7 +1,7 @@
 # Perko - business promo video (Motion DNA)
 
 16:9, 1920×1080, 30 fps, 20.4 s. 150 BPM: beat = 12 f (0.4 s), bar = 48 f (1.6 s), one scene per bar.
-Hebrew, RTL. Remotion 4 + React. Brand values, sources and the merge plan are in `PROJECT_BRIEF.md`;
+Hebrew, RTL. Remotion 4 + React. Palette: acid lime #D7FF35 (dominant), ink #11130F, off-white #F8F8F4, secondary lime #BCE82D, muted #303626 - the same tokens as the website. Brand values, sources and the merge plan are in `PROJECT_BRIEF.md`;
 timings and colours live in `src/tokens.ts`.
 
 ```sh

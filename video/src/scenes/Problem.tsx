@@ -16,7 +16,7 @@ import { Whip, WriteOn, accentStyle, impactStyle } from '../components/Kinetic';
 export const Problem: React.FC = () => {
   const g = useCurrentFrame();
   const b = Math.min(3, Math.floor(g / BEAT));
-  const field = [C.paper, C.ink, C.pale, C.paper][b];
+  const field = [C.lime, C.ink, C.lime, C.paper][b];
   const flash = 1 - lin(g, 0, 0, 1, 8); // the boot flash cools into the paper field
 
   // beat 2: the word grows out of a small version of itself while the field swaps
@@ -41,14 +41,14 @@ export const Problem: React.FC = () => {
               const dir = r % 2 ? 1 : -1;
               const off = ((g - BEAT) * 9 * dir + r * 240) % 900;
               return (
-                <div key={r} style={{ ...impactStyle(150, 'transparent'), WebkitTextStroke: '1.5px rgba(169,181,255,0.32)', transform: `translateX(${off - 450}px)`, height: 156, display: 'flex', gap: 60 }}>
+                <div key={r} style={{ ...impactStyle(150, 'transparent'), WebkitTextStroke: '1.5px rgba(215,255,53,0.28)', transform: `translateX(${off - 450}px)`, height: 156, display: 'flex', gap: 60 }}>
                   {Array.from({ length: 7 }, (_, k) => <span key={k}>כרטיס</span>)}
                 </div>
               );
             })}
           </AbsoluteFill>
           <Blur y={gv}>
-            <div style={{ ...impactStyle(330, C.cobalt), transform: `scale(${grow})`, background: 'linear-gradient(180deg, #F3F5FF 0%, #9AABFF 45%, #435BFF 100%)', WebkitBackgroundClip: 'text', color: 'transparent', filter: 'drop-shadow(0 0 28px rgba(67,91,255,0.55))', padding: '0 20px' }}>
+            <div style={{ ...impactStyle(330, C.lime), transform: `scale(${grow})`, background: 'linear-gradient(180deg, #F4FFC7 0%, #D7FF35 55%, #BCE82D 100%)', WebkitBackgroundClip: 'text', color: 'transparent', filter: 'drop-shadow(0 0 26px rgba(215,255,53,0.45))', padding: '0 20px' }}>
               כרטיס
             </div>
           </Blur>
@@ -64,8 +64,8 @@ export const Problem: React.FC = () => {
               ...(k[1] === 'l' ? { left: 0, borderLeftWidth: 3 } : { right: 0, borderRightWidth: 3 }),
             }} />
           ))}
-          <div style={{ position: 'absolute', top: 18, right: 4, fontFamily: mono, fontSize: 16, letterSpacing: '0.2em', color: C.slate, direction: 'ltr' }}>PUNCH CARD · APP · CLUB</div>
-          <div style={{ position: 'absolute', bottom: 18, left: 4, fontFamily: mono, fontSize: 16, letterSpacing: '0.2em', color: C.slate, direction: 'ltr' }}>ONE CARD PER SHOP</div>
+          <div style={{ position: 'absolute', top: 18, right: 4, fontFamily: mono, fontSize: 16, letterSpacing: '0.2em', color: C.muted, direction: 'ltr' }}>PUNCH CARD · APP · CLUB</div>
+          <div style={{ position: 'absolute', bottom: 18, left: 4, fontFamily: mono, fontSize: 16, letterSpacing: '0.2em', color: C.muted, direction: 'ltr' }}>ONE CARD PER SHOP</div>
           <div style={{ position: 'relative' }}>
             {Array.from({ length: slices }, (_, i) => {
               const t = g - BEAT * 2 - i * 0.6;
@@ -86,18 +86,18 @@ export const Problem: React.FC = () => {
         <div style={{ position: 'relative' }}>
           <WriteOn g={g} at={BEAT * 3} style={accentStyle(230, C.ink)}>ועוד אחד.</WriteOn>
           <svg width="760" height="60" viewBox="0 0 760 60" style={{ position: 'absolute', right: -10, bottom: -36 }}>
-            <path d="M745 30 C 560 48, 330 18, 20 36" fill="none" stroke={C.cobalt} strokeWidth="7" strokeLinecap="round" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - snap(g, BEAT * 3 + 3, 0, 1, 8)} />
+            <path d="M745 30 C 560 48, 330 18, 20 36" fill="none" stroke={C.ink} strokeWidth="7" strokeLinecap="round" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - snap(g, BEAT * 3 + 3, 0, 1, 8)} />
           </svg>
         </div>
       )}
 
       {/* exit: three slabs at -20deg sweep toward the reading end, the last one is the title's cobalt field */}
-      {g >= 40 && ['#C9D3FF', C.white, C.cobalt].map((col, i) => {
+      {g >= 40 && [C.ink, C.paper, C.lime].map((col, i) => {
         const p = Math.max(0, wipe * 1.3 - i * 0.15);
         return <div key={i} style={{ position: 'absolute', top: -300, left: 2300 - p * 3600, width: 4200, height: 1700, background: col, transform: 'skewX(-20deg)' }} />;
       })}
 
-      <AbsoluteFill style={{ background: '#FFFFFF', opacity: flash }} />
+      <AbsoluteFill style={{ background: '#FFFFF4', opacity: flash }} />
     </AbsoluteFill>
   );
 };

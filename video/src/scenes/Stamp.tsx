@@ -25,10 +25,10 @@ export const Stamp: React.FC = () => {
   const roll = g < 10 ? Math.abs(snap(g, 0, 1, 8, 10) - snap(g - 1, 0, 1, 8, 10)) * 10 : 0;
   const burst = accel(g, 38, 0, 1, 10);
   const disc = accel(g, 39, 0, 3600, 9);
-  const label: React.CSSProperties = { fontFamily: mono, fontSize: 17, letterSpacing: '0.2em', color: C.slate, direction: 'ltr' };
+  const label: React.CSSProperties = { fontFamily: mono, fontSize: 17, letterSpacing: '0.2em', color: C.muted, direction: 'ltr' };
 
   return (
-    <AbsoluteFill style={{ background: `radial-gradient(ellipse at 70% 40%, #FFFFFF 0%, ${C.paper} 55%, #EEF1F8 100%)` }}>
+    <AbsoluteFill style={{ background: `radial-gradient(ellipse at 70% 40%, #FFFFFB 0%, ${C.paper} 55%, #EFEFE8 100%)` }}>
       {/* reading side: counter */}
       <div style={{ position: 'absolute', right: 180, top: 300, width: 520, direction: 'rtl' }}>
         <div style={{ ...label, textAlign: 'right' }}>STAMPS · קפה פינה · SAMPLE</div>
@@ -49,28 +49,28 @@ export const Stamp: React.FC = () => {
         return (
           <div key={i} style={{
             position: 'absolute', left: p.x, top: p.y, width: GRID.cell, height: GRID.cell, borderRadius: 999,
-            background: on ? (i === 8 ? C.cobalt : C.ink) : i === 9 ? C.white : C.pale,
-            boxShadow: i === 9 ? `inset 0 0 0 5px ${C.paleStrong}` : undefined,
+            background: on ? (i === 8 ? C.lime : C.ink) : i === 9 ? C.paper : C.tint,
+            boxShadow: i === 9 ? `inset 0 0 0 5px ${C.tintStrong}` : i === 8 && on ? `inset 0 0 0 6px ${C.ink}` : undefined,
             transform: `scale(${g < at && i !== 8 ? 0 : s})`, opacity: i === 8 && g < land - 4 ? 0.0 : 1,
           }} />
         );
       })}
       {/* empty 9th slot before the stamp lands */}
-      {g < land && <div style={{ position: 'absolute', left: NEW.x, top: NEW.y, width: GRID.cell, height: GRID.cell, borderRadius: 999, background: C.pale }} />}
+      {g < land && <div style={{ position: 'absolute', left: NEW.x, top: NEW.y, width: GRID.cell, height: GRID.cell, borderRadius: 999, background: C.tint }} />}
       <div style={{ position: 'absolute', left: GRID.x, top: GRID.y + GRID.cell * 2 + GRID.gap + 34, ...label }}>{g >= land ? '9 / 10 · +1 STAMP' : '8 / 10'}</div>
 
       {/* landing ring, then the burst */}
       {g >= land && (
         <div style={{
           position: 'absolute', left: NEW.cx - GRID.cell / 2, top: NEW.cy - GRID.cell / 2, width: GRID.cell, height: GRID.cell, borderRadius: 999,
-          border: `5px solid ${C.cobalt}`, transform: `scale(${g < 38 ? snap(g, land, 1, 1.7, 12) : 1.7 + burst * 18})`,
+          border: `5px solid ${C.ink}`, transform: `scale(${g < 38 ? snap(g, land, 1, 1.7, 12) : 1.7 + burst * 18})`,
           opacity: g < 38 ? 1 - lin(g, land + 3, 0, 0.8, 14) : 0.9 - burst * 0.5,
         }} />
       )}
       {g >= 38 && Array.from({ length: 16 }, (_, i) => (
-        <div key={i} style={{ position: 'absolute', left: NEW.cx, top: NEW.cy, width: 40 + burst * 500, height: 6, borderRadius: 6, background: C.cobalt, transformOrigin: '0 50%', transform: `rotate(${(i / 16) * 360}deg) translateX(${burst * 700}px)` }} />
+        <div key={i} style={{ position: 'absolute', left: NEW.cx, top: NEW.cy, width: 40 + burst * 500, height: 6, borderRadius: 6, background: C.ink, transformOrigin: '0 50%', transform: `rotate(${(i / 16) * 360}deg) translateX(${burst * 700}px)` }} />
       ))}
-      <div style={{ position: 'absolute', left: NEW.cx - disc / 2, top: NEW.cy - disc / 2, width: disc, height: disc, borderRadius: 9999, background: C.cobalt }} />
+      <div style={{ position: 'absolute', left: NEW.cx - disc / 2, top: NEW.cy - disc / 2, width: disc, height: disc, borderRadius: 9999, background: C.lime }} />
     </AbsoluteFill>
   );
 };
