@@ -86,20 +86,20 @@ const facts = [
 </section>
 
 <style>
-  .join { background: var(--pale); padding-block: var(--gap-section); margin-top: var(--gap-section); }
+  .join { background: var(--paper); padding-block: var(--gap-section); margin-top: var(--gap-section); }
   .join__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 112px); align-items: start; }
 
   .join__lead { margin-top: 28px; max-width: 38ch; }
   .join__facts { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px 40px; }
   .join__facts dt { font-size: 22px; font-weight: 800; display: flex; gap: 10px; align-items: center; }
-  .join__facts dt::before { content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--cobalt); flex: none; }
+  .join__facts dt::before { content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); flex: none; }
   .join__facts dd { margin: 6px 0 0; color: var(--slate); padding-inline-start: 22px; }
   .join__fine { margin-top: 40px; color: var(--slate); max-width: 52ch; }
 
   .join__form-wrap { position: sticky; top: 92px; }
-  .form { background: var(--white); border-radius: var(--radius); padding: clamp(24px, 3.2vw, 44px); display: grid; gap: 20px; }
+  .form { background: var(--lime); border-radius: var(--radius); padding: clamp(24px, 3.2vw, 44px); display: grid; gap: 20px; }
   .form__title { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
-  .form__intro p { color: var(--slate); margin-top: 4px; }
+  .form__intro p { color: var(--muted); margin-top: 4px; }
   .field { display: grid; gap: 8px; }
   .field label { font-weight: 700; font-size: 15px; }
   .field__opt { font-weight: 400; color: var(--slate); }
@@ -110,7 +110,7 @@ const facts = [
   .field textarea { resize: vertical; min-height: 96px; }
   .field input[dir='ltr'] { text-align: right; }
   .field input[dir='ltr']:not(:placeholder-shown) { text-align: left; }
-  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--cobalt); background: var(--white); }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--ink); background: var(--paper); }
   .field [aria-invalid='true'] { border-color: #C4321F; background: #FFF6F4; }
   .select { position: relative; }
   .select select { appearance: none; padding-inline-start: 16px; padding-inline-end: 44px; cursor: pointer; }
@@ -122,15 +122,15 @@ const facts = [
   .field__error { color: #B42B18; font-size: 15px; font-weight: 600; }
   .field__error:empty { display: none; }
   .form__submit { width: 100%; min-height: 60px; font-size: 18px; margin-top: 4px; position: relative; }
-  .form__spinner { display: none; width: 20px; height: 20px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.35); border-top-color: var(--white); }
+  .form__spinner { display: none; width: 20px; height: 20px; border-radius: 50%; border: 3px solid rgba(215,255,53,0.35); border-top-color: var(--lime); }
   .form.is-loading .form__spinner { display: block; animation: spin 800ms linear infinite; }
   .form.is-loading .form__submit { pointer-events: none; opacity: 0.9; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .form__privacy { color: var(--slate); }
+  .form__privacy { color: var(--muted); }
   .form__status:empty { display: none; }
   .form__status { border-radius: 18px; padding: 20px; outline: none; }
-  .form__status.is-success { background: var(--cobalt); color: var(--white); }
-  .form__status.is-info { background: var(--pale); color: var(--ink); }
+  .form__status.is-success { background: var(--ink); color: var(--lime); }
+  .form__status.is-info { background: var(--ink); color: var(--paper); }
   .form__status.is-error { background: #FFF1EE; color: #8A2414; }
   .form__status b { display: block; font-size: 18px; margin-bottom: 4px; }
 

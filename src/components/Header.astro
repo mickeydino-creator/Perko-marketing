@@ -39,7 +39,7 @@ const links = [
 <style>
   .site-header {
     position: sticky; top: 0; z-index: 50;
-    background: var(--paper);
+    background: var(--lime);
     transition: background-color var(--t-ui) ease;
   }
   .site-header__bar {
@@ -63,13 +63,13 @@ const links = [
   .site-header__actions { margin-inline-start: auto; display: flex; align-items: center; gap: 8px; }
   .site-header__toggle {
     display: none; width: 46px; height: 46px; border-radius: 999px; border: 0; cursor: pointer;
-    background: var(--pale); align-items: center; justify-content: center;
+    background: var(--ink); align-items: center; justify-content: center;
     transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease;
   }
   .site-header__toggle:active { transform: scale(0.95); }
   .burger { position: relative; width: 18px; height: 12px; display: block; }
   .burger span {
-    position: absolute; inset-inline: 0; height: 2.5px; border-radius: 2px; background: var(--ink);
+    position: absolute; inset-inline: 0; height: 2.5px; border-radius: 2px; background: var(--lime);
     transition: transform var(--t-ui) var(--ease-out), top var(--t-ui) var(--ease-out);
   }
   .burger span:first-child { top: 0; }
@@ -79,7 +79,7 @@ const links = [
 
   .mobile-menu {
     position: absolute; inset-inline: 0; top: 68px;
-    background: var(--paper); padding: 12px var(--m) 28px;
+    background: var(--lime); padding: 12px var(--m) 28px;
     height: calc(100svh - 68px); overflow-y: auto;
     display: flex; flex-direction: column;
   }

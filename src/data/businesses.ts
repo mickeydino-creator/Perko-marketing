@@ -11,7 +11,7 @@ export type Program = {
   reward: string;
   rule: string;
   initial: string;
-  tone: 'cobalt' | 'ink' | 'pale';
+  tone: 'lime' | 'ink' | 'pale';
 };
 
 export const businesses: Program[] = [
@@ -27,7 +27,7 @@ export const businesses: Program[] = [
     reward: 'קפה הפוך עלינו',
     rule: 'חותמת על כל משקה חם',
     initial: 'פ',
-    tone: 'cobalt',
+    tone: 'lime',
   },
   {
     id: 'restaurant',

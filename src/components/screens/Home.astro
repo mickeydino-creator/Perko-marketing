@@ -10,13 +10,13 @@ const [cafe, restaurant, shop] = businesses;
     <p class="ui-title">הכרטיסים שלי</p>
   </div>
 
-  <article class="ui-card ui-card--cobalt">
+  <article class="ui-card ui-card--lime">
     <div class="ui-card__head">
       <span class="ui-avatar ui-avatar--white">{cafe.initial}</span>
       <span class="ui-card__names"><b>{cafe.name}</b><span>{cafe.program}</span></span>
       <span class="ui-count"><b>9</b>/{cafe.total}</span>
     </div>
-    <Stamps type="stamps" total={cafe.total} current={9} class="ui-stamps--on-cobalt" />
+    <Stamps type="stamps" total={cafe.total} current={9} class="ui-stamps--on-lime" />
     <p class="ui-card__foot">עוד חותמת אחת ל{cafe.reward.replace('עלינו', '').trim()} חינם</p>
   </article>
 

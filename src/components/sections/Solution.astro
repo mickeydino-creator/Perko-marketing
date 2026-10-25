@@ -57,11 +57,11 @@ const groups = [
     <figure class="solution__fragment" data-reveal style="--i:2">
       <div class="card-detail" data-ui role="img" aria-label="המחשה של מסך כרטיס באפליקציה: כרטיס הקפה של בית קפה לדוגמה, 7 מתוך 10 חותמות, וכללי הצבירה שהעסק הגדיר">
         <div class="card-detail__head">
-          <span class="ui-avatar ui-avatar--white">פ</span>
+          <span class="ui-avatar ui-avatar--ink">פ</span>
           <span><b>קפה פינה</b><span>בית קפה שכונתי · שם לדוגמה</span></span>
         </div>
         <p class="card-detail__count"><b>7</b> מתוך 10 חותמות</p>
-        <Stamps type="stamps" total={10} current={7} class="ui-stamps--on-cobalt card-detail__stamps" />
+        <Stamps type="stamps" total={10} current={7} class="ui-stamps--on-lime card-detail__stamps" />
         <p class="card-detail__next">עוד 3 ביקורים לקפה הפוך עלינו</p>
         <div class="card-detail__rules">
           <p class="card-detail__rules-title">הכללים של העסק הזה</p>
@@ -87,7 +87,7 @@ const groups = [
   .sheet__title { margin-bottom: 20px; }
   .sheet__intro { color: var(--slate); max-width: 44ch; margin-bottom: 40px; }
   .sheet__group + .sheet__group { margin-top: 40px; }
-  .sheet__group-name { font-size: 22px; font-weight: 800; margin-bottom: 14px; color: var(--cobalt-strong); }
+  .sheet__group-name { font-size: 22px; font-weight: 800; margin-bottom: 14px; color: var(--ink); }
   .sheet__item + .sheet__item { margin-top: 18px; }
   .sheet__item dt { display: flex; align-items: baseline; gap: 10px; font-size: 18px; font-weight: 500; }
   .sheet__item dt b { font-weight: 800; white-space: nowrap; }
@@ -96,17 +96,17 @@ const groups = [
   .sheet__fine { margin-top: 44px; color: var(--slate); max-width: 52ch; }
 
   .solution__fragment { display: grid; gap: 20px; }
-  .card-detail { background: var(--cobalt); color: var(--white); border-radius: var(--radius); padding: 32px; font-size: 15px; }
+  .card-detail { background: var(--lime); color: var(--ink); border-radius: var(--radius); padding: 32px; font-size: 15px; }
   .card-detail__head { display: flex; gap: 14px; align-items: center; }
   .card-detail__head .ui-avatar { font-size: 18px; width: 52px; height: 52px; border-radius: 16px; }
   .card-detail__head > span:last-child { display: grid; line-height: 1.3; }
   .card-detail__head b { font-size: 22px; }
-  .card-detail__head span span { color: var(--slate-on-cobalt); font-size: 15px; }
+  .card-detail__head span span { color: var(--muted); font-size: 15px; }
   .card-detail__count { margin-top: 32px; font-size: 18px; }
   .card-detail__count b { font-size: 64px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; margin-inline-end: 6px; }
   .card-detail__stamps { margin-top: 20px; font-size: 15px; gap: 12px; }
   .card-detail__next { margin-top: 18px; font-weight: 700; }
-  .card-detail__rules { margin-top: 28px; background: var(--white); color: var(--ink); border-radius: 18px; padding: 18px 20px; }
+  .card-detail__rules { margin-top: 28px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 18px 20px; }
   .card-detail__rules-title { font-weight: 800; margin-bottom: 8px; }
   .card-detail__rules li { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; font-size: 15px; }
   .card-detail__rules li span { color: var(--slate); }
@@ -117,7 +117,7 @@ const groups = [
     .sheet { padding: 48px 20px 44px; max-width: none; margin-inline: -8px; }
     .sheet__item dt { font-size: 18px; flex-wrap: wrap; }
     .sheet__item dt .sheet__leader { display: none; }
-    .sheet__item dt b { color: var(--cobalt-strong); width: 100%; }
+    .sheet__item dt b { color: var(--ink); width: 100%; }
     .card-detail { padding: 24px 20px; }
   }
 </style>

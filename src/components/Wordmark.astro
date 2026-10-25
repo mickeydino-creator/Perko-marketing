@@ -1,6 +1,6 @@
 ---
-// The Perko wordmark. Its "o" is a collected stamp: a solid cobalt disc.
-interface Props { class?: string; tone?: 'ink' | 'white'; label?: boolean }
+// The Perko wordmark. Its "o" is a collected stamp: a solid disc (ink on light surfaces, acid lime on ink).
+interface Props { class?: string; tone?: 'ink' | 'white' | 'lime'; label?: boolean }
 const { class: cls = '', tone = 'ink', label = true } = Astro.props;
 ---
 <span class:list={['wordmark', `wordmark--${tone}`, cls]} dir="ltr" role={label ? 'img' : undefined} aria-label={label ? 'Perko' : undefined} aria-hidden={label ? undefined : 'true'}>
@@ -13,9 +13,12 @@ const { class: cls = '', tone = 'ink', label = true } = Astro.props;
     font-weight: 800; letter-spacing: -0.055em; line-height: 1; font-size: 30px;
     color: var(--ink); white-space: nowrap; unicode-bidi: isolate;
   }
-  .wordmark--white { color: var(--white); }
+  .wordmark--white { color: var(--paper); }
+  .wordmark--white .wordmark__o { background: var(--lime); }
+  .wordmark--lime { color: var(--lime); }
+  .wordmark--lime .wordmark__o { background: var(--paper); }
   .wordmark__o {
     display: inline-block; width: 0.5em; height: 0.5em; border-radius: 50%;
-    background: var(--cobalt); transform: translateY(0.015em);
+    background: var(--accent); transform: translateY(0.015em);
   }
 </style>

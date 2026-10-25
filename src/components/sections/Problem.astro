@@ -93,11 +93,11 @@ const pieces = [
     display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 5vw, 96px); align-items: center;
   }
   .problem__text { margin-top: 32px; display: grid; gap: 18px; max-width: 46ch; }
-  .problem__answer { font-weight: 700; color: var(--cobalt-strong); font-size: var(--t-lead); line-height: 1.4; max-width: 30ch; }
+  .problem__answer { font-weight: 700; color: var(--ink); font-size: var(--t-lead); line-height: 1.4; max-width: 30ch; }
 
   .problem__visual {
     position: relative; height: min(640px, calc(100svh - 140px)); border-radius: var(--radius);
-    background: var(--pale); overflow: hidden;
+    background: var(--ink); overflow: hidden;
   }
   .problem__pile { position: absolute; inset: 0; }
   .frag {
@@ -110,35 +110,35 @@ const pieces = [
   .frag__name { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
   .frag__kind { color: var(--slate); font-size: 15px; }
 
-  .frag--punch { width: 280px; background: #FFF8EC; top: 8%; right: 7%; --r: -5deg; }
+  .frag--punch { width: 280px; background: var(--paper); top: 8%; right: 7%; --r: -5deg; }
   .frag__holes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 10px; }
-  .frag__holes i { aspect-ratio: 1; border-radius: 50%; background: #F0E2C8; }
-  .frag__holes i.on { background: var(--pale); box-shadow: inset 0 2px 3px rgba(17,21,34,0.18); } /* taste-skill-ignore: punched hole in a data-ui drawing */
+  .frag__holes i { aspect-ratio: 1; border-radius: 50%; background: var(--pale-strong); }
+  .frag__holes i.on { background: var(--ink); box-shadow: inset 0 2px 3px rgba(0,0,0,0.3); } /* taste-skill-ignore: punched hole in a data-ui drawing */
 
-  .frag--club { width: 290px; height: 178px; background: var(--ink); color: var(--white); top: 14%; left: 8%; --r: 6deg; }
+  .frag--club { width: 290px; height: 178px; background: var(--ink-raised); color: var(--paper); box-shadow: inset 0 0 0 1.5px rgba(248,248,244,0.14); top: 14%; left: 8%; --r: 6deg; }
   .frag--club .frag__kind { color: var(--slate-on-ink); }
-  .frag__chip { width: 38px; height: 28px; border-radius: 6px; background: #C9B37A; margin-top: 10px; }
+  .frag__chip { width: 38px; height: 28px; border-radius: 6px; background: var(--slate-on-ink); margin-top: 10px; }
   .frag__bars { position: absolute; bottom: 18px; left: 20px; display: flex; gap: 2px; height: 26px; }
   .frag__bars i { width: calc(var(--w) * 2px); background: var(--white); opacity: 0.85; }
 
   .frag--app { width: 300px; background: var(--white); grid-template-columns: auto 1fr; align-items: center; gap: 14px; top: 47%; right: 14%; --r: 3deg; }
-  .frag__icon { width: 52px; height: 52px; border-radius: 14px; background: #E2553D; }
+  .frag__icon { width: 52px; height: 52px; border-radius: 14px; background: var(--ink); }
 
-  .frag--paper { width: 210px; background: #FFFFFF; top: 60%; left: 12%; --r: -8deg; border-radius: 6px; }
+  .frag--paper { width: 210px; background: var(--paper); top: 60%; left: 12%; --r: -8deg; border-radius: 6px; }
   .frag__ticks { display: flex; gap: 8px; margin-top: 8px; }
   .frag__ticks i { width: 16px; height: 16px; border-radius: 50%; background: var(--pale); }
-  .frag__ticks i.on { background: #2F8F5B; }
+  .frag__ticks i.on { background: var(--ink); }
 
-  .frag--code { width: 230px; background: #FFFFFF; bottom: 6%; right: 36%; --r: 4deg; border-radius: 6px; }
+  .frag--code { width: 230px; background: var(--paper); bottom: 6%; right: 36%; --r: 4deg; border-radius: 6px; }
   .frag--code .frag__name { letter-spacing: 0.04em; direction: ltr; text-align: right; }
 
   .wallet {
     position: absolute; left: 50%; top: 50%; width: min(400px, 82%);
     transform: translate(-50%, calc(-50% + (1 - var(--p)) * 40px));
-    background: var(--white); border-radius: 26px; padding: 22px 22px 14px;
+    background: var(--lime); border-radius: 26px; padding: 22px 22px 14px;
     opacity: clamp(0, (var(--p) - 0.45) * 3, 1);
   }
-  .wallet__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; color: var(--slate); font-size: 15px; }
+  .wallet__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; color: var(--muted); font-size: 15px; }
   .wallet__mark { font-size: 26px; }
   .wallet__rows { display: grid; gap: 6px; }
   .wallet__row {
@@ -149,7 +149,7 @@ const pieces = [
     transform: translateY(calc((1 - clamp(0, (var(--p) - 0.55 - var(--i) * 0.05) * 6, 1)) * 12px));
   }
   .wallet__row span:last-child { color: var(--slate); }
-  .wallet__dot { width: 14px; height: 14px; border-radius: 50%; background: var(--cobalt); }
+  .wallet__dot { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); }
 
   /* Without script or with reduced motion: the finished state, plainly stacked. */
   :global(html:not(.js)) .problem, .problem.is-static { height: auto; --p: 1; }

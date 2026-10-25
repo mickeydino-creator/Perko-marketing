@@ -72,13 +72,13 @@ const steps = [
   .how__step:last-child { min-height: 48svh; justify-content: flex-start; padding-top: 6svh; }
   .how__step p { font-size: var(--t-lead); line-height: 1.5; color: var(--slate); }
   .how__step b { color: var(--ink); font-weight: 800; }
-  .how__step.is-current b { color: var(--cobalt-strong); }
+  .how__step.is-current b { color: var(--ink); }
   .how__inline { display: none; }
 
   .how__stage { position: relative; }
   .how__panel {
     position: sticky; top: 80px; height: calc(100svh - 92px); min-height: 600px;
-    background: var(--pale); border-radius: var(--radius);
+    background: var(--ink); border-radius: var(--radius);
     display: flex; flex-direction: column;
   }
   .how__phones { flex: 1; position: relative; display: grid; place-items: center; }
@@ -88,8 +88,8 @@ const steps = [
     transition: opacity 900ms ease, transform 1100ms var(--ease-expo);
   }
   .how__phone.is-active { opacity: 1; transform: none; }
-  .how__count { display: flex; justify-content: space-between; padding: 18px 24px; color: var(--slate); }
-  .how__count span:first-child { color: var(--ink); font-weight: 700; }
+  .how__count { display: flex; justify-content: space-between; padding: 18px 24px; color: var(--slate-on-ink); }
+  .how__count span:first-child { color: var(--lime); font-weight: 700; }
 
   @media (prefers-reduced-motion: reduce) {
     .how__phone { transition: opacity 300ms ease; transform: none; }
@@ -103,7 +103,7 @@ const steps = [
     .how__step, .how__step:last-child { min-height: 0; padding-top: 0; }
     .how__step p { font-size: 18px; color: var(--ink); }
     .how__inline {
-      display: block; margin-top: 24px; background: var(--pale); border-radius: var(--radius);
+      display: block; margin-top: 24px; background: var(--ink); border-radius: var(--radius);
       height: 360px; overflow: hidden; padding: 28px 0 0; display: flex; justify-content: center;
     }
     .how__mini { width: 260px; }
