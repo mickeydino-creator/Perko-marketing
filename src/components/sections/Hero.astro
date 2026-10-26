@@ -1,6 +1,5 @@
 ---
 import Phone from '../Phone.astro';
-import Home from '../screens/Home.astro';
 import QrGlyph from '../ui/QrGlyph.astro';
 ---
 <section class="hero" aria-labelledby="hero-title">
@@ -29,8 +28,8 @@ import QrGlyph from '../ui/QrGlyph.astro';
 
   <div class="hero__stage on-ink">
     <div class="hero__scene">
-      <Phone class="hero__phone" label="המחשה של מסך הבית באפליקציית Perko: כרטיס קפה עם 9 מתוך 10 חותמות, כרטיסים של מסעדה ושל חנות ספרים, ועסקים משתתפים בסביבה">
-        <Home />
+      <Phone class="hero__phone" label="צילום מסך הבית באפליקציית Perko: כרטיס קפה עם 9 מתוך 10 חותמות, כרטיס מסעדה עם 4 מתוך 6, מועדון קוראים עם 120 נקודות, ועסקים משתתפים שעוד לא בארנק">
+        <img class="phone__shot" src="/img/app/home.webp" width="780" height="1600" alt="" fetchpriority="high" decoding="async" />
       </Phone>
       <div class="hero__toast" data-ui aria-hidden="true">
         <span class="hero__toast-dot"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4L18 8" fill="none" stroke="#11130F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -42,7 +41,7 @@ import QrGlyph from '../ui/QrGlyph.astro';
       </div>
     </div>
     <p class="hero__bar small">
-      <span>המחשה: כך האפליקציה עשויה להיראות</span>
+      <span>צילום מסך מהאפליקציה</span>
       <span>שמות העסקים לדוגמה</span>
     </p>
   </div>

@@ -1,26 +1,23 @@
 ---
 import Phone from '../Phone.astro';
-import Discover from '../screens/Discover.astro';
-import Collect from '../screens/Collect.astro';
-import Redeem from '../screens/Redeem.astro';
 const steps = [
   {
     id: 'discover',
     runIn: 'קודם מגלים.',
     text: 'פותחים את Perko ורואים אילו עסקים בסביבה משתתפים בה, ומה התוכנית של כל אחד: כמה חותמות או נקודות צריך, ומה ההטבה בסוף. כרטיס חדש נוסף לארנק בלחיצה.',
-    label: 'מסך גילוי: רשימת עסקים משתתפים בסביבה, עם המרחק והתוכנית של כל עסק',
+    label: 'מסך גילוי: חיפוש, סינון לפי קפה, אוכל וחנויות, ורשימת העסקים המשתתפים עם התוכנית של כל אחד',
   },
   {
     id: 'collect',
     runIn: 'אחר כך צוברים.',
     text: 'אחרי רכישה מזכה סורקים את קוד ה-QR שבקופה, והחותמת או הנקודות נכנסות לכרטיס של אותו עסק. כך אנחנו מתכננים את תהליך הצבירה, והוא יתגבש יחד עם העסקים שישתתפו בפיילוט.',
-    label: 'מסך סריקה: המצלמה מכוונת לקוד בקופה, ומתחתיה אישור שנוספה חותמת, 8 מתוך 10',
+    label: 'מסך אחרי סריקה: החותמת העשירית נכנסה, הכרטיס של קפה פינה מלא וההטבה מוכנה',
   },
   {
     id: 'redeem',
     runIn: 'ובסוף מממשים.',
     text: 'רואים בכל רגע כמה חסר עד ההטבה. כשעומדים בתנאים שהעסק קבע, ההטבה מופיעה כמוכנה, מציגים אותה לצוות בקופה, וכרטיס חדש מתחיל מההתחלה.',
-    label: 'מסך הטבה: 10 מתוך 10 חותמות, קפה הפוך מוכן למימוש מול הצוות',
+    label: 'מסך מימוש: קפה הפוך מוכן, עם קוד בן 6 ספרות שמתחלף כל 30 שניות ומוצג לצוות בקופה',
   },
 ];
 ---
@@ -29,11 +26,11 @@ const steps = [
     <div class="how__stage" aria-hidden="true">
       <div class="how__panel">
         <div class="how__phones">
-          <Phone class="how__phone is-active" data-screen="discover"><Discover /></Phone>
-          <Phone class="how__phone" data-screen="collect"><Collect /></Phone>
-          <Phone class="how__phone" data-screen="redeem"><Redeem /></Phone>
+          <Phone class="how__phone is-active" data-screen="discover"><img class="phone__shot" src="/img/app/discover.webp" width="780" height="1600" alt="" loading="lazy" decoding="async" /></Phone>
+          <Phone class="how__phone phone--ink" data-screen="collect"><img class="phone__shot" src="/img/app/collect.webp" width="780" height="1600" alt="" loading="lazy" decoding="async" /></Phone>
+          <Phone class="how__phone" data-screen="redeem"><img class="phone__shot" src="/img/app/redeem.webp" width="780" height="1600" alt="" loading="lazy" decoding="async" /></Phone>
         </div>
-        <p class="how__count small"><span data-step-count>שלב 1 מתוך 3</span><span>המחשה של המסכים המתוכננים</span></p>
+        <p class="how__count small"><span data-step-count>שלב 1 מתוך 3</span><span>צילומי מסך מהאפליקציה, עם עסקים לדוגמה</span></p>
       </div>
     </div>
 
@@ -47,10 +44,10 @@ const steps = [
           <li class="how__step" data-step={s.id} data-reveal>
             <p><b>{s.runIn}</b> {s.text}</p>
             <div class="how__inline">
-              <Phone class="how__mini" label={s.label}>
-                {i === 0 && <Discover />}
-                {i === 1 && <Collect />}
-                {i === 2 && <Redeem />}
+              <Phone class={s.id === 'collect' ? 'how__mini phone--ink' : 'how__mini'} label={s.label}>
+                {i === 0 && <img class="phone__shot" src="/img/app/discover.webp" width="780" height="1600" alt="" loading="lazy" decoding="async" />}
+                {i === 1 && <img class="phone__shot" src="/img/app/collect.webp" width="780" height="1600" alt="" loading="lazy" decoding="async" />}
+                {i === 2 && <img class="phone__shot" src="/img/app/redeem.webp" width="780" height="1600" alt="" loading="lazy" decoding="async" />}
               </Phone>
             </div>
           </li>
