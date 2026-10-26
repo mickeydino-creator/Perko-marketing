@@ -73,6 +73,12 @@ const facts = [
           <textarea id="f-message" name="message" rows="3" maxlength="600"></textarea>
         </div>
 
+        <!-- Spam trap: hidden from people and screen readers, bots fill it in. -->
+        <div class="form__trap" aria-hidden="true">
+          <label for="f-website">אתר</label>
+          <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
         <button class="btn form__submit" type="submit" data-submit>
           <span class="form__label">אני רוצה להצטרף בחינם</span>
           <span class="form__spinner" aria-hidden="true"></span>
@@ -126,6 +132,7 @@ const facts = [
   .form.is-loading .form__spinner { display: block; animation: spin 800ms linear infinite; }
   .form.is-loading .form__submit { pointer-events: none; opacity: 0.9; }
   @keyframes spin { to { transform: rotate(360deg); } }
+  .form__trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .form__privacy { color: var(--muted); }
   .form__privacy a { color: var(--ink); text-decoration: underline; text-underline-offset: 0.2em; }
   .form__status:empty { display: none; }

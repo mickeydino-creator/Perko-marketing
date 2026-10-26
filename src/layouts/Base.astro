@@ -17,6 +17,7 @@ const { title, description } = Astro.props;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="he_IL" />
+    <!-- Allowed by its sha256 in the Content-Security-Policy in vercel.json: change one, update the other. -->
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>

@@ -281,11 +281,17 @@ function initForm() {
       first?.focus();
       return;
     }
-    const data = Object.fromEntries(new FormData(form).entries());
+    const { website, ...data } = Object.fromEntries(new FormData(form).entries());
     form.classList.add('is-loading');
     const submit = $<HTMLButtonElement>('[data-submit]', form)!;
     submit.setAttribute('aria-busy', 'true');
     try {
+      if (website) {
+        // The spam trap was filled in: a bot. Answer as if it worked and send nothing.
+        form.reset();
+        setStatus('success', 'תודה, קיבלנו את הפרטים.', 'נחזור אליכם בקרוב כדי לספר על ההצטרפות ולשמוע על העסק.');
+        return;
+      }
       if (!endpoint) {
         // No endpoint is configured yet: say so plainly instead of pretending the details were sent.
         await new Promise((r) => setTimeout(r, 500));
