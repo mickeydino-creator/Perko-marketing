@@ -1,0 +1,47 @@
+---
+import Base from './Base.astro';
+import Wordmark from '../components/Wordmark.astro';
+import { operator } from '../data/legal';
+interface Props { title: string; description: string; updated: string }
+const { title, description, updated } = Astro.props;
+---
+<Base title={`${title} - Perko`} description={description}>
+  <header class="legal-top">
+    <div class="wrap legal-top__bar">
+      <a href="/" aria-label="Perko, לעמוד הבית"><Wordmark label={false} /></a>
+      <a class="legal-top__back" href="/">חזרה לאתר</a>
+    </div>
+  </header>
+  <main id="main" class="wrap legal">
+    <h1 class="head">{title}</h1>
+    <p class="small legal__updated">עודכן לאחרונה: {updated}</p>
+    <slot />
+  </main>
+  <footer class="wrap legal-foot small">
+    <nav aria-label="מסמכים">
+      <ul>
+        <li><a href="/privacy">מדיניות פרטיות</a></li>
+        <li><a href="/terms">תנאי שימוש</a></li>
+        <li><a href="/accessibility">הצהרת נגישות</a></li>
+      </ul>
+    </nav>
+    <p>Perko מופעלת על ידי {operator.name}. ליצירת קשר: <a href={`mailto:${operator.email}`}>{operator.email}</a></p>
+  </footer>
+</Base>
+
+<style>
+  .legal-top { border-bottom: 1px solid var(--pale-strong); background: var(--paper); }
+  .legal-top__bar { display: flex; justify-content: space-between; align-items: center; min-height: 72px; }
+  .legal-top__bar :global(.wordmark) { font-size: 34px; }
+  .legal-top__back { font-weight: 700; color: var(--ink); }
+  .legal { max-width: 72ch; padding-block: 56px 72px; }
+  .legal__updated { color: var(--slate); margin-top: 12px; }
+  .legal :global(h2) { font-size: 24px; font-weight: 800; margin-top: 40px; letter-spacing: -0.01em; }
+  .legal :global(p), .legal :global(ul) { margin-top: 12px; line-height: 1.65; }
+  .legal :global(ul) { padding-inline-start: 22px; list-style: disc; }
+  .legal :global(li + li) { margin-top: 6px; }
+  .legal :global(a) { color: var(--ink); text-decoration: underline; text-underline-offset: 0.2em; }
+  .legal-foot { border-top: 1px solid var(--pale-strong); padding-block: 28px 40px; color: var(--slate); display: grid; gap: 12px; }
+  .legal-foot ul { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .legal-foot a { color: var(--ink); }
+</style>

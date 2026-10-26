@@ -1,6 +1,7 @@
 ---
 import Wordmark from '../Wordmark.astro';
 import credits from '../../data/credits.json';
+import { operator } from '../../data/legal';
 const year = new Date().getFullYear();
 ---
 <section class="closing on-ink" aria-labelledby="closing-title">
@@ -34,6 +35,14 @@ const year = new Date().getFullYear();
         </nav>
         <p>© {year} Perko</p>
       </div>
+      <div class="footer__legal">
+        <ul>
+          <li><a href="/privacy">מדיניות פרטיות</a></li>
+          <li><a href="/terms">תנאי שימוש</a></li>
+          <li><a href="/accessibility">הצהרת נגישות</a></li>
+        </ul>
+        <p>מופעל על ידי {operator.name}, {operator.city}. ליצירת קשר: <a href={`mailto:${operator.email}`}>{operator.email}</a></p>
+      </div>
       <div class="footer__mark" aria-hidden="true"><Wordmark tone="lime" label={false} /></div>
       <p class="footer__credits">
         צילומי הרחובות והשווקים מ-Wikimedia Commons, להמחשת העולם של העסקים המקומיים. אף אחד מהעסקים שמופיעים בהם אינו שותף של Perko:
@@ -42,6 +51,7 @@ const year = new Date().getFullYear();
             {' '}<a href={c.page} rel="noopener" target="_blank">{c.title}</a>, {c.creator}, <a href={c.licenseUrl} rel="noopener license" target="_blank">{c.license}</a>{i < credits.length - 1 ? ';' : '.'}
           </>
         ))}
+        {' '}התמונות נחתכו והומרו לפורמט webp.
       </p>
     </div>
   </footer>
@@ -64,6 +74,9 @@ const year = new Date().getFullYear();
   .footer__row ul { display: flex; gap: 24px; flex-wrap: wrap; }
   .footer__row a { color: var(--white); text-decoration: none; }
   @media (hover: hover) and (pointer: fine) { .footer__row a:hover { text-decoration: underline; text-underline-offset: 0.25em; } }
+  .footer__legal { margin-top: calc(-1 * clamp(24px, 3.5vw, 48px)); margin-bottom: clamp(48px, 7vw, 96px); display: grid; gap: 10px; font-size: 15px; color: var(--slate-on-ink); }
+  .footer__legal ul { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .footer__legal a { color: var(--white); }
   .footer__credits { margin-top: 32px; font-size: 15px; line-height: 1.6; color: var(--slate-on-ink); max-width: 72ch; }
   .footer__credits a { color: var(--slate-on-ink); }
 
