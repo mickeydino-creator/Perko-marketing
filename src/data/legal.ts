@@ -1,5 +1,4 @@
-// Facts the legal pages and the footer need. Every value marked [למלא] must be filled in by the operator before
-// the pages go live: the code cannot know them.
+// Facts the legal pages and the footer need. Keep them current: they are published on /privacy, /terms and /accessibility.
 export const operator = {
   name: 'עילי דינוביץ',
   email: 'ilaidinow@gmail.com',
@@ -15,7 +14,7 @@ export const processors = {
   // Where the app's data lives. Check Supabase > Project settings > General > Region.
   supabaseRegion: 'האיחוד האירופי (פרנקפורט, גרמניה)',
   formProvider: 'הטופס עדיין לא מחובר לשום שירות. כשיחובר, נעדכן כאן את שם השירות',
-  hosting: '[למלא: שירות אחסון האתר, למשל Netlify או Cloudflare Pages]',
+  hosting: 'Vercel',
   email: 'Supabase',
 };
 
