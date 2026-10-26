@@ -3,7 +3,7 @@ import Legal from '../layouts/Legal.astro';
 import { operator, processors, minAge, updated } from '../data/legal';
 ---
 <Legal title="מדיניות פרטיות" description="איזה מידע Perko אוספת באתר ובאפליקציה, למה, עם מי הוא משותף ואיך מבקשים לעיין בו או למחוק אותו." updated={updated}>
-  <p>המדיניות הזאת חלה על האתר perko.co.il ועל אפליקציית Perko. Perko מופעלת על ידי {operator.name} ({operator.id}), {operator.city}. בכל שאלה על המידע שלכם אפשר לכתוב ל-<a href={`mailto:${operator.email}`}>{operator.email}</a>.</p>
+  <p>המדיניות הזאת חלה על האתר perko.co.il ועל אפליקציית Perko. Perko מופעלת על ידי {operator.name}, {operator.city}. בכל שאלה על המידע שלכם אפשר לכתוב ל-<a href={`mailto:${operator.email}`}>{operator.email}</a>.</p>
   <p>Perko נמצאת בשלב גישה מוקדמת, בפיילוט בעמק רפאים ובדרך בית לחם בירושלים. כשהשירות ישתנה, נעדכן גם את המדיניות.</p>
 
   <h2>איזה מידע אנחנו אוספים</h2>
