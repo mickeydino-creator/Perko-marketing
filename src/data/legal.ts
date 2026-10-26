@@ -19,5 +19,5 @@ export const processors = {
   email: 'Supabase',
 };
 
-export const minAge = 16;
+export const minAge = 13;
 export const updated = '26.10.2026';
