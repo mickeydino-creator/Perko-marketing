@@ -1,7 +1,7 @@
 // Facts the legal pages and the footer need. Keep them current: they are published on /privacy, /terms and /accessibility.
 export const operator = {
   name: 'עילי דינוביץ',
-  email: 'ilaidinow@gmail.com',
+  email: 'hello@getperko.com',
   city: 'ירושלים',
 };
 
