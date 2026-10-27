@@ -1,5 +1,6 @@
 ---
-const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+// The form posts to the site's own Vercel Function (api/join.ts), which emails each sign-up.
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || '/api/join';
 const facts = [
   { t: 'ההצטרפות חינם', d: 'בשלב הגישה המוקדמת עסקים מצטרפים בלי עלות.' },
   { t: 'אין התחייבות לתשלום', d: 'משאירים פרטים ומביעים עניין. שום דבר לא מחייב אתכם.' },
@@ -83,7 +84,7 @@ const facts = [
           <span class="form__label">אני רוצה להצטרף בחינם</span>
           <span class="form__spinner" aria-hidden="true"></span>
         </button>
-        <p class="form__privacy small">מילוי הפרטים לא חובה, אבל בלעדיהם לא נוכל לחזור אליכם. נשתמש בהם רק כדי לחזור אליכם בנוגע להצטרפות ל-Perko, והם נשמרים אצל ספק הטופס שלנו. פרטים נוספים ב<a href="/privacy">מדיניות הפרטיות</a>.</p>
+        <p class="form__privacy small">מילוי הפרטים לא חובה, אבל בלעדיהם לא נוכל לחזור אליכם. נשתמש בהם רק כדי לחזור אליכם בנוגע להצטרפות ל-Perko, והם נשלחים אלינו באימייל. פרטים נוספים ב<a href="/privacy">מדיניות הפרטיות</a>.</p>
 
         <div class="form__status" role="status" aria-live="polite" tabindex="-1" data-form-status></div>
       </form>

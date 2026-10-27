@@ -13,7 +13,7 @@ export const accessibilityContact = {
 export const processors = {
   // Where the app's data lives. Check Supabase > Project settings > General > Region.
   supabaseRegion: 'האיחוד האירופי (פרנקפורט, גרמניה)',
-  formProvider: 'הטופס עדיין לא מחובר לשום שירות. כשיחובר, נעדכן כאן את שם השירות',
+  formProvider: 'Resend (שרתים באירלנד), שמעביר את הפרטים באימייל לתיבת הדואר שלנו. הפרטים לא נשמרים במסד נתונים',
   hosting: 'Vercel',
   email: 'Resend (שרתים באירלנד)',
 };

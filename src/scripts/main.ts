@@ -303,6 +303,11 @@ function initForm() {
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({ ...data, source: 'perko-landing' }),
       });
+      if (res.status === 503) {
+        // The server side is deployed but not configured yet: say so plainly instead of pretending it was sent.
+        setStatus('info', 'הטופס עדיין לא מחובר.', 'הפרטים שמילאתם לא נשלחו. אפשר לכתוב לנו בינתיים ל-hello@getperko.com.');
+        return;
+      }
       if (!res.ok) throw new Error(String(res.status));
       form.reset();
       setStatus('success', 'תודה, קיבלנו את הפרטים.', 'נחזור אליכם בקרוב כדי לספר על ההצטרפות ולשמוע על העסק.');

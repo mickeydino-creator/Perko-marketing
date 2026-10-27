@@ -27,9 +27,13 @@ npm run build    # static output in dist/
 
 ## Before launch
 
-1. **Interest form.** Set `PUBLIC_FORM_ENDPOINT` (see `.env.example`) to an endpoint that accepts a JSON POST
-   (`business`, `type`, `name`, `contact`, `message`, `source`). Without it the form validates and then tells
-   the visitor plainly that it is not connected yet and that nothing was sent.
+1. **Interest form.** The form posts to the site's own Vercel Function, `api/join.ts`, which validates the details
+   and emails them through Resend (nothing is stored). In Vercel > Project > Settings > Environment Variables set
+   `RESEND_API_KEY` and `JOIN_TO_EMAIL` (the inbox that receives sign-ups; comma-separated for several), and
+   optionally `JOIN_FROM_EMAIL` (default `Perko <hello@getperko.com>`; the domain must be verified in Resend).
+   Then redeploy. Until both are set the function answers 503 and the form tells the visitor plainly that it is
+   not connected yet and nothing was sent. The reply-to of each email is the business's address when it gave one.
+   `PUBLIC_FORM_ENDPOINT` overrides the target (for example a form service) if ever needed.
 2. **Privacy.** The form says the details are used only to get back to the business. Add a privacy policy link
    once one exists.
 3. **Contact and legal details** are deliberately absent from the footer until real ones exist.
