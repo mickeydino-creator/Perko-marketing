@@ -15,7 +15,7 @@ export const processors = {
   supabaseRegion: 'האיחוד האירופי (פרנקפורט, גרמניה)',
   formProvider: 'הטופס עדיין לא מחובר לשום שירות. כשיחובר, נעדכן כאן את שם השירות',
   hosting: 'Vercel',
-  email: 'Supabase',
+  email: 'Resend (שרתים באירלנד)',
 };
 
 export const minAge = 13;
