@@ -4,6 +4,26 @@ import '../styles/global.css';
 import '../styles/app.css';
 interface Props { title: string; description: string }
 const { title, description } = Astro.props;
+// One address per page for search engines: the production domain, no trailing slash.
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site).href;
+const image = new URL('/og.jpg', Astro.site).href;
+const isHome = Astro.url.pathname === '/';
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${Astro.site}#org`,
+      name: 'Perko',
+      url: Astro.site?.href,
+      logo: new URL('/logo.png', Astro.site).href,
+      email: 'hello@getperko.com',
+      description: 'ארנק דיגיטלי אחד לכרטיסיות הנאמנות של עסקים שכונתיים: צוברים חותמות בסריקה בקופה ומממשים הטבות.',
+      areaServed: { '@type': 'City', name: 'ירושלים' },
+    },
+    { '@type': 'WebSite', name: 'Perko', url: Astro.site?.href, inLanguage: 'he', publisher: { '@id': `${Astro.site}#org` } },
+  ],
+};
 ---
 <!doctype html>
 <html lang="he" dir="rtl">
@@ -14,9 +34,22 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
     <meta name="theme-color" content="#D7FF35" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Perko" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="he_IL" />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Perko: כל ההטבות שלך. מקום אחד." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    {isHome && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
     <!-- Allowed by its sha256 in the Content-Security-Policy in vercel.json: change one, update the other. -->
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
