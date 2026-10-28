@@ -67,8 +67,10 @@ const year = new Date().getFullYear();
   .closing__btn { min-height: 60px; padding: 0 32px; font-size: 18px; }
 
   .footer { margin-top: clamp(96px, 12vw, 176px); padding-bottom: 32px; }
-  .footer__mark { direction: ltr; overflow: hidden; }
-  .footer__mark :global(.wordmark) { font-size: clamp(110px, 25.6vw, 380px); line-height: 0.82; letter-spacing: -0.06em; display: flex; }
+  /* The mark spans the content width edge to edge, so both sides line up with the text above.
+     Ink width = 2.272em (box 2.321em minus the p's 0.049em left side-bearing, measured in Chromium). */
+  .footer__mark { direction: ltr; overflow: hidden; display: flex; justify-content: center; container-type: inline-size; }
+  .footer__mark :global(.wordmark) { font-size: calc(100cqw / 2.272); line-height: 0.82; letter-spacing: -0.06em; display: flex; margin-left: -0.049em; }
   .footer__row { margin-bottom: clamp(48px, 7vw, 96px); display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: center; font-size: 15px; color: var(--slate-on-ink); }
   .footer__row p:last-child { text-align: left; }
   .footer__row ul { display: flex; gap: 24px; flex-wrap: wrap; }
