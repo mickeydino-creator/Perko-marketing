@@ -1,3 +1,4 @@
+import { initDepth, initStampTrail } from './depth';
 // Page behaviour: menu, entrances, the two scroll stories, the demo, the FAQ and the interest form.
 
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -321,6 +322,8 @@ function initForm() {
 }
 
 initMenu();
+initDepth();
+initStampTrail();
 initReveal();
 initConverge();
 initSteps();

@@ -1,0 +1,1456 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>פרקו - פנייה לעסקים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#11130F; --muted:#5d6156; --line:#E4E5DE; --bg:#FFFFFF; --soft:#F8F8F4;
+  --lime:#D7FF35; --lime-soft:#F1FFC2; --warn:#FFE9D6; --warn-ink:#8A3B00; --ok:#1F7A3A;
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.55 Heebo, Arial, sans-serif; }
+.wrap { max-width:1100px; margin:0 auto; padding:32px 24px 64px; }
+h1 { font-size:28px; font-weight:800; letter-spacing:-0.02em; margin:0 0 4px; }
+h1 .dot { display:inline-block; width:.42em; height:.42em; border-radius:50%; background:var(--ink); margin-inline-start:.08em; }
+.lead { margin:0; color:var(--muted); }
+.progress { margin:20px 0 8px; padding:16px 18px; background:var(--soft); border:1px solid var(--line); border-radius:12px; }
+.progress-top { display:flex; flex-wrap:wrap; gap:8px 24px; align-items:baseline; font-size:14px; }
+.progress-top b { font-size:20px; }
+.bar { height:8px; background:#fff; border:1px solid var(--line); border-radius:99px; margin-top:12px; overflow:hidden; }
+.bar i { display:block; height:100%; width:0; background:var(--ink); border-radius:99px; transition:width .3s; }
+.note { font-size:13px; color:var(--muted); margin:8px 0 20px; }
+.tools { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:16px; }
+.tools input, .tools select { font:inherit; padding:8px 12px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); min-height:40px; }
+.tools input[type=search] { flex:1 1 200px; }
+.tools label { display:flex; align-items:center; gap:8px; font-size:14px; }
+.btn, .btn-ghost { font:inherit; font-size:14px; font-weight:700; border-radius:999px; padding:7px 16px; cursor:pointer; min-height:38px; }
+.btn { background:var(--ink); color:var(--lime); border:1px solid var(--ink); }
+.btn-ghost { background:#fff; color:var(--ink); border:1px solid var(--line); }
+.btn-ghost:hover { border-color:var(--ink); }
+.toggle[aria-expanded=true] { background:var(--lime); border-color:var(--lime); }
+.link-btn { font:inherit; font-size:13px; background:none; border:0; text-decoration:underline; cursor:pointer; color:var(--muted); padding:0 4px; }
+.biz { border:1px solid var(--line); border-radius:12px; margin-bottom:10px; background:#fff; }
+.biz.done { background:var(--soft); }
+.row { display:grid; grid-template-columns:auto minmax(0,1fr) auto auto; gap:16px; align-items:center; padding:14px 16px; }
+.fit { display:inline-grid; place-items:center; width:34px; height:34px; border-radius:50%; font-weight:800; }
+.fit--hi { background:var(--lime); }
+.fit--mid { background:var(--soft); border:1px solid var(--line); }
+.fit--lo { color:var(--muted); border:1px solid var(--line); }
+.title strong { font-size:17px; }
+.sub, .contact { color:var(--muted); font-size:13px; }
+.mono { direction:ltr; unicode-bidi:isolate; font-variant-numeric:tabular-nums; }
+.muted { color:#a3a69b; }
+.tag { display:inline-block; font-size:11px; font-weight:700; padding:1px 8px; border-radius:999px; background:var(--soft); border:1px solid var(--line); color:var(--muted); vertical-align:middle; margin-inline-start:6px; }
+.tag--warn { background:var(--warn); border-color:var(--warn); color:var(--warn-ink); }
+.checks { display:flex; gap:6px; }
+.chk { position:relative; display:grid; justify-items:center; gap:0; min-width:72px; padding:6px 8px; border:1px solid var(--line); border-radius:10px; cursor:pointer; font-size:13px; font-weight:500; user-select:none; background:#fff; }
+.chk input { position:absolute; opacity:0; }
+.chk span::before { content:""; display:inline-block; width:14px; height:14px; border:1.5px solid var(--ink); border-radius:4px; margin-inline-end:6px; vertical-align:-2px; background:#fff; }
+.chk:has(input:checked) { background:var(--lime); border-color:var(--lime); }
+.chk input:checked + span::before { background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23D7FF35' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat; }
+.chk--reply:has(input:checked) { background:var(--ink); color:#fff; border-color:var(--ink); }
+.chk--reply input:checked + span::before { border-color:#fff; }
+.chk input:focus-visible + span { outline:2px solid var(--ink); outline-offset:3px; border-radius:4px; }
+.when { font-size:11px; color:inherit; opacity:.7; min-height:1em; }
+.detail { border-top:1px solid var(--line); padding:14px 16px 16px; display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:8px 24px; }
+.tabs { grid-column:1 / -1; display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+.tab { font:inherit; font-size:14px; font-weight:700; padding:6px 14px; border-radius:999px; border:1px solid var(--line); background:#fff; cursor:pointer; color:var(--ink); }
+.tab[aria-selected=true] { background:var(--ink); color:#fff; border-color:var(--ink); }
+.best { font-size:13px; color:var(--muted); margin-inline-start:auto; }
+.panel { grid-column:1; }
+.subject { font-size:14px; padding:8px 0 4px; }
+.subject span { color:var(--muted); }
+.msg { white-space:pre-line; padding:14px 16px; margin-top:8px; font-size:15px; line-height:1.7; background:var(--soft); border:1px solid var(--line); border-radius:10px; }
+.nm { background:var(--lime-soft); border-radius:4px; padding:0 3px; }
+.actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+.side { grid-column:2; grid-row:2 / span 2; padding-top:8px; }
+.notes-l { display:grid; gap:4px; font-size:13px; font-weight:700; }
+.notes { font:inherit; font-size:14px; font-weight:400; width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:10px; resize:vertical; min-height:110px; }
+.notes:focus { outline:2px solid var(--ink); outline-offset:0; }
+details { margin-top:14px; font-size:14px; }
+summary { cursor:pointer; font-weight:700; font-size:13px; }
+details p { margin:8px 0 0; }
+.muted-p { color:var(--muted); font-size:13px; }
+.srcs { font-size:13px; }
+.note-preview { font-size:12px; color:var(--muted); margin-top:2px; }
+a { color:var(--ink); text-decoration-color:#b5b8ab; text-underline-offset:3px; }
+footer { margin-top:24px; font-size:13px; color:var(--muted); }
+@media (max-width:860px) {
+  .wrap { padding:20px 16px 48px; }
+  .row { grid-template-columns:auto minmax(0,1fr); }
+  .checks { grid-column:1 / -1; }
+  .chk { flex:1; min-width:0; }
+  .toggle { grid-column:1 / -1; }
+  .detail { grid-template-columns:1fr; }
+  .side { grid-column:1; grid-row:auto; }
+  .best { margin-inline-start:0; width:100%; }
+}
+@media print {
+  .tools, .toggle, .actions, .link-btn, .tabs button { display:none; }
+  .detail, .panel { display:grid !important; }
+  .biz { break-inside:avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>פרקו - פנייה לעסקים<span class="dot"></span></h1>
+<p class="lead">20 עסקים עצמאיים בעמק רפאים ובדרך בית לחם, ירושלים · נבדק ב-25.10.2026</p>
+
+<div class="progress" aria-live="polite">
+  <div class="progress-top">
+    <span><b id="p-sent">0</b> מתוך 20 קיבלו הודעה</span>
+    <span><b id="p-wa">0</b> בוואטסאפ</span>
+    <span><b id="p-mail">0</b> במייל</span>
+    <span><b id="p-reply">0</b> ענו</span>
+  </div>
+  <div class="bar"><i id="p-bar"></i></div>
+</div>
+<p class="note">אלה מועמדים מהמחקר בלבד, ואף עסק עוד לא הסכים להשתתף. את ״לוודא שפתוח״ כדאי לבדוק בטלפון לפני ששולחים. ל-6 עסקים יש מייל מפורסם, ול-5 יש מספר נייד לוואטסאפ. לשאר אפשר להעתיק את ההודעה ולשלוח ידנית.</p>
+
+<div class="tools">
+  <input type="search" id="q" placeholder="חיפוש עסק או סוג" aria-label="חיפוש">
+  <select id="street" aria-label="רחוב">
+    <option value="">כל הרחובות</option>
+    <option>עמק רפאים</option>
+    <option>דרך בית לחם</option>
+  </select>
+  <select id="status" aria-label="סטטוס">
+    <option value="">כל הסטטוסים</option>
+    <option value="todo">עוד לא נשלח</option>
+    <option value="sent">נשלח</option>
+    <option value="reply">ענו</option>
+  </select>
+  <label>השם שלך <input id="me" placeholder="יופיע בכל ההודעות" style="width:160px"></label>
+  <button class="btn-ghost" id="export">ייצוא ל-CSV</button>
+</div>
+
+
+<section class="biz" data-i="0" data-street="עמק רפאים" data-text="טחנת הקפה The Coffee Mill בית קפה וקלייה">
+  <div class="row">
+    <span class="fit fit--hi" title="ציון התאמה">9</span>
+    <div class="who">
+      <div class="title"><strong>טחנת הקפה</strong></div>
+      <div class="sub">בית קפה וקלייה · עמק רפאים 23, המושבה הגרמנית</div>
+      <div class="contact"><span class="mono">02-566-1665</span> · <span class="mono">coffeemill99@gmail.com</span> · לאה ברסלאו, אבי כץ</div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: מייל או טלפון</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לאה ואבי, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+טחנת הקפה היא מהמקומות שאנשים חוזרים אליהם כל בוקר, וגם לשקית הפולים כל כמה שבועות.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי הכללים שלכם, למשל קפה עשירי עליכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לקפוץ לקפה ולהראות לכם את זה בעשר דקות. מתי נוח?</div>
+      <div class="actions"><button class="btn copy" data-i="0" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> טחנת הקפה ופרקו - כרטיס מועדון דיגיטלי לקפה ולפולים <button class="link-btn copy" data-i="0" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לאה ואבי,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. אתם קולים קפה במושבה הגרמנית כבר שלושים שנה, ויש לכם בדיוק את מה שכרטיס מועדון נבנה בשבילו: לקוחות שחוזרים כל בוקר, וגם קונים שוב את הפולים כל כמה שבועות.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.
+
+מה זה יכול לתת לטחנת הקפה:
+- תגמול לשני סוגי החזרה: קפה עשירי עליכם, ובנוסף הטבה על כל שקית פולים רביעית.
+- סוף לכרטיסי נייר שנשכחים בארנק: הלקוח רואה בטלפון כמה חסר לו להטבה.
+- חשיפה ללקוחות של עסקים שכנים ברחוב שמשתמשים באותה אפליקציה.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לקפוץ לקפה ולהראות לכם את זה בעשר דקות. מתי נוח לכם?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="0" data-k="email">העתקת המייל</button><button class="btn-ghost open-mail" data-i="0">פתיחה במייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>שתי סיבות לחזור באותה חנות: הקפה היומי, והשקית של פולי הקפה שקונים שוב כל כמה שבועות. הבעלים מופיעים בשמם באתר, כך שהשיחה הראשונה יכולה להיות ישר עם מי שמחליט.</p><p class="muted-p">המייל והטלפון אומתו בדף ״אודות״ הרשמי. מופיע במדריך המושבה הגרמנית של The Jerusalem Guide מיולי 2026. עבודות הרכבת הקלה עלולות להשפיע על התנועה ברחוב.</p><p><a href="https://www.thecoffeemill.co.il/en" target="_blank" rel="noopener">אתר</a> · <a href="https://www.instagram.com/thecoffeemillil" target="_blank" rel="noopener">אינסטגרם</a> · <a href="https://www.facebook.com/coffeemill99" target="_blank" rel="noopener">פייסבוק</a></p><p class="srcs"><a href="https://www.thecoffeemill.co.il/en/about" target="_blank" rel="noopener">מקור 1</a> · <a href="https://www.thejerusalemguide.com/areas/german-colony" target="_blank" rel="noopener">מקור 2</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="1" data-street="עמק רפאים" data-text="בירמה Birma Coffee בית קפה וקלייה">
+  <div class="row">
+    <span class="fit fit--hi" title="ציון התאמה">9</span>
+    <div class="who">
+      <div class="title"><strong>בירמה</strong></div>
+      <div class="sub">בית קפה וקלייה · עמק רפאים 20, המושבה הגרמנית</div>
+      <div class="contact"><span class="mono">02-544-5668</span> · <span class="muted">אין מייל מפורסם</span> · מיכאל רונן, דניאל רונן</div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון או וואטסאפ</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">היי מיכאל ודניאל, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+ראינו מה בניתם בבירמה: קלייה קטנה ודלפק עם לקוחות קבועים שעוצרים בדרך לעבודה. בדיוק העסק שכרטיס חותמות נועד בשבילו.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי הכללים שלכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+יש לכם רבע שעה השבוע? אשמח להגיע לדלפק.</div>
+      <div class="actions"><button class="btn copy" data-i="1" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> בירמה ופרקו - כרטיס חותמות דיגיטלי לדלפק <button class="link-btn copy" data-i="1" data-k="subject">העתקה</button></div>
+      <div class="msg">היי מיכאל ודניאל,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. ראינו מה בניתם בבירמה מאז 2021: קלייה קטנה, דלפק טייק-אוויי ולקוחות קבועים שעוצרים בדרך לעבודה. זה בדיוק העסק שכרטיס חותמות נועד בשבילו.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.
+
+מה זה יכול לתת לבירמה:
+- כרטיס חותמות בלי נייר ובלי הדפסות: קפה עשירי עליכם, או כל כלל אחר שתחליטו.
+- לקוח הבוקר רואה בטלפון שחסרות לו שתי חותמות, וזו עוד סיבה לעצור דווקא אצלכם.
+- מקום ראשון ברשת של עסקים שכונתיים ברחוב, כמותג צעיר שמשפיע על איך המוצר ייראה.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+יש לכם רבע שעה השבוע? אשמח להגיע לדלפק ולהראות.
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="1" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>דלפק טייק-אוויי עם לקוחות קבועים בדרך לעבודה הוא המקרה הקלאסי לכרטיס חותמות, ומותג צעיר שמנוהל בידי המייסדים צפוי להיפתח לכרטיס דיגיטלי במקום נייר.</p><p class="muted-p">הטלפון אומת באתר הרשמי. מספר הבית 20 לקוח מ-rest.co.il, כי האתר הרשמי לא מציין מספר. לא מתפרסם מייל.</p><p><a href="https://birmacoffee.com" target="_blank" rel="noopener">אתר</a> · <a href="https://www.instagram.com/birmacoffee" target="_blank" rel="noopener">אינסטגרם</a> · <a href="https://www.facebook.com/birmacoffee" target="_blank" rel="noopener">פייסבוק</a></p><p class="srcs"><a href="https://birmacoffee.com" target="_blank" rel="noopener">מקור 1</a> · <a href="https://www.rest.co.il/rest/80358238/" target="_blank" rel="noopener">מקור 2</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="2" data-street="דרך בית לחם" data-text="קאלו Kalo Cafe &amp; Market בית קפה ומעדנייה">
+  <div class="row">
+    <span class="fit fit--hi" title="ציון התאמה">9</span>
+    <div class="who">
+      <div class="title"><strong>קאלו</strong></div>
+      <div class="sub">בית קפה ומעדנייה · דרך בית לחם 31, בקעה</div>
+      <div class="contact"><span class="mono">02-673-6365</span> · <span class="mono">kalocafe@gmail.com</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: מייל או טלפון</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לצוות קאלו, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+קאלו הוא כבר שנים חלק מהשגרה של בקעה, גם בבית הקפה וגם במעדנייה.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות או נקודות לפי ההטבה שתגדירו. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+למי אצלכם כדאי לפנות לשיחה קצרה על זה?</div>
+      <div class="actions"><button class="btn copy" data-i="2" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> קאלו ופרקו - כרטיס מועדון לבית הקפה ולמעדנייה <button class="link-btn copy" data-i="2" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לצוות קאלו,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. קאלו הוא כבר יותר מעשרים וחמש שנה חלק מהשגרה של בקעה, עם קהל מקומי גדול שמגיע גם לארוחת בוקר וגם לקניות במעדנייה.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות או נקודות לפי ההטבה שאתם מגדירים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.
+
+מה זה יכול לתת לקאלו:
+- הטבה אחת פשוטה שמתאימה לשני סוגי הקנייה, למשל נקודות על כל קנייה ומנה מוכנה או ארוחת בוקר במתנה.
+- קשר דיגיטלי עם הקבועים, בלי לבנות אפליקציה משלכם.
+- קאלו יכול להיות עוגן של הרשת בדרך בית לחם, יחד עם השכנים ברחוב.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לדבר עם מי שאחראי אצלכם על הלקוחות, או לקפוץ ולהראות. למי כדאי לפנות?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="2" data-k="email">העתקת המייל</button><button class="btn-ghost open-mail" data-i="2">פתיחה במייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>מוסד בבקעה עם קהל מקומי גדול (מעל 800 ביקורות בגוגל לפי Wanderlog) ושני סוגי קנייה: ביקור בבית הקפה וקניות במעדנייה. הוא כבר מוכר אונליין, אז הוא רגיל לכלים דיגיטליים.</p><p class="muted-p">המייל והטלפון אומתו בדף יצירת הקשר הרשמי. סניף יחיד. שם הבעלים לא מתפרסם. יש סתירות בשעות הפתיחה בין מדריכים שונים.</p><p><a href="https://www.kalocafe.co.il/" target="_blank" rel="noopener">אתר</a> · <a href="https://www.instagram.com/kalocafejerusalem" target="_blank" rel="noopener">אינסטגרם</a> · <a href="https://www.facebook.com/kalocafe/" target="_blank" rel="noopener">פייסבוק</a></p><p class="srcs"><a href="https://www.kalocafe.co.il/contact-us/" target="_blank" rel="noopener">מקור 1</a> · <a href="https://he.wikipedia.org/wiki/%D7%93%D7%A8%D7%9A_%D7%91%D7%99%D7%AA_%D7%9C%D7%97%D7%9D" target="_blank" rel="noopener">מקור 2</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="3" data-street="דרך בית לחם" data-text="המקום של איציק Itzik&#x27;s Place בית קפה">
+  <div class="row">
+    <span class="fit fit--hi" title="ציון התאמה">8</span>
+    <div class="who">
+      <div class="title"><strong>המקום של איציק</strong></div>
+      <div class="sub">בית קפה · דרך בית לחם 33, בקעה</div>
+      <div class="contact"><span class="mono">02-672-0247</span> <span class="tag">ממדריך</span> · <span class="muted">אין מייל מפורסם</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון או ביקור</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לצוות של המקום של איציק, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+אתם מהמקומות שהשכונה חוזרת אליהם כל יום, עוד מימי הקיוסק.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי הכללים שלכם, למשל קפה עשירי חינם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אפשר לקפוץ אליכם לכמה דקות בשעה שקטה? מתי הכי נוח?</div>
+      <div class="actions"><button class="btn copy" data-i="3" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> המקום של איציק ופרקו - כרטיס קפה דיגיטלי, בלי הקמה <button class="link-btn copy" data-i="3" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לצוות של המקום של איציק,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. אתם מהמקומות שהשכונה חוזרת אליהם כל יום, עוד מימי הקיוסק, ובלי שום אפליקציה או אתר משלכם.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.
+
+מה זה יכול לתת להמקום של איציק:
+- כרטיס קפה דיגיטלי מוכן, בלי לפתח כלום ובלי לנהל אתר: מדפיסים קוד לקופה וזהו.
+- הקבועים שלכם רואים בטלפון כמה חסר להם, ולא מאבדים כרטיסי נייר.
+- אתם שתי דלתות מקאלו ומציגה, וביחד אפשר לבנות רחוב שבו כל עצירה נספרת.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אפשר לקפוץ אליכם לכמה דקות בשעה שקטה ולהראות? מה הזמן הכי נוח?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="3" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>בית קפה שהתחיל כקיוסק חי מלקוחות יומיים מהרחובות מסביב, ובלי אתר או אפליקציה משלו כרטיס דיגיטלי מוכן מחליף את הנייר בלי שום הקמה. הוא שתי דלתות מקאלו, מה שהופך את שניהם לגרעין טבעי לפיילוט.</p><p class="muted-p">פעיל ב-Wolt (פתוח ב-25.10.2026). ב-Wolt מופיע מספר נוסף: ‎054-522-2843. אין אתר ואין מייל.</p><p><a href="https://wolt.com/he/isr/jerusalem/venue/itziks-place" target="_blank" rel="noopener">עוד</a></p><p class="srcs"><a href="https://www.rest.co.il/rest/80214546/" target="_blank" rel="noopener">מקור 1</a> · <a href="https://wolt.com/he/isr/jerusalem/venue/itziks-place" target="_blank" rel="noopener">מקור 2</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="4" data-street="דרך בית לחם" data-text="ציגה - הגלידה של ציגה Tziga Ice Cream גלידה">
+  <div class="row">
+    <span class="fit fit--hi" title="ציון התאמה">8</span>
+    <div class="who">
+      <div class="title"><strong>ציגה - הגלידה של ציגה</strong></div>
+      <div class="sub">גלידה · דרך בית לחם 31, בקעה</div>
+      <div class="contact"><span class="mono">02-502-8374</span> · <span class="muted">אין מייל מפורסם</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לצוות ציגה, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+גלידה היא בדיוק הפינוק שמשפחות מהשכונה חוזרות אליו שוב ושוב.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם, למשל ״כל כדור שמיני עלינו״. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לשיחה קצרה או לקפוץ אליכם. מתי נוח?</div>
+      <div class="actions"><button class="btn copy" data-i="4" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> ציגה ופרקו - ״כל כדור שמיני עלינו״, בלי כרטיסי נייר <button class="link-btn copy" data-i="4" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לצוות ציגה,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. ג&#x27;לאטו בעבודת יד הוא בדיוק הפינוק שמשפחות מהשכונה חוזרות אליו שוב ושוב, וזה המקום שבו כרטיס חותמות הכי קל להבנה.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.
+
+מה זה יכול לתת לציגה:
+- הטבה שילדים ומבוגרים מבינים מיד, למשל ״כל כדור שמיני עלינו״.
+- המשפחה רואה בטלפון שחסר להם עוד ביקור אחד, ויש סיבה לבוא שוב בשבוע הבא.
+- אתם באותו בניין עם קאלו, כך שלקוח יכול לצבור אצל שניכם באותה יציאה.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לשיחה קצרה או לקפוץ אליכם. מתי נוח לכם?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="4" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>גלידה היא פינוק שאותן משפחות קונות שוב ושוב, ולכן הטבה כמו ״הכדור השמיני חינם״ קלה להבנה. היא באותו בניין עם קאלו, כך שלקוח יכול לצבור בשתיהן ביציאה אחת.</p><p class="muted-p">הטלפון אומת באתר הרשמי. פעיל ב-Wolt. תוצאת חיפוש אחת הזכירה סניפים נוספים, אבל לא האתר הרשמי ולא כתבה במאקו מציינים אותם. ביקוש עונתי, בשיא בקיץ.</p><p><a href="https://tziga.co.il/" target="_blank" rel="noopener">אתר</a> · <a href="https://wolt.com/he/isr/jerusalem/restaurant/tziga-ice-cream" target="_blank" rel="noopener">עוד</a></p><p class="srcs"><a href="https://tziga.co.il/" target="_blank" rel="noopener">מקור 1</a> · <a href="https://wolt.com/he/isr/jerusalem/restaurant/tziga-ice-cream" target="_blank" rel="noopener">מקור 2</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="5" data-street="עמק רפאים" data-text="פרחי העמק Emek Flowers חנות פרחים">
+  <div class="row">
+    <span class="fit fit--hi" title="ציון התאמה">8</span>
+    <div class="who">
+      <div class="title"><strong>פרחי העמק</strong></div>
+      <div class="sub">חנות פרחים · עמק רפאים 43, המושבה הגרמנית</div>
+      <div class="contact"><span class="mono">052-404-3365</span> · <span class="muted">אין מייל מפורסם</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לצוות פרחי העמק, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+הרבה משפחות בשכונה קונות פרחים לשבת כל שבוע, וזה בדיוק הלקוח הקבוע שאנחנו בונים בשבילו.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי מה שתחליטו, למשל זר תשיעי במתנה. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לעשר דקות שיחה או לקפוץ לחנות. מתי מתאים?</div>
+      <div class="actions"><button class="btn copy" data-i="5" data-k="wa">העתקת ההודעה</button><button class="btn-ghost open-wa" data-i="5">פתיחה בוואטסאפ</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> פרחי העמק ופרקו - זר תשיעי במתנה, בכרטיס דיגיטלי <button class="link-btn copy" data-i="5" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לצוות פרחי העמק,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. הרבה משפחות במושבה קונות פרחים לשבת כל שבוע, וזה בדיוק הלקוח הקבוע שכרטיס מועדון נבנה בשבילו.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.
+
+מה זה יכול לתת לפרחי העמק:
+- הטבה שמתאימה להרגל של שישי, למשל שמונה זרים והתשיעי במתנה.
+- לקוחות של בתי הקפה ברחוב יכולים לגלות אתכם באותה אפליקציה, כעצירה שנייה בדרך הביתה.
+- בלי כרטיסים מודפסים ובלי מערכת חדשה לתפעל בחנות.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לעשר דקות שיחה או לקפוץ לחנות. מתי מתאים לכם?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="5" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>פרחים לשבת ביום שישי הם הרגל שבועי בהרבה בתים, ולכן ״8 זרים והתשיעי במתנה״ מתאים בטבעיות. חנות פרחים היא גם עצירה שנייה טובה ללקוחות של בתי הקפה ברחוב.</p><p class="muted-p">הטלפון אומת באתר הרשמי, ובתחתית האתר מופיע 2026 עם שעות פתיחה עדכניות. שם הבעלים לא ידוע.</p><p><a href="https://emekflowers.co.il/" target="_blank" rel="noopener">אתר</a></p><p class="srcs"><a href="https://emekflowers.co.il/" target="_blank" rel="noopener">מקור 1</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="6" data-street="דרך בית לחם" data-text="קאסה לביא Casa Lavi בית קפה ומאפייה">
+  <div class="row">
+    <span class="fit fit--hi" title="ציון התאמה">8</span>
+    <div class="who">
+      <div class="title"><strong>קאסה לביא</strong></div>
+      <div class="sub">בית קפה ומאפייה · דרך בית לחם 41, בקעה</div>
+      <div class="contact"><span class="mono">058-429-6540</span> <span class="tag">ממדריך</span> · <span class="muted">אין מייל מפורסם</span> · מיטל ואלפונסו יצחק</div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: הודעה באינסטגרם או טלפון</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">היי מיטל ואלפונסו, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+אהבנו את מה שבניתם בקאסה לביא: קלייה משלכם, מאפים בריאים וקהל שחוזר כמה פעמים בשבוע.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי הכללים שלכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לקפוץ לקפה ולהראות את זה בכמה דקות. מתי נוח לכם?</div>
+      <div class="actions"><button class="btn copy" data-i="6" data-k="wa">העתקת ההודעה</button><button class="btn-ghost open-wa" data-i="6">פתיחה בוואטסאפ</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> קאסה לביא ופרקו - כרטיס מועדון ללקוחות הקבועים <button class="link-btn copy" data-i="6" data-k="subject">העתקה</button></div>
+      <div class="msg">היי מיטל ואלפונסו,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. אהבנו את מה שבניתם בקאסה לביא: קלייה משלכם, מאפים בלי סוכר לבן ובלי קמח לבן, וקהל שחוזר כמה פעמים בשבוע.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.
+
+מה זה יכול לתת לקאסה לביא:
+- תגמול לקהל הקבוע, בכללים שאתם בוחרים: קפה, מאפה, או שילוב.
+- חשיפה ללקוחות של עסקים שכנים שמחפשים בדיוק מקום כמו שלכם.
+- השפעה על המוצר מההתחלה, כעסק צעיר שמוביל את הפיילוט.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לקפוץ לקפה ולהראות את זה בכמה דקות. מתי נוח לכם?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="6" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>בית קפה צעיר בניהול הבעלים עם קהל קבוע שמחפש אוכל בריא וחוזר כמה פעמים בשבוע. מותג שמובל בידי המייסדים מתאים לפיילוט מוקדם.</p><p class="muted-p">הטלפון לקוח מ-rest.co.il. בגוגל (דרך Wanderlog) מופיע ‎02-631-0295. ביקורות מדצמבר 2025 וינואר 2026. הדומיין casalavicafe.com לא נטען.</p><p><a href="https://casalavi.webflow.io/" target="_blank" rel="noopener">אתר</a> · <a href="https://www.instagram.com/casalavicafe" target="_blank" rel="noopener">אינסטגרם</a></p><p class="srcs"><a href="https://casalavi.webflow.io/" target="_blank" rel="noopener">מקור 1</a> · <a href="https://www.rest.co.il/rest/80359561/" target="_blank" rel="noopener">מקור 2</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="7" data-street="דרך בית לחם" data-text="גראנד קפה Grand Cafe בית קפה ומסעדה">
+  <div class="row">
+    <span class="fit fit--mid" title="ציון התאמה">7</span>
+    <div class="who">
+      <div class="title"><strong>גראנד קפה</strong></div>
+      <div class="sub">בית קפה ומסעדה · דרך בית לחם 70, בקעה</div>
+      <div class="contact"><span class="mono">02-570-2702</span> · <span class="muted">אין מייל מפורסם</span> · עדי תלמור, שרה תלמור</div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון או וואטסאפ ‎+972-52-667-4624</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום עדי ושרה, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+גראנד קפה הוא מהמקומות שמגדירים את בקעה, עם קהל בראנץ&#x27; נאמן.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם, למשל מאפה עליכם בביקור באמצע השבוע. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לפגישה קצרה בזמן שנוח לכם. מתי מתאים?</div>
+      <div class="actions"><button class="btn copy" data-i="7" data-k="wa">העתקת ההודעה</button><button class="btn-ghost open-wa" data-i="7">פתיחה בוואטסאפ</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> גראנד קפה ופרקו - להביא את קהל הבראנץ&#x27; גם באמצע השבוע <button class="link-btn copy" data-i="7" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום עדי ושרה,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. גראנד קפה הוא מהמקומות שמגדירים את בקעה כבר מ-2011, עם קהל בראנץ&#x27; ומאפים נאמן.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.
+
+מה זה יכול לתת לגראנד קפה:
+- הטבה שמזיזה ביקורים, למשל מאפה עליכם למי שמגיע גם באמצע השבוע.
+- קשר דיגיטלי עם הקבועים של סוף השבוע, בלי אפליקציה נפרדת.
+- מקום מוכר כמו שלכם נותן לרשת השכונתית אמינות, ומקבל ממנה לקוחות של העסקים השכנים.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לפגישה קצרה בזמן שנוח לכם. מתי מתאים?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="7" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>מקום בראנץ&#x27; פופולרי עם קבועים מהשכונה, שבו הטבה כמו מאפה חינם יכולה להביא את סועדי סוף השבוע גם באמצע השבוע. בגודל שלו הוא יכול להיות שותף עוגן שנותן לרשת אמינות.</p><p class="muted-p">הטלפון, הוואטסאפ והאינסטגרם אומתו באתר הרשמי. פעיל ב-Wolt. אין מייל, רק טופס לאירועים.</p><p><a href="https://www.grand-cafe.co.il/" target="_blank" rel="noopener">אתר</a> · <a href="https://www.instagram.com/grand.cafe_/" target="_blank" rel="noopener">אינסטגרם</a> · <a href="https://www.facebook.com/grandcafe70" target="_blank" rel="noopener">פייסבוק</a></p><p class="srcs"><a href="https://jewishlink.news/a-jerusalem-restaurant-to-remember-in-baka-the-grand-cafe/" target="_blank" rel="noopener">מקור 1</a> · <a href="https://www.grand-cafe.co.il/" target="_blank" rel="noopener">מקור 2</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="8" data-street="דרך בית לחם" data-text="לה שרולה Le Charolais אטליז ומעדנייה">
+  <div class="row">
+    <span class="fit fit--mid" title="ציון התאמה">7</span>
+    <div class="who">
+      <div class="title"><strong>לה שרולה</strong></div>
+      <div class="sub">אטליז ומעדנייה · דרך בית לחם 84, בקעה</div>
+      <div class="contact"><span class="mono">050-579-1350</span> · <span class="muted">אין מייל מפורסם</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון או וואטסאפ</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לצוות לה שרולה, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+הרבה משפחות בשכונה קונות אצלכם לשבת כל שבוע, וזה בדיוק הלקוח הקבוע שאנחנו בונים בשבילו.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות או נקודות לפי הכללים שלכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לשיחה קצרה עם מי שמנהל את החנות. מתי נוח?</div>
+      <div class="actions"><button class="btn copy" data-i="8" data-k="wa">העתקת ההודעה</button><button class="btn-ghost open-wa" data-i="8">פתיחה בוואטסאפ</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> לה שרולה ופרקו - הטבה לקונים הקבועים של שבת <button class="link-btn copy" data-i="8" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לצוות לה שרולה,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. הרבה משפחות בבקעה קונות אצלכם לשבת כל שבוע, וזה בדיוק הלקוח הקבוע שכרטיס מועדון נבנה בשבילו.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות או נקודות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.
+
+מה זה יכול לתת ללה שרולה:
+- נקודות לפי גובה הקנייה, שמתאימות לסלים הגדולים של סוף השבוע.
+- הטבה שמחזקת את ההרגל השבועי, למשל מנה מוכנה או מאפה צרפתי במתנה.
+- אתם עסק שונה מבתי הקפה ברחוב, וזה בדיוק מה שהופך רשת שכונתית לשימושית.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לשיחה קצרה עם מי שמנהל את החנות. מתי נוח?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="8" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>משפחות קונות בשר לשבת כל שבוע, וסלי קנייה גדולים מצדיקים הטבה משמעותית. זה גם סוג עסק שונה מבתי הקפה, שמרחיב את מה שהרשת מציעה.</p><p class="muted-p">הטלפון אומת באתר הרשמי. ב-Wolt מופיע ‎02-6444966. לפי כתבה מ-2021 הבעלים הם שלושה מסעדנים ירושלמים: חנות אחת, אבל לא בעלים יחיד.</p><p><a href="https://lecharolais.co.il/" target="_blank" rel="noopener">אתר</a> · <a href="https://www.facebook.com/lecharolaisjerusalem/" target="_blank" rel="noopener">פייסבוק</a></p><p class="srcs"><a href="https://lecharolais.co.il/" target="_blank" rel="noopener">מקור 1</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="9" data-street="דרך בית לחם" data-text="ברזאולה Bresaola מעדנייה ובר טאפאס">
+  <div class="row">
+    <span class="fit fit--mid" title="ציון התאמה">7</span>
+    <div class="who">
+      <div class="title"><strong>ברזאולה</strong></div>
+      <div class="sub">מעדנייה ובר טאפאס · דרך בית לחם 27, בקעה</div>
+      <div class="contact"><span class="mono">02-673-5522</span> <span class="tag">ממדריך</span> · <span class="muted">אין מייל מפורסם</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לצוות ברזאולה, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+יש לכם קהל נאמן אמיתי, שמגיע גם לקניות הביתה וגם לערב בבר.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לקפוץ אליכם לכמה דקות. מתי הכי שקט אצלכם?</div>
+      <div class="actions"><button class="btn copy" data-i="9" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> ברזאולה ופרקו - כרטיס מועדון לדלפק ולבר <button class="link-btn copy" data-i="9" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לצוות ברזאולה,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. יש לכם קהל נאמן אמיתי, שמגיע גם לנקניקים לבית וגם לערב של טאפאס בבר.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.
+
+מה זה יכול לתת לברזאולה:
+- כרטיס אחד שסופר גם קנייה בדלפק וגם ערב בבר.
+- הטבה שמחזירה את מי שבא פעם בחודש להיות קבוע, למשל מנת טאפאס במתנה.
+- חשיפה ללקוחות של בתי הקפה והמעדניות ברחוב.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לקפוץ אליכם לכמה דקות. מתי הכי שקט אצלכם?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="9" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>דלפק נקניקים לקנייה הביתה יחד עם בר לישיבה, כך שמגיעים אליו גם לקניות השבועיות וגם לערבים בחוץ. הדירוג הגבוה מאוד מעיד על קהל נאמן שהטבה יכולה להביא לעוד ביקורים.</p><p class="muted-p">פעיל ב-Wolt (דירוג 9.2). דף הפייסבוק מופיע כאתר העסק ב-Wolt. האינסטגרם נמצא רק בתוצאת חיפוש ולכן לא נכלל.</p><p><a href="https://www.facebook.com/bresaola.jlm/" target="_blank" rel="noopener">פייסבוק</a> · <a href="https://wolt.com/he/isr/jerusalem/restaurant/bresaola" target="_blank" rel="noopener">עוד</a></p><p class="srcs"><a href="https://wolt.com/he/isr/jerusalem/restaurant/bresaola" target="_blank" rel="noopener">מקור 1</a> · <a href="https://www.d.co.il/80361096/30455/" target="_blank" rel="noopener">מקור 2</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="10" data-street="דרך בית לחם" data-text="פלורה - חנות פרחים Flora Flower Shop חנות פרחים">
+  <div class="row">
+    <span class="fit fit--mid" title="ציון התאמה">7</span>
+    <div class="who">
+      <div class="title"><strong>פלורה - חנות פרחים</strong></div>
+      <div class="sub">חנות פרחים · דרך בית לחם 29, בקעה</div>
+      <div class="contact"><span class="mono">073-375-3310</span> · <span class="mono">info@floraflower.co.il</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: מייל</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לצוות פלורה, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+פרחים לשבת ולחגים הם בדיוק קנייה שחוזרת על עצמה, ושווה לתגמל עליה.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי מה שתחליטו, למשל זר תשיעי במתנה. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לשיחה קצרה או לקפוץ לחנות. מתי נוח לכם?</div>
+      <div class="actions"><button class="btn copy" data-i="10" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> פלורה ופרקו - זר תשיעי במתנה, בכרטיס דיגיטלי <button class="link-btn copy" data-i="10" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לצוות פלורה,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. פרחים לשבת, ועוד שיאים בחגים, הם בדיוק קנייה שחוזרת על עצמה ושווה לתגמל עליה.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.
+
+מה זה יכול לתת לפלורה:
+- הטבה שמתאימה לשישי, למשל זר תשיעי במתנה, שנספרת גם באיסוף מהחנות.
+- אתם כמה דלתות מקאלו ומציגה, אז לקוח יכול לצבור אצל כמה עסקים באותו סיבוב.
+- בלי כרטיסים מודפסים ובלי מערכת חדשה לתפעל.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לשיחה קצרה או לקפוץ לחנות. מתי נוח לכם?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="10" data-k="email">העתקת המייל</button><button class="btn-ghost open-mail" data-i="10">פתיחה במייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>פרחים לשבת כל שבוע, ועוד שיאים בחגים, מתאימים מאוד לכרטיס חותמות. היא כמה דלתות מקאלו ומציגה, אז לקוחות יכולים לצבור בכמה עצירות באותו סיבוב.</p><p class="muted-p">המייל והטלפון אומתו באתר הרשמי, שבו פעילים מבצעי סוכות 2026. במדריכים מופיעים מספרים אחרים, אז כדאי להשתמש במספר מהאתר.</p><p><a href="https://www.floraflower.co.il/" target="_blank" rel="noopener">אתר</a></p><p class="srcs"><a href="https://www.floraflower.co.il/" target="_blank" rel="noopener">מקור 1</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="11" data-street="עמק רפאים" data-text="לחם ועוד Lechem V&#x27;od מאפייה ובית קפה">
+  <div class="row">
+    <span class="fit fit--mid" title="ציון התאמה">7</span>
+    <div class="who">
+      <div class="title"><strong>לחם ועוד</strong> <span class="tag tag--warn">לוודא שפתוח</span></div>
+      <div class="sub">מאפייה ובית קפה · עמק רפאים 35, המושבה הגרמנית</div>
+      <div class="contact"><span class="mono">02-624-4255</span> <span class="tag">ממדריך</span> · <span class="muted">אין מייל מפורסם</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון או ביקור</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לצוות לחם ועוד, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+מאפייה היא המקום שאנשים חוזרים אליו הכי הרבה, ללחם של כל יום ולעוגה של שבת.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם, למשל לחם עשירי עליכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לקפוץ ולהראות את זה בכמה דקות. מתי מתאים?</div>
+      <div class="actions"><button class="btn copy" data-i="11" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> לחם ועוד ופרקו - כרטיס מועדון ללחם של כל יום <button class="link-btn copy" data-i="11" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לצוות לחם ועוד,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. מאפייה היא המקום שאנשים חוזרים אליו הכי הרבה, ללחם המחמצת של כל יום ולעוגת הגבינה של שבת.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.
+
+מה זה יכול לתת ללחם ועוד:
+- כרטיס פשוט ללחם היומי, למשל לחם עשירי עליכם.
+- הטבה עשירה יותר לקניות הגדולות במעדנייה, לפי מה שתחליטו.
+- חשיפה ללקוחות של בתי הקפה וחנויות הפרחים ברחוב.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לקפוץ ולהראות את זה בכמה דקות. מתי מתאים לכם?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="11" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>לחם יומי ועוגות לשבת הופכים מאפיות לקטגוריה החזקה ביותר של קנייה חוזרת. דלפק המעדנייה מוסיף סלים גדולים שמצדיקים הטבה עשירה יותר.</p><p class="muted-p">הציון הורד כי לא אומת שהעסק עדיין פתוח: rest.co.il עודכן בפברואר 2026, אבל לא נמצאה ביקורת מתוארכת מ-2026. חולק את מספר 35 עם פוקצ&#x27;ה במושבה.</p><p><span class="muted">-</span></p><p class="srcs"><a href="https://www.rest.co.il/rest/80209734/" target="_blank" rel="noopener">מקור 1</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="12" data-street="עמק רפאים" data-text="הפרחים של ארז Erez Flowers חנות פרחים">
+  <div class="row">
+    <span class="fit fit--mid" title="ציון התאמה">7</span>
+    <div class="who">
+      <div class="title"><strong>הפרחים של ארז</strong></div>
+      <div class="sub">חנות פרחים · עמק רפאים 26, המושבה הגרמנית</div>
+      <div class="contact"><span class="mono">02-533-6363</span> · <span class="mono">erezprachim@gmail.com</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: מייל או טלפון</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לצוות הפרחים של ארז, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+יש לכם גם קונים שנכנסים לפני שבת וגם לקוחות משלוחים שחוזרים, וזה בדיוק הקהל שאנחנו בונים בשבילו.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי הכללים שלכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לעשר דקות שיחה. מתי נוח לכם?</div>
+      <div class="actions"><button class="btn copy" data-i="12" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> הפרחים של ארז ופרקו - הטבה ללקוחות שחוזרים <button class="link-btn copy" data-i="12" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לצוות הפרחים של ארז,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. יש לכם גם קונים שנכנסים לחנות לפני שבת וגם לקוחות משלוחים שחוזרים שוב ושוב, וזה בדיוק הקהל שכרטיס מועדון נבנה בשבילו.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.
+
+מה זה יכול לתת להפרחים של ארז:
+- הטבה ללקוחות שחוזרים, למשל זר במתנה אחרי כמה קניות.
+- הלקוח רואה בטלפון כמה חסר לו, ולא צריך לשמור כרטיס.
+- חשיפה ללקוחות של בתי הקפה והמאפיות בעמק רפאים.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לעשר דקות שיחה. מתי נוח לכם?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="12" data-k="email">העתקת המייל</button><button class="btn-ghost open-mail" data-i="12">פתיחה במייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>גם קוני שישי שנכנסים לחנות וגם לקוחות המשלוחים קונים שוב ושוב. עם מייל מפורסם, הוא מהקלים לפנות אליהם בכתב.</p><p class="muted-p">המייל והטלפון אומתו באתר הרשמי. יש שתי חנויות פרחים בעמק רפאים שעשויות להתחרות, אז כדאי לפנות לכל אחת בנפרד.</p><p><a href="https://erez-flowers.co.il/" target="_blank" rel="noopener">אתר</a> · <a href="https://wolt.com/en/isr/jerusalem/venue/erezer-emek-refaim" target="_blank" rel="noopener">עוד</a></p><p class="srcs"><a href="https://erez-flowers.co.il/store/" target="_blank" rel="noopener">מקור 1</a> · <a href="https://erez-flowers.co.il/" target="_blank" rel="noopener">מקור 2</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="13" data-street="דרך בית לחם" data-text="קומקום - בית תה Kumkum Tea House בית תה">
+  <div class="row">
+    <span class="fit fit--mid" title="ציון התאמה">6</span>
+    <div class="who">
+      <div class="title"><strong>קומקום - בית תה</strong></div>
+      <div class="sub">בית תה · דרך בית לחם 23, בקעה</div>
+      <div class="contact"><span class="mono">050-656-3334</span> · <span class="muted">אין מייל מפורסם</span> · אלישבע לוי</div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון או וואטסאפ</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום אלישבע, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+קראנו על קומקום ואהבנו את הבית הקטן והקהילתי שבנית בבקעה.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי מה שתבחרי, למשל קנקן תה או סקונס במתנה. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לבוא לתה ולהראות את זה בכמה דקות. מתי נוח לך?</div>
+      <div class="actions"><button class="btn copy" data-i="13" data-k="wa">העתקת ההודעה</button><button class="btn-ghost open-wa" data-i="13">פתיחה בוואטסאפ</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> קומקום ופרקו - כרטיס מועדון לבית התה <button class="link-btn copy" data-i="13" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום אלישבע,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. קראנו על קומקום ואהבנו את הבית הקטן והקהילתי שבנית בבקעה, עם תה של אחר הצהריים, סקונס ביתיים ופינה של תה עלים.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאת קובעת, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.
+
+מה זה יכול לתת לקומקום:
+- הטבה עם אופי, למשל קנקן תה או סקונס במתנה.
+- גם קנייה של תה עלים לבית יכולה להיספר, כך שהכרטיס עובד גם בין ביקור לביקור.
+- חשיפה ללקוחות של בתי הקפה ברחוב שעוד לא גילו את הגינה שלך.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור לך בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לבוא לתה ולהראות את זה בכמה דקות. מתי נוח לך?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="13" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>מקום בניהול הבעלים עם אופי קהילתי, שבו ההטבה יכולה להיות קנקן תה או סקונס. פינת המכירה של תה עלים מוסיפה קנייה חוזרת, והבעלים הופיעה בכתבה באוגוסט 2026, כך שהיא פעילה וזמינה.</p><p class="muted-p">הטלפון והאינסטגרם אומתו באתר הרשמי. תה של אחר הצהריים הוא יותר אירוע מאשר ביקור יומי. ויקיפדיה מציינת בעלים אחרת, והסתמכתי על כתבת Times of Israel מ-2026.</p><p><a href="https://kumkumteahouse.com/" target="_blank" rel="noopener">אתר</a> · <a href="https://www.instagram.com/kumkum.tea.house" target="_blank" rel="noopener">אינסטגרם</a></p><p class="srcs"><a href="https://www.timesofisrael.com/elisheva-levy-jerusalems-fairy-godmother/" target="_blank" rel="noopener">מקור 1</a> · <a href="https://kumkumteahouse.com/" target="_blank" rel="noopener">מקור 2</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="14" data-street="עמק רפאים" data-text="בוכמן&#x27;ס דיינר Buchman&#x27;s Diner מסעדה קז&#x27;ואל">
+  <div class="row">
+    <span class="fit fit--mid" title="ציון התאמה">6</span>
+    <div class="who">
+      <div class="title"><strong>בוכמן&#x27;ס דיינר</strong> <span class="tag tag--warn">לוודא שפתוח</span></div>
+      <div class="sub">מסעדה קז&#x27;ואל · עמק רפאים 51, המושבה הגרמנית</div>
+      <div class="contact"><span class="mono">073-730-9889</span> <span class="tag">ממדריך</span> · <span class="muted">אין מייל מפורסם</span> · ליאור סיון, מתן סיון</div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">היי ליאור ומתן, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+הדיינר שלכם הוא מקום שמשפחות ובני נוער חוזרים אליו, ושם כרטיס חותמות עובד הכי טוב.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם, למשל מילקשייק חינם בביקור השישי. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לשיחה קצרה. מתי נוח?</div>
+      <div class="actions"><button class="btn copy" data-i="14" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> בוכמן&#x27;ס ופרקו - מילקשייק חינם בביקור השישי <button class="link-btn copy" data-i="14" data-k="subject">העתקה</button></div>
+      <div class="msg">היי ליאור ומתן,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. הדיינר שלכם הוא מקום שמשפחות ובני נוער חוזרים אליו, וזה בדיוק הקהל שכרטיס חותמות עובד אצלו הכי טוב.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.
+
+מה זה יכול לתת לבוכמן&#x27;ס:
+- הטבה שקל להסביר לכל שולחן, למשל מילקשייק חינם בביקור השישי.
+- בני נוער שכבר חיים בטלפון מקבלים כרטיס שלא נאבד.
+- אם זה יעבוד אצלכם, אפשר יהיה לבחון את זה גם במקומות האחרים שלכם.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לשיחה קצרה. מתי נוח לכם?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="14" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>משפחות ובני נוער חוזרים לארוחות קלילות, אז ״מילקשייק חינם בביקור השישי״ קל להסביר. הבעלים ידועים בשמם ומפעילים גם שני מקומות פיצה, כך שפיילוט מוצלח יכול להתרחב אצלם.</p><p class="muted-p">קבוצה משפחתית מקומית קטנה ולא רשת. הטלפון מכתבת ג&#x27;רוזלם פוסט מנובמבר 2024. לא נמצאה עדות מתוארכת מ-2026.</p><p><a href="https://wolt.com/en/isr/jerusalem/restaurant/buchmans-diner" target="_blank" rel="noopener">עוד</a></p><p class="srcs"><a href="https://jpost.com/food-recipes/article-829474" target="_blank" rel="noopener">מקור 1</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="15" data-street="עמק רפאים" data-text="פומפידו Pompidou Bistro &amp; Bar ביסטרו ובר">
+  <div class="row">
+    <span class="fit fit--lo" title="ציון התאמה">5</span>
+    <div class="who">
+      <div class="title"><strong>פומפידו</strong> <span class="tag tag--warn">לוודא שפתוח</span></div>
+      <div class="sub">ביסטרו ובר · עמק רפאים 27, המושבה הגרמנית</div>
+      <div class="contact"><span class="mono">02-625-1111</span> <span class="tag">ממדריך</span> · <span class="muted">אין מייל מפורסם</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לצוות פומפידו, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+חשבנו עליכם בגלל החיבור לשכנים: לקוחות שמכירים את עמק רפאים מבתי הקפה ביום יכולים לגלות אתכם בערב.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות או נקודות לפי ההטבה שלכם, למשל קינוח עליכם בביקור הרביעי. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לדבר עם מי שמנהל את המקום. מתי אפשר לתפוס אתכם?</div>
+      <div class="actions"><button class="btn copy" data-i="15" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> פומפידו ופרקו - לקוחות היום של הרחוב, גם בערב <button class="link-btn copy" data-i="15" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לצוות פומפידו,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. חשבנו עליכם בגלל החיבור לשכנים: לקוחות שמכירים את עמק רפאים מבתי הקפה ביום יכולים לגלות את הביסטרו והמרפסת שלכם בערב.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות או נקודות לפי ההטבה שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.
+
+מה זה יכול לתת לפומפידו:
+- חשיפה ללקוחות של העסקים השכנים באותה אפליקציה.
+- הטבה שמחזירה סועדים שלא הגיעו מזמן, למשל קינוח עליכם בביקור הרביעי.
+- בלי קופונים מודפסים ובלי מערכת חדשה במשמרת.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לדבר עם מי שמנהל את המקום. מתי אפשר לתפוס אתכם?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="15" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>ביקורי ערב ודייטים חוזרים לעיתים רחוקות יותר, אבל רשת משותפת יכולה להביא אליו בערב לקוחות של בתי הקפה, והטבה כמו קינוח חינם יכולה להחזיר סועדים שהפסיקו להגיע.</p><p class="muted-p">מופיע במדריך The Jerusalem Guide מיולי 2026. אין אתר רשמי או רשתות חברתיות. הביקורת האחרונה ב-rest.co.il מ-2023.</p><p><span class="muted">-</span></p><p class="srcs"><a href="https://www.rest.co.il/rest/80164067/" target="_blank" rel="noopener">מקור 1</a> · <a href="https://www.thejerusalemguide.com/areas/german-colony" target="_blank" rel="noopener">מקור 2</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="16" data-street="דרך בית לחם" data-text="רנדבו Rendez-Vous מסעדה קז&#x27;ואל">
+  <div class="row">
+    <span class="fit fit--lo" title="ציון התאמה">5</span>
+    <div class="who">
+      <div class="title"><strong>רנדבו</strong> <span class="tag tag--warn">לוודא שפתוח</span></div>
+      <div class="sub">מסעדה קז&#x27;ואל · דרך בית לחם 110</div>
+      <div class="contact"><span class="mono">074-726-8306</span> <span class="tag">ממדריך</span> · <span class="muted">אין מייל מפורסם</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לצוות רנדבו, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+פיצה ופסטה הן הזמנות שמשפחות חוזרות אליהן שוב ושוב, ושם כרטיס חותמות עובד הכי טוב.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לשיחה קצרה עם מי שמנהל את המקום. מתי נוח?</div>
+      <div class="actions"><button class="btn copy" data-i="16" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> רנדבו ופרקו - כרטיס חותמות לפיצה ולפסטה <button class="link-btn copy" data-i="16" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לצוות רנדבו,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. פיצה ופסטה הן הזמנות שמשפחות חוזרות אליהן שוב ושוב, וזה בדיוק המקום שבו כרטיס חותמות עובד הכי טוב.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.
+
+מה זה יכול לתת לרנדבו:
+- הטבה משפחתית פשוטה, למשל פיצה במתנה אחרי כמה ביקורים.
+- קשר עם הלקוחות הקבועים, בלי אפליקציה נפרדת.
+- אתם בקצה הדרומי של הרחוב, ותוכלו להביא לרשת לקוחות מכיוון תלפיות.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לשיחה קצרה עם מי שמנהל את המקום. מתי נוח?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="16" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>פיצה ופסטה הן הזמנות משפחתיות חוזרות שמתאימות לכרטיס חותמות פשוט. היא בקצה הדרומי של הרחוב, לכיוון תלפיות, ותרחיב את הרשת מעבר למרכז בקעה.</p><p class="muted-p">ב-rest.co.il יש ביקורת (שלילית) מאוגוסט 2025. מספר 074 עשוי להיות מספר ניתוב של המדריך, אז כדאי לוודא במקום את הקו הישיר.</p><p><span class="muted">-</span></p><p class="srcs"><a href="https://www.rest.co.il/rest/80195583/" target="_blank" rel="noopener">מקור 1</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="17" data-street="עמק רפאים" data-text="פוקצ&#x27;ה במושבה Focaccia Moshava מסעדה ומאפייה">
+  <div class="row">
+    <span class="fit fit--lo" title="ציון התאמה">5</span>
+    <div class="who">
+      <div class="title"><strong>פוקצ&#x27;ה במושבה</strong></div>
+      <div class="sub">מסעדה ומאפייה · עמק רפאים 35, המושבה הגרמנית</div>
+      <div class="contact"><span class="mono">02-538-7182</span> <span class="tag">ממדריך</span> · <span class="muted">אין מייל מפורסם</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: טלפון</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום לצוות פוקצ&#x27;ה במושבה, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+שוק הפוקצ&#x27;ות שלכם בשישי הוא בדיוק הרגל שבועי ששווה לתגמל.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם, למשל פוקצ&#x27;ה עליכם בשישי העשירי. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.
+
+אשמח לדבר עם מי שמנהל את המקום. מתי נוח?</div>
+      <div class="actions"><button class="btn copy" data-i="17" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> פוקצ&#x27;ה במושבה ופרקו - לתגמל את שוק שישי <button class="link-btn copy" data-i="17" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום לצוות פוקצ&#x27;ה במושבה,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. שוק הפוקצ&#x27;ות שלכם בשישי לפני שבת הוא בדיוק הרגל שבועי ששווה לתגמל.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.
+
+מה זה יכול לתת לפוקצ&#x27;ה במושבה:
+- הטבה שמחזקת את האיסוף של שישי, למשל פוקצ&#x27;ה עליכם בשישי העשירי.
+- הלקוח רואה בטלפון כמה חסר לו, ויש סיבה לא לפספס שבוע.
+- הנוכחות שלכם ברחוב עוזרת לרשת, והרשת מביאה לכם לקוחות של העסקים השכנים.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לדבר עם מי שמנהל את המקום. מתי נוח?
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="17" data-k="email">העתקת המייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>שוק הפוקצ&#x27;ות של שישי הוא איסוף שבועי קבוע וסיבה מוכנה לתגמל ביקורים חוזרים. הנראות שלו ברחוב גם תעזור לרשת.</p><p class="muted-p">הסניף הכשר של פוקצ&#x27;ה בר מהמרכז (רחוב רבי עקיבא): מותג מקומי עם שני סניפים, לא עסק עצמאי יחיד. מופיע ב-The Jerusalem Guide מיולי 2026.</p><p><span class="muted">-</span></p><p class="srcs"><a href="https://www.itraveljerusalem.com/rst/focaccia-moshava/" target="_blank" rel="noopener">מקור 1</a> · <a href="https://www.rest.co.il/restaurants/jerusalem/emek-refaim/" target="_blank" rel="noopener">מקור 2</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="18" data-street="עמק רפאים" data-text="סתיו תכשיטים Stav Jewelry תכשיטים ומתנות">
+  <div class="row">
+    <span class="fit fit--lo" title="ציון התאמה">4</span>
+    <div class="who">
+      <div class="title"><strong>סתיו תכשיטים</strong></div>
+      <div class="sub">תכשיטים ומתנות · עמק רפאים 40, המושבה הגרמנית</div>
+      <div class="contact"><span class="mono">02-563-7059</span> · <span class="mono">stavjewelry@gmail.com</span> · דליה סתיו, אייל סתיו</div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: מייל</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום דליה ואייל, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+סתיו תכשיטים הוא מהעסקים הוותיקים והמיוחדים בעמק רפאים, ואנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים ברחוב. אצלכם זה לא חייב להיות כרטיס חותמות: אפשר להגדיר הטבה כמו ניקוי, תיקון או חריטה במתנה.
+
+אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות. אשמח לשמוע אם זה מעניין אתכם.</div>
+      <div class="actions"><button class="btn copy" data-i="18" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> סתיו תכשיטים ופרקו - הטבה שמתאימה לתכשיטים <button class="link-btn copy" data-i="18" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום דליה ואייל,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. סתיו תכשיטים הוא מהעסקים הוותיקים והמיוחדים בעמק רפאים, בדיוק מהמקומות שאנחנו רוצים שאנשים מהשכונה יגלו.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות או הטבות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.
+
+מה זה יכול לתת לסתיו תכשיטים:
+- הטבה שמתאימה לתכשיטים ולא לקפה, כמו ניקוי, תיקון או חריטה במתנה.
+- חשיפה ללקוחות הקבועים של בתי הקפה והמאפיות ברחוב, שמחפשים מתנה מקומית.
+- קשר שנשאר עם הלקוח גם אחרי הקנייה, לקראת החג הבא.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לשמוע אם זה מעניין אתכם, ולקפוץ לשיחה קצרה.
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="18" data-k="email">העתקת המייל</button><button class="btn-ghost open-mail" data-i="18">פתיחה במייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>מעט קניות חוזרות, אבל חנות מתנות ותיקה בניהול הבעלים שתרוויח מהחשיפה ברשת, למשל לקוחות של בתי הקפה שמגלים חנות מתנות שכונתית. ההטבה כאן תהיה מחווה שווה יותר, כמו תיקון או חריטה חינם, ולא חותמות.</p><p class="muted-p">המייל והטלפון אומתו באתר הרשמי. מתאים יותר כשותף בשלב מאוחר מאשר כעוגן לפיילוט.</p><p><a href="http://www.stavjewelry.com/" target="_blank" rel="noopener">אתר</a> · <a href="https://www.instagram.com/stav.jewelry" target="_blank" rel="noopener">אינסטגרם</a> · <a href="https://www.facebook.com/stavjewelry" target="_blank" rel="noopener">פייסבוק</a></p><p class="srcs"><a href="http://www.stavjewelry.com/" target="_blank" rel="noopener">מקור 1</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="biz" data-i="19" data-street="עמק רפאים" data-text="ברברה שו מתנות Barbara Shaw Gifts מתנות ויודאיקה">
+  <div class="row">
+    <span class="fit fit--lo" title="ציון התאמה">4</span>
+    <div class="who">
+      <div class="title"><strong>ברברה שו מתנות</strong> <span class="tag tag--warn">לוודא שפתוח</span></div>
+      <div class="sub">מתנות ויודאיקה · עמק רפאים 6, המושבה הגרמנית</div>
+      <div class="contact"><span class="mono">02-579-9621</span> · <span class="mono">barbshaw@gmail.com</span></div>
+    </div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" data-f="wa"><span>וואטסאפ</span><small class="when" data-w="wa"></small></label>
+      <label class="chk"><input type="checkbox" data-f="mail"><span>מייל</span><small class="when" data-w="mail"></small></label>
+      <label class="chk chk--reply"><input type="checkbox" data-f="reply"><span>ענו</span><small class="when" data-w="reply"></small></label>
+    </div>
+    <button class="btn-ghost toggle" aria-expanded="false">הודעות והערות</button>
+  </div>
+  <div class="detail" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" aria-selected="true" data-t="wa">וואטסאפ</button>
+      <button role="tab" class="tab" aria-selected="false" data-t="email">מייל</button>
+      <span class="best">ערוץ מומלץ: מייל</span>
+    </div>
+    <div class="panel" data-p="wa">
+      <div class="msg">שלום ברברה, כאן <span class="nm">[השם שלך]</span> מפרקו.
+
+אנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בעמק רפאים, וחשבנו על החנות שלך: לקוחות קבועים של בתי הקפה ברחוב יכולים לגלות אותך דרך אותה אפליקציה, במיוחד לפני החגים.
+
+אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות. אשמח לשמוע אם זה מעניין אותך.</div>
+      <div class="actions"><button class="btn copy" data-i="19" data-k="wa">העתקת ההודעה</button></div>
+    </div>
+    <div class="panel" data-p="email" hidden>
+      <div class="subject"><span>נושא:</span> ברברה שו ופרקו - חשיפה ללקוחות של עמק רפאים <button class="link-btn copy" data-i="19" data-k="subject">העתקה</button></div>
+      <div class="msg">שלום ברברה,
+
+כאן <span class="nm">[השם שלך]</span> מפרקו. החנות שלך יושבת בתחילת עמק רפאים, בדיוק איפה שאנשים מתחילים ללכת ברחוב, עם מתנות שמיוצרות כאן בירושלים.
+
+פרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. הלקוח סורק קוד בקופה, צובר הטבות לפי הכללים של כל עסק, ורואה באותה אפליקציה את כל העסקים המשתתפים ברחוב.
+
+מה זה יכול לתת לברברה שו:
+- חשיפה ללקוחות הקבועים של בתי הקפה והמאפיות ברחוב, במיוחד לפני החגים.
+- הטבה קטנה עם אופי, כמו עטיפת מתנה או הנחה לקנייה הבאה.
+- סיבה לחזור לחנות גם בין עונה לעונה.
+
+אנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור לך בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.
+
+אשמח לשמוע אם זה מעניין אותך.
+
+תודה,
+<span class="nm">[השם שלך]</span>
+פרקו · getperko.com</div>
+      <div class="actions"><button class="btn copy" data-i="19" data-k="email">העתקת המייל</button><button class="btn-ghost open-mail" data-i="19">פתיחה במייל</button></div>
+    </div>
+    <div class="side">
+      <label class="notes-l">הערות<textarea class="notes" rows="3" placeholder="למשל: דיברתי עם המנהלת, לחזור ביום ראשון"></textarea></label>
+      <details><summary>למה זה מתאים, ומקורות</summary>
+        <p>קניות מתנות וחגים הן עונתיות, אבל מותג מקומי עם אופי ירוויח מתנועת הרשת. החנות בתחילת עמק רפאים, איפה שאנשים מתחילים ללכת ברחוב.</p><p class="muted-p">המייל והטלפון אומתו בדף יצירת הקשר הרשמי. מותג מקומי עם שתי חנויות משלו, לא רשת. לא נמצאה עדות מתוארכת מ-2025-26.</p><p><a href="https://www.barbarashawgifts.com/" target="_blank" rel="noopener">אתר</a></p><p class="srcs"><a href="https://www.barbarashawgifts.com/contact-us/" target="_blank" rel="noopener">מקור 1</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>הסימונים וההערות נשמרים בדפדפן שבו פתחת את הקובץ. בדפדפן אחר או במכשיר אחר הם לא יופיעו, ולכן כדאי לייצא ל-CSV מדי פעם לגיבוי. הטלפונים בלי תגית אומתו באתר הרשמי של העסק, ״ממדריך״ פירושו שהמספר נלקח ממדריך או מכתבה, וכתובות המייל הועתקו מהדפים של העסקים עצמם.</footer>
+</div>
+
+<script>
+const DATA = [{"key": "The Coffee Mill", "wa": "שלום לאה ואבי, כאן {name} מפרקו.\n\nטחנת הקפה היא מהמקומות שאנשים חוזרים אליהם כל בוקר, וגם לשקית הפולים כל כמה שבועות.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי הכללים שלכם, למשל קפה עשירי עליכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לקפוץ לקפה ולהראות לכם את זה בעשר דקות. מתי נוח?", "email": "שלום לאה ואבי,\n\nכאן {name} מפרקו. אתם קולים קפה במושבה הגרמנית כבר שלושים שנה, ויש לכם בדיוק את מה שכרטיס מועדון נבנה בשבילו: לקוחות שחוזרים כל בוקר, וגם קונים שוב את הפולים כל כמה שבועות.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.\n\nמה זה יכול לתת לטחנת הקפה:\n- תגמול לשני סוגי החזרה: קפה עשירי עליכם, ובנוסף הטבה על כל שקית פולים רביעית.\n- סוף לכרטיסי נייר שנשכחים בארנק: הלקוח רואה בטלפון כמה חסר לו להטבה.\n- חשיפה ללקוחות של עסקים שכנים ברחוב שמשתמשים באותה אפליקציה.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לקפוץ לקפה ולהראות לכם את זה בעשר דקות. מתי נוח לכם?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "טחנת הקפה ופרקו - כרטיס מועדון דיגיטלי לקפה ולפולים", "to": "coffeemill99@gmail.com", "waNum": "", "he": "טחנת הקפה"}, {"key": "Birma Coffee", "wa": "היי מיכאל ודניאל, כאן {name} מפרקו.\n\nראינו מה בניתם בבירמה: קלייה קטנה ודלפק עם לקוחות קבועים שעוצרים בדרך לעבודה. בדיוק העסק שכרטיס חותמות נועד בשבילו.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי הכללים שלכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nיש לכם רבע שעה השבוע? אשמח להגיע לדלפק.", "email": "היי מיכאל ודניאל,\n\nכאן {name} מפרקו. ראינו מה בניתם בבירמה מאז 2021: קלייה קטנה, דלפק טייק-אוויי ולקוחות קבועים שעוצרים בדרך לעבודה. זה בדיוק העסק שכרטיס חותמות נועד בשבילו.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.\n\nמה זה יכול לתת לבירמה:\n- כרטיס חותמות בלי נייר ובלי הדפסות: קפה עשירי עליכם, או כל כלל אחר שתחליטו.\n- לקוח הבוקר רואה בטלפון שחסרות לו שתי חותמות, וזו עוד סיבה לעצור דווקא אצלכם.\n- מקום ראשון ברשת של עסקים שכונתיים ברחוב, כמותג צעיר שמשפיע על איך המוצר ייראה.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nיש לכם רבע שעה השבוע? אשמח להגיע לדלפק ולהראות.\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "בירמה ופרקו - כרטיס חותמות דיגיטלי לדלפק", "to": "", "waNum": "", "he": "בירמה"}, {"key": "Kalo Cafe & Market", "wa": "שלום לצוות קאלו, כאן {name} מפרקו.\n\nקאלו הוא כבר שנים חלק מהשגרה של בקעה, גם בבית הקפה וגם במעדנייה.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות או נקודות לפי ההטבה שתגדירו. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nלמי אצלכם כדאי לפנות לשיחה קצרה על זה?", "email": "שלום לצוות קאלו,\n\nכאן {name} מפרקו. קאלו הוא כבר יותר מעשרים וחמש שנה חלק מהשגרה של בקעה, עם קהל מקומי גדול שמגיע גם לארוחת בוקר וגם לקניות במעדנייה.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות או נקודות לפי ההטבה שאתם מגדירים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.\n\nמה זה יכול לתת לקאלו:\n- הטבה אחת פשוטה שמתאימה לשני סוגי הקנייה, למשל נקודות על כל קנייה ומנה מוכנה או ארוחת בוקר במתנה.\n- קשר דיגיטלי עם הקבועים, בלי לבנות אפליקציה משלכם.\n- קאלו יכול להיות עוגן של הרשת בדרך בית לחם, יחד עם השכנים ברחוב.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לדבר עם מי שאחראי אצלכם על הלקוחות, או לקפוץ ולהראות. למי כדאי לפנות?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "קאלו ופרקו - כרטיס מועדון לבית הקפה ולמעדנייה", "to": "kalocafe@gmail.com", "waNum": "", "he": "קאלו"}, {"key": "Itzik's Place", "wa": "שלום לצוות של המקום של איציק, כאן {name} מפרקו.\n\nאתם מהמקומות שהשכונה חוזרת אליהם כל יום, עוד מימי הקיוסק.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי הכללים שלכם, למשל קפה עשירי חינם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאפשר לקפוץ אליכם לכמה דקות בשעה שקטה? מתי הכי נוח?", "email": "שלום לצוות של המקום של איציק,\n\nכאן {name} מפרקו. אתם מהמקומות שהשכונה חוזרת אליהם כל יום, עוד מימי הקיוסק, ובלי שום אפליקציה או אתר משלכם.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.\n\nמה זה יכול לתת להמקום של איציק:\n- כרטיס קפה דיגיטלי מוכן, בלי לפתח כלום ובלי לנהל אתר: מדפיסים קוד לקופה וזהו.\n- הקבועים שלכם רואים בטלפון כמה חסר להם, ולא מאבדים כרטיסי נייר.\n- אתם שתי דלתות מקאלו ומציגה, וביחד אפשר לבנות רחוב שבו כל עצירה נספרת.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאפשר לקפוץ אליכם לכמה דקות בשעה שקטה ולהראות? מה הזמן הכי נוח?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "המקום של איציק ופרקו - כרטיס קפה דיגיטלי, בלי הקמה", "to": "", "waNum": "", "he": "המקום של איציק"}, {"key": "Tziga Ice Cream", "wa": "שלום לצוות ציגה, כאן {name} מפרקו.\n\nגלידה היא בדיוק הפינוק שמשפחות מהשכונה חוזרות אליו שוב ושוב.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם, למשל ״כל כדור שמיני עלינו״. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לשיחה קצרה או לקפוץ אליכם. מתי נוח?", "email": "שלום לצוות ציגה,\n\nכאן {name} מפרקו. ג'לאטו בעבודת יד הוא בדיוק הפינוק שמשפחות מהשכונה חוזרות אליו שוב ושוב, וזה המקום שבו כרטיס חותמות הכי קל להבנה.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.\n\nמה זה יכול לתת לציגה:\n- הטבה שילדים ומבוגרים מבינים מיד, למשל ״כל כדור שמיני עלינו״.\n- המשפחה רואה בטלפון שחסר להם עוד ביקור אחד, ויש סיבה לבוא שוב בשבוע הבא.\n- אתם באותו בניין עם קאלו, כך שלקוח יכול לצבור אצל שניכם באותה יציאה.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לשיחה קצרה או לקפוץ אליכם. מתי נוח לכם?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "ציגה ופרקו - ״כל כדור שמיני עלינו״, בלי כרטיסי נייר", "to": "", "waNum": "", "he": "ציגה - הגלידה של ציגה"}, {"key": "Emek Flowers (Pirchei HaEmek)", "wa": "שלום לצוות פרחי העמק, כאן {name} מפרקו.\n\nהרבה משפחות בשכונה קונות פרחים לשבת כל שבוע, וזה בדיוק הלקוח הקבוע שאנחנו בונים בשבילו.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי מה שתחליטו, למשל זר תשיעי במתנה. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לעשר דקות שיחה או לקפוץ לחנות. מתי מתאים?", "email": "שלום לצוות פרחי העמק,\n\nכאן {name} מפרקו. הרבה משפחות במושבה קונות פרחים לשבת כל שבוע, וזה בדיוק הלקוח הקבוע שכרטיס מועדון נבנה בשבילו.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.\n\nמה זה יכול לתת לפרחי העמק:\n- הטבה שמתאימה להרגל של שישי, למשל שמונה זרים והתשיעי במתנה.\n- לקוחות של בתי הקפה ברחוב יכולים לגלות אתכם באותה אפליקציה, כעצירה שנייה בדרך הביתה.\n- בלי כרטיסים מודפסים ובלי מערכת חדשה לתפעל בחנות.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לעשר דקות שיחה או לקפוץ לחנות. מתי מתאים לכם?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "פרחי העמק ופרקו - זר תשיעי במתנה, בכרטיס דיגיטלי", "to": "", "waNum": "972524043365", "he": "פרחי העמק"}, {"key": "Casa Lavi", "wa": "היי מיטל ואלפונסו, כאן {name} מפרקו.\n\nאהבנו את מה שבניתם בקאסה לביא: קלייה משלכם, מאפים בריאים וקהל שחוזר כמה פעמים בשבוע.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי הכללים שלכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לקפוץ לקפה ולהראות את זה בכמה דקות. מתי נוח לכם?", "email": "היי מיטל ואלפונסו,\n\nכאן {name} מפרקו. אהבנו את מה שבניתם בקאסה לביא: קלייה משלכם, מאפים בלי סוכר לבן ובלי קמח לבן, וקהל שחוזר כמה פעמים בשבוע.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.\n\nמה זה יכול לתת לקאסה לביא:\n- תגמול לקהל הקבוע, בכללים שאתם בוחרים: קפה, מאפה, או שילוב.\n- חשיפה ללקוחות של עסקים שכנים שמחפשים בדיוק מקום כמו שלכם.\n- השפעה על המוצר מההתחלה, כעסק צעיר שמוביל את הפיילוט.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לקפוץ לקפה ולהראות את זה בכמה דקות. מתי נוח לכם?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "קאסה לביא ופרקו - כרטיס מועדון ללקוחות הקבועים", "to": "", "waNum": "972584296540", "he": "קאסה לביא"}, {"key": "Grand Cafe", "wa": "שלום עדי ושרה, כאן {name} מפרקו.\n\nגראנד קפה הוא מהמקומות שמגדירים את בקעה, עם קהל בראנץ' נאמן.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם, למשל מאפה עליכם בביקור באמצע השבוע. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לפגישה קצרה בזמן שנוח לכם. מתי מתאים?", "email": "שלום עדי ושרה,\n\nכאן {name} מפרקו. גראנד קפה הוא מהמקומות שמגדירים את בקעה כבר מ-2011, עם קהל בראנץ' ומאפים נאמן.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.\n\nמה זה יכול לתת לגראנד קפה:\n- הטבה שמזיזה ביקורים, למשל מאפה עליכם למי שמגיע גם באמצע השבוע.\n- קשר דיגיטלי עם הקבועים של סוף השבוע, בלי אפליקציה נפרדת.\n- מקום מוכר כמו שלכם נותן לרשת השכונתית אמינות, ומקבל ממנה לקוחות של העסקים השכנים.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לפגישה קצרה בזמן שנוח לכם. מתי מתאים?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "גראנד קפה ופרקו - להביא את קהל הבראנץ' גם באמצע השבוע", "to": "", "waNum": "972526674624", "he": "גראנד קפה"}, {"key": "Le Charolais Deli & Butcher", "wa": "שלום לצוות לה שרולה, כאן {name} מפרקו.\n\nהרבה משפחות בשכונה קונות אצלכם לשבת כל שבוע, וזה בדיוק הלקוח הקבוע שאנחנו בונים בשבילו.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות או נקודות לפי הכללים שלכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לשיחה קצרה עם מי שמנהל את החנות. מתי נוח?", "email": "שלום לצוות לה שרולה,\n\nכאן {name} מפרקו. הרבה משפחות בבקעה קונות אצלכם לשבת כל שבוע, וזה בדיוק הלקוח הקבוע שכרטיס מועדון נבנה בשבילו.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות או נקודות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.\n\nמה זה יכול לתת ללה שרולה:\n- נקודות לפי גובה הקנייה, שמתאימות לסלים הגדולים של סוף השבוע.\n- הטבה שמחזקת את ההרגל השבועי, למשל מנה מוכנה או מאפה צרפתי במתנה.\n- אתם עסק שונה מבתי הקפה ברחוב, וזה בדיוק מה שהופך רשת שכונתית לשימושית.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לשיחה קצרה עם מי שמנהל את החנות. מתי נוח?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "לה שרולה ופרקו - הטבה לקונים הקבועים של שבת", "to": "", "waNum": "972505791350", "he": "לה שרולה"}, {"key": "Bresaola", "wa": "שלום לצוות ברזאולה, כאן {name} מפרקו.\n\nיש לכם קהל נאמן אמיתי, שמגיע גם לקניות הביתה וגם לערב בבר.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לקפוץ אליכם לכמה דקות. מתי הכי שקט אצלכם?", "email": "שלום לצוות ברזאולה,\n\nכאן {name} מפרקו. יש לכם קהל נאמן אמיתי, שמגיע גם לנקניקים לבית וגם לערב של טאפאס בבר.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.\n\nמה זה יכול לתת לברזאולה:\n- כרטיס אחד שסופר גם קנייה בדלפק וגם ערב בבר.\n- הטבה שמחזירה את מי שבא פעם בחודש להיות קבוע, למשל מנת טאפאס במתנה.\n- חשיפה ללקוחות של בתי הקפה והמעדניות ברחוב.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לקפוץ אליכם לכמה דקות. מתי הכי שקט אצלכם?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "ברזאולה ופרקו - כרטיס מועדון לדלפק ולבר", "to": "", "waNum": "", "he": "ברזאולה"}, {"key": "Flora Flower Shop", "wa": "שלום לצוות פלורה, כאן {name} מפרקו.\n\nפרחים לשבת ולחגים הם בדיוק קנייה שחוזרת על עצמה, ושווה לתגמל עליה.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי מה שתחליטו, למשל זר תשיעי במתנה. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לשיחה קצרה או לקפוץ לחנות. מתי נוח לכם?", "email": "שלום לצוות פלורה,\n\nכאן {name} מפרקו. פרחים לשבת, ועוד שיאים בחגים, הם בדיוק קנייה שחוזרת על עצמה ושווה לתגמל עליה.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.\n\nמה זה יכול לתת לפלורה:\n- הטבה שמתאימה לשישי, למשל זר תשיעי במתנה, שנספרת גם באיסוף מהחנות.\n- אתם כמה דלתות מקאלו ומציגה, אז לקוח יכול לצבור אצל כמה עסקים באותו סיבוב.\n- בלי כרטיסים מודפסים ובלי מערכת חדשה לתפעל.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לשיחה קצרה או לקפוץ לחנות. מתי נוח לכם?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "פלורה ופרקו - זר תשיעי במתנה, בכרטיס דיגיטלי", "to": "info@floraflower.co.il", "waNum": "", "he": "פלורה - חנות פרחים"}, {"key": "Lechem V'od (Bread and More)", "wa": "שלום לצוות לחם ועוד, כאן {name} מפרקו.\n\nמאפייה היא המקום שאנשים חוזרים אליו הכי הרבה, ללחם של כל יום ולעוגה של שבת.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם, למשל לחם עשירי עליכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לקפוץ ולהראות את זה בכמה דקות. מתי מתאים?", "email": "שלום לצוות לחם ועוד,\n\nכאן {name} מפרקו. מאפייה היא המקום שאנשים חוזרים אליו הכי הרבה, ללחם המחמצת של כל יום ולעוגת הגבינה של שבת.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.\n\nמה זה יכול לתת ללחם ועוד:\n- כרטיס פשוט ללחם היומי, למשל לחם עשירי עליכם.\n- הטבה עשירה יותר לקניות הגדולות במעדנייה, לפי מה שתחליטו.\n- חשיפה ללקוחות של בתי הקפה וחנויות הפרחים ברחוב.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לקפוץ ולהראות את זה בכמה דקות. מתי מתאים לכם?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "לחם ועוד ופרקו - כרטיס מועדון ללחם של כל יום", "to": "", "waNum": "", "he": "לחם ועוד"}, {"key": "Erez Flowers (EreZer)", "wa": "שלום לצוות הפרחים של ארז, כאן {name} מפרקו.\n\nיש לכם גם קונים שנכנסים לפני שבת וגם לקוחות משלוחים שחוזרים, וזה בדיוק הקהל שאנחנו בונים בשבילו.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי הכללים שלכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לעשר דקות שיחה. מתי נוח לכם?", "email": "שלום לצוות הפרחים של ארז,\n\nכאן {name} מפרקו. יש לכם גם קונים שנכנסים לחנות לפני שבת וגם לקוחות משלוחים שחוזרים שוב ושוב, וזה בדיוק הקהל שכרטיס מועדון נבנה בשבילו.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.\n\nמה זה יכול לתת להפרחים של ארז:\n- הטבה ללקוחות שחוזרים, למשל זר במתנה אחרי כמה קניות.\n- הלקוח רואה בטלפון כמה חסר לו, ולא צריך לשמור כרטיס.\n- חשיפה ללקוחות של בתי הקפה והמאפיות בעמק רפאים.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לעשר דקות שיחה. מתי נוח לכם?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "הפרחים של ארז ופרקו - הטבה ללקוחות שחוזרים", "to": "erezprachim@gmail.com", "waNum": "", "he": "הפרחים של ארז"}, {"key": "Kumkum Tea House", "wa": "שלום אלישבע, כאן {name} מפרקו.\n\nקראנו על קומקום ואהבנו את הבית הקטן והקהילתי שבנית בבקעה.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי מה שתבחרי, למשל קנקן תה או סקונס במתנה. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לבוא לתה ולהראות את זה בכמה דקות. מתי נוח לך?", "email": "שלום אלישבע,\n\nכאן {name} מפרקו. קראנו על קומקום ואהבנו את הבית הקטן והקהילתי שבנית בבקעה, עם תה של אחר הצהריים, סקונס ביתיים ופינה של תה עלים.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאת קובעת, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.\n\nמה זה יכול לתת לקומקום:\n- הטבה עם אופי, למשל קנקן תה או סקונס במתנה.\n- גם קנייה של תה עלים לבית יכולה להיספר, כך שהכרטיס עובד גם בין ביקור לביקור.\n- חשיפה ללקוחות של בתי הקפה ברחוב שעוד לא גילו את הגינה שלך.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור לך בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לבוא לתה ולהראות את זה בכמה דקות. מתי נוח לך?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "קומקום ופרקו - כרטיס מועדון לבית התה", "to": "", "waNum": "972506563334", "he": "קומקום - בית תה"}, {"key": "Buchman's Diner", "wa": "היי ליאור ומתן, כאן {name} מפרקו.\n\nהדיינר שלכם הוא מקום שמשפחות ובני נוער חוזרים אליו, ושם כרטיס חותמות עובד הכי טוב.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם, למשל מילקשייק חינם בביקור השישי. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לשיחה קצרה. מתי נוח?", "email": "היי ליאור ומתן,\n\nכאן {name} מפרקו. הדיינר שלכם הוא מקום שמשפחות ובני נוער חוזרים אליו, וזה בדיוק הקהל שכרטיס חותמות עובד אצלו הכי טוב.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.\n\nמה זה יכול לתת לבוכמן'ס:\n- הטבה שקל להסביר לכל שולחן, למשל מילקשייק חינם בביקור השישי.\n- בני נוער שכבר חיים בטלפון מקבלים כרטיס שלא נאבד.\n- אם זה יעבוד אצלכם, אפשר יהיה לבחון את זה גם במקומות האחרים שלכם.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לשיחה קצרה. מתי נוח לכם?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "בוכמן'ס ופרקו - מילקשייק חינם בביקור השישי", "to": "", "waNum": "", "he": "בוכמן'ס דיינר"}, {"key": "Pompidou Bistro & Bar", "wa": "שלום לצוות פומפידו, כאן {name} מפרקו.\n\nחשבנו עליכם בגלל החיבור לשכנים: לקוחות שמכירים את עמק רפאים מבתי הקפה ביום יכולים לגלות אתכם בערב.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות או נקודות לפי ההטבה שלכם, למשל קינוח עליכם בביקור הרביעי. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לדבר עם מי שמנהל את המקום. מתי אפשר לתפוס אתכם?", "email": "שלום לצוות פומפידו,\n\nכאן {name} מפרקו. חשבנו עליכם בגלל החיבור לשכנים: לקוחות שמכירים את עמק רפאים מבתי הקפה ביום יכולים לגלות את הביסטרו והמרפסת שלכם בערב.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות או נקודות לפי ההטבה שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.\n\nמה זה יכול לתת לפומפידו:\n- חשיפה ללקוחות של העסקים השכנים באותה אפליקציה.\n- הטבה שמחזירה סועדים שלא הגיעו מזמן, למשל קינוח עליכם בביקור הרביעי.\n- בלי קופונים מודפסים ובלי מערכת חדשה במשמרת.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לדבר עם מי שמנהל את המקום. מתי אפשר לתפוס אתכם?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "פומפידו ופרקו - לקוחות היום של הרחוב, גם בערב", "to": "", "waNum": "", "he": "פומפידו"}, {"key": "Rendez-Vous", "wa": "שלום לצוות רנדבו, כאן {name} מפרקו.\n\nפיצה ופסטה הן הזמנות שמשפחות חוזרות אליהן שוב ושוב, ושם כרטיס חותמות עובד הכי טוב.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לשיחה קצרה עם מי שמנהל את המקום. מתי נוח?", "email": "שלום לצוות רנדבו,\n\nכאן {name} מפרקו. פיצה ופסטה הן הזמנות שמשפחות חוזרות אליהן שוב ושוב, וזה בדיוק המקום שבו כרטיס חותמות עובד הכי טוב.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בדרך בית לחם.\n\nמה זה יכול לתת לרנדבו:\n- הטבה משפחתית פשוטה, למשל פיצה במתנה אחרי כמה ביקורים.\n- קשר עם הלקוחות הקבועים, בלי אפליקציה נפרדת.\n- אתם בקצה הדרומי של הרחוב, ותוכלו להביא לרשת לקוחות מכיוון תלפיות.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בדרך בית לחם שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לשיחה קצרה עם מי שמנהל את המקום. מתי נוח?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "רנדבו ופרקו - כרטיס חותמות לפיצה ולפסטה", "to": "", "waNum": "", "he": "רנדבו"}, {"key": "Focaccia Moshava", "wa": "שלום לצוות פוקצ'ה במושבה, כאן {name} מפרקו.\n\nשוק הפוקצ'ות שלכם בשישי הוא בדיוק הרגל שבועי ששווה לתגמל.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בשכונה: הלקוח סורק קוד בקופה וצובר חותמות לפי ההטבה שלכם, למשל פוקצ'ה עליכם בשישי העשירי. אנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות.\n\nאשמח לדבר עם מי שמנהל את המקום. מתי נוח?", "email": "שלום לצוות פוקצ'ה במושבה,\n\nכאן {name} מפרקו. שוק הפוקצ'ות שלכם בשישי לפני שבת הוא בדיוק הרגל שבועי ששווה לתגמל.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.\n\nמה זה יכול לתת לפוקצ'ה במושבה:\n- הטבה שמחזקת את האיסוף של שישי, למשל פוקצ'ה עליכם בשישי העשירי.\n- הלקוח רואה בטלפון כמה חסר לו, ויש סיבה לא לפספס שבוע.\n- הנוכחות שלכם ברחוב עוזרת לרשת, והרשת מביאה לכם לקוחות של העסקים השכנים.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לדבר עם מי שמנהל את המקום. מתי נוח?\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "פוקצ'ה במושבה ופרקו - לתגמל את שוק שישי", "to": "", "waNum": "", "he": "פוקצ'ה במושבה"}, {"key": "Stav Jewelry", "wa": "שלום דליה ואייל, כאן {name} מפרקו.\n\nסתיו תכשיטים הוא מהעסקים הוותיקים והמיוחדים בעמק רפאים, ואנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים ברחוב. אצלכם זה לא חייב להיות כרטיס חותמות: אפשר להגדיר הטבה כמו ניקוי, תיקון או חריטה במתנה.\n\nאנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות. אשמח לשמוע אם זה מעניין אתכם.", "email": "שלום דליה ואייל,\n\nכאן {name} מפרקו. סתיו תכשיטים הוא מהעסקים הוותיקים והמיוחדים בעמק רפאים, בדיוק מהמקומות שאנחנו רוצים שאנשים מהשכונה יגלו.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. במקום כרטיס נייר, הלקוח סורק קוד בקופה, צובר חותמות או הטבות לפי הכללים שאתם קובעים, ורואה באותה אפליקציה גם עסקים שכנים בעמק רפאים.\n\nמה זה יכול לתת לסתיו תכשיטים:\n- הטבה שמתאימה לתכשיטים ולא לקפה, כמו ניקוי, תיקון או חריטה במתנה.\n- חשיפה ללקוחות הקבועים של בתי הקפה והמאפיות ברחוב, שמחפשים מתנה מקומית.\n- קשר שנשאר עם הלקוח גם אחרי הקנייה, לקראת החג הבא.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור אתכם בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לשמוע אם זה מעניין אתכם, ולקפוץ לשיחה קצרה.\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "סתיו תכשיטים ופרקו - הטבה שמתאימה לתכשיטים", "to": "stavjewelry@gmail.com", "waNum": "", "he": "סתיו תכשיטים"}, {"key": "Barbara Shaw Gifts", "wa": "שלום ברברה, כאן {name} מפרקו.\n\nאנחנו בונים כרטיס מועדון דיגיטלי אחד לעסקים בעמק רפאים, וחשבנו על החנות שלך: לקוחות קבועים של בתי הקפה ברחוב יכולים לגלות אותך דרך אותה אפליקציה, במיוחד לפני החגים.\n\nאנחנו בגישה מוקדמת, וההצטרפות בחינם ובלי התחייבות. אשמח לשמוע אם זה מעניין אותך.", "email": "שלום ברברה,\n\nכאן {name} מפרקו. החנות שלך יושבת בתחילת עמק רפאים, בדיוק איפה שאנשים מתחילים ללכת ברחוב, עם מתנות שמיוצרות כאן בירושלים.\n\nפרקו היא אפליקציה אחת לכרטיסי מועדון של עסקים שכונתיים. הלקוח סורק קוד בקופה, צובר הטבות לפי הכללים של כל עסק, ורואה באותה אפליקציה את כל העסקים המשתתפים ברחוב.\n\nמה זה יכול לתת לברברה שו:\n- חשיפה ללקוחות הקבועים של בתי הקפה והמאפיות ברחוב, במיוחד לפני החגים.\n- הטבה קטנה עם אופי, כמו עטיפת מתנה או הנחה לקנייה הבאה.\n- סיבה לחזור לחנות גם בין עונה לעונה.\n\nאנחנו בשלב גישה מוקדמת ומחפשים כמה עסקים ראשונים בעמק רפאים שיעזרו לנו לבנות את זה נכון. ההצטרפות כרגע בחינם ובלי התחייבות לתשלום, ונעזור לך בהקמה. המטרה שלנו פשוטה: לחזק את העסקים הקטנים והמשפחתיים שעושים את השכונה לבית.\n\nאשמח לשמוע אם זה מעניין אותך.\n\nתודה,\n{name}\nפרקו · getperko.com", "subject": "ברברה שו ופרקו - חשיפה ללקוחות של עמק רפאים", "to": "barbshaw@gmail.com", "waNum": "", "he": "ברברה שו מתנות"}];
+const KEY = 'perko-outreach-v1';
+let S = {};
+try { S = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+const st = k => (S[k] = S[k] || {});
+
+const meIn = document.getElementById('me');
+try { meIn.value = localStorage.getItem('perko-me') || ''; } catch (e) {}
+const myName = () => meIn.value.trim() || '[השם שלך]';
+const fill = t => t.replaceAll('{name}', myName());
+function paintNames() { document.querySelectorAll('.nm').forEach(s => s.textContent = myName()); }
+meIn.addEventListener('input', () => { try { localStorage.setItem('perko-me', meIn.value); } catch (e) {} paintNames(); });
+
+const fmt = iso => { const d = new Date(iso); return d.getDate() + '.' + (d.getMonth() + 1); };
+
+function paintRow(sec) {
+  const s = S[DATA[+sec.dataset.i].key] || {};
+  sec.querySelectorAll('.chk input').forEach(cb => { cb.checked = !!s[cb.dataset.f]; });
+  sec.querySelectorAll('.when').forEach(w => { w.textContent = s[w.dataset.w] ? fmt(s[w.dataset.w]) : ''; });
+  sec.classList.toggle('done', !!(s.wa || s.mail));
+  sec.querySelector('.notes').value = s.notes || '';
+}
+
+function paintProgress() {
+  let sent = 0, wa = 0, mail = 0, reply = 0;
+  DATA.forEach(d => { const s = S[d.key] || {}; if (s.wa || s.mail) sent++; if (s.wa) wa++; if (s.mail) mail++; if (s.reply) reply++; });
+  document.getElementById('p-sent').textContent = sent;
+  document.getElementById('p-wa').textContent = wa;
+  document.getElementById('p-mail').textContent = mail;
+  document.getElementById('p-reply').textContent = reply;
+  document.getElementById('p-bar').style.width = (sent / DATA.length * 100) + '%';
+}
+
+function mark(i, f, on) {
+  const s = st(DATA[i].key);
+  if (on) s[f] = s[f] || new Date().toISOString(); else delete s[f];
+  save();
+  const sec = document.querySelector(`.biz[data-i="${i}"]`);
+  paintRow(sec); paintProgress(); filter();
+}
+
+async function copyText(t) {
+  try { await navigator.clipboard.writeText(t); return true; } catch (e) {}
+  const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select();
+  let ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+  ta.remove(); return ok;
+}
+
+document.querySelectorAll('.biz').forEach(sec => {
+  const i = +sec.dataset.i, d = DATA[i];
+  paintRow(sec);
+  sec.querySelectorAll('.chk input').forEach(cb => cb.addEventListener('change', () => mark(i, cb.dataset.f, cb.checked)));
+  const det = sec.querySelector('.detail'), tg = sec.querySelector('.toggle');
+  tg.addEventListener('click', () => { det.hidden = !det.hidden; tg.setAttribute('aria-expanded', !det.hidden); });
+  sec.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    sec.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-selected', x === t));
+    sec.querySelectorAll('.panel').forEach(p => p.hidden = p.dataset.p !== t.dataset.t);
+  }));
+  const notes = sec.querySelector('.notes');
+  notes.addEventListener('input', () => { st(d.key).notes = notes.value; save(); });
+  sec.querySelectorAll('.copy').forEach(btn => btn.addEventListener('click', async () => {
+    const label = btn.textContent;
+    const ok = await copyText(fill(d[btn.dataset.k]));
+    btn.textContent = ok ? 'הועתק' : 'סמנו והעתיקו ידנית';
+    setTimeout(() => btn.textContent = label, 1600);
+  }));
+  const ow = sec.querySelector('.open-wa');
+  if (ow) ow.addEventListener('click', () => {
+    window.open('https://wa.me/' + d.waNum + '?text=' + encodeURIComponent(fill(d.wa)), '_blank', 'noopener');
+    if (!(S[d.key] || {}).wa && confirm('לסמן ש״' + d.he + '״ קיבלו הודעה בוואטסאפ?')) mark(i, 'wa', true);
+  });
+  const om = sec.querySelector('.open-mail');
+  if (om) om.addEventListener('click', () => {
+    location.href = 'mailto:' + d.to + '?subject=' + encodeURIComponent(d.subject) + '&body=' + encodeURIComponent(fill(d.email));
+    setTimeout(() => { if (!(S[d.key] || {}).mail && confirm('לסמן ש״' + d.he + '״ קיבלו מייל?')) mark(i, 'mail', true); }, 600);
+  });
+});
+paintNames(); paintProgress();
+
+const q = document.getElementById('q'), streetSel = document.getElementById('street'), statusSel = document.getElementById('status');
+function filter() {
+  const s = q.value.trim(), street = streetSel.value, status = statusSel.value;
+  document.querySelectorAll('.biz').forEach(sec => {
+    const x = S[DATA[+sec.dataset.i].key] || {}, sent = !!(x.wa || x.mail);
+    const okStatus = !status || (status === 'todo' && !sent) || (status === 'sent' && sent) || (status === 'reply' && x.reply);
+    sec.hidden = (street && sec.dataset.street !== street) || (s && !sec.dataset.text.includes(s)) || !okStatus;
+  });
+}
+q.addEventListener('input', filter); streetSel.addEventListener('change', filter); statusSel.addEventListener('change', filter);
+
+document.getElementById('export').addEventListener('click', () => {
+  const esc = v => '"' + String(v ?? '').replaceAll('"', '""') + '"';
+  const day = iso => iso ? new Date(iso).toLocaleDateString('he-IL') : '';
+  const lines = [['עסק', 'וואטסאפ', 'מייל', 'ענו', 'הערות'].map(esc).join(',')];
+  DATA.forEach(d => { const s = S[d.key] || {}; lines.push([d.he, day(s.wa), day(s.mail), day(s.reply), s.notes].map(esc).join(',')); });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' }));
+  a.download = 'perko-outreach-status.csv'; a.click();
+});
+</script>
+</body>
+</html>
